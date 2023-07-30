@@ -3,11 +3,24 @@
   "name": "denpendency-analyzer",
   "type": "module",
   "version": "0.0.0",
+  "description": "A CLI tool for analyzing package dependencies",
+  "keywords": [
+    "cli",
+    "dependency",
+    "analyzer"
+  ],
+  "bugs": {
+    "url": "https://github.com/package-dependency-analyze/denpendency-analyzer/issues"
+  },
+  "homepage": "https://github.com/package-dependency-analyze/denpendency-analyzer",
   "files": [
     "./lib",
     "./bin"
   ],
   "packageManager": "pnpm@8.6.10",
+  "engines": {
+    "node": ">=14.17.0"
+  },
   "license": "MIT",
   "publishConfig": {
     "access": "public",
@@ -19,9 +32,9 @@
   "scripts": {
     "prepare": "husky install",
     "prebuild": "rimraf ./lib",
-    "build": "pnpm prebuild && turbo build",
+    "build": "pnpm prebuild && turbo build --no-daemon",
     "preview": "node ./bin/cli.js",
-    "commit": "cz",
+    "commit": "cz && changeset add",
     "lint": "turbo lint --no-daemon",
     "test": "turbo test --no-daemon",
     "test:cov": "vitest run --coverage"
@@ -47,7 +60,7 @@
     "commitlint": "^17.6.7",
     "cz-git": "^1.7.0",
     "eslint": "^8.46.0",
-    "eslint-plugin-vue": "^9.15.1",
+    "eslint-plugin-vue": "^9.16.0",
     "husky": "^8.0.3",
     "lint-staged": "^13.2.3",
     "prettier": "^3.0.0",
