@@ -3,4 +3,4 @@
 
 pnpm test
 git add ".changeset/*"
-git commit -m "chore: update changeset"
+git commit -m "chore: update changeset" | echo
