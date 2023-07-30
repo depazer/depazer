@@ -1,0 +1,17 @@
+{
+  "name": "@package-dependency-analyze/cli",
+  "version": "0.0.0",
+  "description": "A CLI tool for analyzing package dependencies",
+  "scripts": {
+    "build": "tsx ./build/build.ts",
+    "dev": "tsx ./src/main.ts",
+    "test:dev": "vitest",
+    "test": "vitest run",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix"
+  },
+  "devDependencies": {
+    "cac": "^6.7.14",
+    "chalk": "^5.3.0",
+    "esbuild": "^0.18.17"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "include": ["src/**/*", "test/**/*", "vitest.config.*", "package.json"],
+  "compilerOptions": {
+    "lib": ["es2023"],
+    "target": "es2016",
+    "noEmit": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+
+    "resolveJsonModule": true,
+    "composite": true,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "types": ["node"],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  }
+}

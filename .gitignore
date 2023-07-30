@@ -1,0 +1,11 @@
+node_modules
+.turbo
+lib
+dist
+.eslintcache
+
+.changeset/README.md
+
+.vscode/**/*
+!.vscode/settings.json
+!.vscode/extensions.json

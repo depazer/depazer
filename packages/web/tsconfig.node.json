@@ -1,0 +1,17 @@
+{
+  "include": ["vite.config.*", "vitest.config.*"],
+  "compilerOptions": {
+    "lib": ["es2023"],
+    "target": "es2020",
+    "noEmit": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+
+    "composite": true,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "types": ["node"]
+  }
+}
