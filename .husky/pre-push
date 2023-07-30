@@ -2,3 +2,5 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 pnpm test
+git add ".changeset/*"
+git commit -m "chore: update changeset"
