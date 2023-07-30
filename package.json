@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/package",
-  "name": "denpendency-analyzer",
+  "name": "dependency-analyzer",
   "type": "module",
   "version": "0.0.0",
   "description": "A CLI tool for analyzing package dependencies",
@@ -10,9 +10,9 @@
     "analyzer"
   ],
   "bugs": {
-    "url": "https://github.com/package-dependency-analyze/denpendency-analyzer/issues"
+    "url": "https://github.com/package-dependency-analyze/dependency-analyzer/issues"
   },
-  "homepage": "https://github.com/package-dependency-analyze/denpendency-analyzer",
+  "homepage": "https://github.com/package-dependency-analyze/dependency-analyzer",
   "files": [
     "./lib",
     "./bin"
