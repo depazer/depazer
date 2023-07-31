@@ -12,14 +12,14 @@ export const createAnalyzeCommand: CreateCommand<AnalyzeOption> = function () {
     options: [
       {
         rawName: '-p, --port <number>',
-        describtion: 'Port of analyzer server',
+        description: 'Port of analyzer server',
         config: {
           default: 4936
         }
       },
       {
         rawName: '-j, --jsonFile [file name]',
-        describtion: 'Generate json file for analysis'
+        description: 'Generate json file for analysis'
       }
     ]
   }

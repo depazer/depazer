@@ -2,7 +2,7 @@ import type { CAC } from 'cac'
 
 interface Option {
   rawName: string
-  describtion: string
+  description: string
   config?: {
     default?: unknown
     type?: unknown[]

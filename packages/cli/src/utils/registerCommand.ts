@@ -8,8 +8,8 @@ export function registerCommand(cli: CAC, createCommandFunctions: CreateCommand[
     const { action, alias, command, description, options = [] } = createCommand(cli)
 
     const COMMAND = cli.command(command, createDescription(description, alias))
-    options.forEach(({ rawName, describtion, config }) =>
-      COMMAND.option(rawName, describtion, config)
+    options.forEach(({ rawName, description, config }) =>
+      COMMAND.option(rawName, description, config)
     )
     alias && COMMAND.alias(alias)
     COMMAND.action(action)
