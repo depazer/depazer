@@ -37,7 +37,10 @@
     "commit": "cz && changeset add",
     "lint": "turbo lint --no-daemon",
     "test": "turbo test --no-daemon",
-    "test:cov": "vitest run --coverage"
+    "test:cov": "vitest run --coverage",
+    "docs": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
   },
   "config": {
     "commitizen": {
@@ -69,6 +72,7 @@
     "tsx": "^3.12.7",
     "turbo": "^1.10.12",
     "typescript": "^5.1.6",
+    "vitepress": "1.0.0-beta.7",
     "vitest": "^0.33.0"
   }
 }
