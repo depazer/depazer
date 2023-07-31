@@ -1,4 +1,4 @@
-name: unit-test
+name: unit test
 
 on:
   push:
@@ -28,3 +28,9 @@ jobs:
         run: pnpm i
       - name: Run Vitest
         run: pnpm test
+      - name: Generate coverage reports
+        run: pnpm test:cov
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
