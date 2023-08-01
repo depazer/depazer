@@ -6,9 +6,6 @@ import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 
 export default defineConfig({
-  build: {
-    outDir: fileURLToPath(new URL('../../lib/web', import.meta.url))
-  },
   plugins: [unocss(), vue(), vueJsx()],
   resolve: {
     alias: {

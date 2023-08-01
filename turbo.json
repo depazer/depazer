@@ -9,7 +9,8 @@
       "cache": true
     },
     "build": {
-      "cache": false
+      "cache": false,
+      "dependsOn": ["^build"]
     }
   }
 }

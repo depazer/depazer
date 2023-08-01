@@ -2,14 +2,44 @@
   "name": "@package-dependency-analyze/cli",
   "version": "0.0.0",
   "description": "A CLI tool for analyzing package dependencies",
+  "type": "module",
+  "files": [
+    "bin",
+    "lib"
+  ],
+  "bin": {
+    "depazer": "./bin/cli.js"
+  },
+  "keywords": [
+    "cli",
+    "dependency",
+    "analyzer"
+  ],
+  "bugs": {
+    "url": "https://github.com/package-dependency-analyze/dependency-analyzer/issues"
+  },
+  "homepage": "https://github.com/package-dependency-analyze/dependency-analyzer",
+  "packageManager": "pnpm@8.6.11",
+  "engines": {
+    "node": ">=14.17.0"
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "registry": "https://registry.npmjs.org/",
   "scripts": {
-    "build": "tsx ./build/build.ts",
+    "prebuild": "rimraf ./lib",
+    "build": "pnpm prebuild && tsx ./build/build.ts",
+    "preview": "node ./bin/cli.js",
     "dev": "tsx ./src/main.ts",
     "test:dev": "vitest",
     "test": "vitest run",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix"
   },
   "devDependencies": {
+    "@package-dependency-analyze/web": "workspace:*",
     "cac": "^6.7.14",
     "chalk": "^5.3.0",
     "esbuild": "^0.18.17"

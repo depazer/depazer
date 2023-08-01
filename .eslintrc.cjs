@@ -4,6 +4,7 @@ require('@rushstack/eslint-patch/modern-module-resolution')
 module.exports = {
   ignorePatterns: [
     'lib',
+    'bin',
     '/**/**/node_modules',
     '/**/**/dist',
     '/**/**/public',

@@ -3,14 +3,13 @@ import { chalk, errorLogger } from './utils/logger'
 import { registerCommand } from './utils/registerCommand'
 import { createCommandFunctions, helpCallback } from './commands'
 
-import { version, name as _ } from '../package.json'
+import { version, bin } from '../package.json'
 
 import type { CreateCommand } from '@/types/command'
 
 export function createCli() {
-  const cli = cac('depazer')
-  /** @todo 命令名未定 */
-  // const cli = cac(name.split('/')[1])
+  /** @todo 命令名未定 与package.bin字段第一个命令同步 */
+  const cli = cac(Object.keys(bin)[0])
 
   registerCommand(cli, createCommandFunctions as CreateCommand[])
   cli.help(helpCallback).version(version)
