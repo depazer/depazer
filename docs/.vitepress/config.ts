@@ -2,6 +2,7 @@ import { defineConfig } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
+  base: '/dependency-analyzer/',
   title: "dependency-analyzer",
   description: "A CLI tool for analyzing package dependencies",
   themeConfig: {
