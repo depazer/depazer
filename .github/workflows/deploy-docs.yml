@@ -18,11 +18,19 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18]
+    
     steps:
       - name: Checkout
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
+      - uses: pnpm/action-setup@v2
+        with:
+            version: 8
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
