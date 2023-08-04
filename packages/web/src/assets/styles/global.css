@@ -1,0 +1,12 @@
+[class='dark']:root {
+  color-scheme: dark;
+  --uno-apply: text-slate-1;
+}
+
+body {
+  --uno-apply: ma-0;
+}
+
+[class="dark"] body {
+  --uno-apply: bg-slate-9;
+}

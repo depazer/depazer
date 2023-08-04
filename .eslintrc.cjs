@@ -28,6 +28,9 @@ module.exports = {
         argsIgnorePattern: '^_',
         varsIgnorePattern: '^_'
       }
-    ]
+    ],
+    'vue/multi-word-component-names': ['error', { ignores: ['index'] }],
+    '@unocss/order': 'warn',
+    '@unocss/order-attributify': 'warn'
   }
 }
