@@ -4,9 +4,13 @@
 }
 
 body {
-  --uno-apply: ma-0;
+  --uno-apply: ma-0 bg-gray-2;
 }
 
 [class="dark"] body {
   --uno-apply: bg-slate-9;
+}
+
+text {
+  --uno-apply: select-none;
 }
