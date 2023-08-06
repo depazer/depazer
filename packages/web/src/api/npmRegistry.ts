@@ -1,21 +1,23 @@
 import { get, set } from 'idb-keyval'
 import { useFetch } from '@vueuse/core'
 
-export async function ApiGetNpmPackageInfo(name: string, version: string) {
-  const cached = await get(`${name}@${version}`)
+export async function ApiGetNpmPackageInfo(name: string, version: string, baseURL: string) {
+  const url = `${baseURL || 'https://registry.npmjs.org/'}${name}/${version}`
+
+  const cached = await get(url)
 
   if (cached) {
     return { data: cached }
   }
 
   const { data, error } = await useFetch(
-    `${name}@${version}`,
+    url,
     {
       headers: { 'Content-Type': 'application/json' }
     },
     {
-      afterFetch({ data, response }) {
-        set(response.url, data)
+      afterFetch({ data }) {
+        set(url, data)
         return { data }
       }
     }

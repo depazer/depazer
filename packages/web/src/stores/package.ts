@@ -1,5 +1,6 @@
-import { computed, reactive } from 'vue'
 import { defineStore } from 'pinia'
+import { useAppStore } from './app'
+import { computed, reactive } from 'vue'
 import { ApiGetNpmPackageInfo } from '@/api/npmRegistry'
 
 interface BaseInfo {
@@ -8,6 +9,8 @@ interface BaseInfo {
 }
 
 export const usePackageStore = defineStore('package', () => {
+  const appStore = useAppStore()
+
   const currentPackage = reactive<BaseInfo>({ name: '', version: '' })
 
   /** @example packageID: '@vue/shared@3.3.4' */
@@ -17,7 +20,11 @@ export const usePackageStore = defineStore('package', () => {
   }
 
   const packageRegistry = computed(async () => {
-    return await ApiGetNpmPackageInfo(currentPackage.name, currentPackage.version)
+    return await ApiGetNpmPackageInfo(
+      currentPackage.name,
+      currentPackage.version,
+      appStore.currentRegistry
+    )
   })
 
   return { currentPackage, packageRegistry, togglePackage }
