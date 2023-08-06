@@ -2,6 +2,7 @@ import type { SimulationLinkDatum, SimulationNodeDatum } from 'd3'
 
 export interface GraphData {
   name: string
+  depth: number
   dependencies: string[]
 }
 

@@ -5,8 +5,8 @@ import {
   forceLink,
   forceManyBody,
   forceSimulation,
-  scaleOrdinal,
-  schemeCategory10,
+  interpolateRainbow,
+  scaleSequential,
   select,
   zoom
 } from 'd3'
@@ -16,7 +16,7 @@ import type { ObjectDirective } from 'vue'
 import type { Data, NodeInfo } from './types'
 import type { SimulationNodeDatum, Simulation } from 'd3'
 
-const color = scaleOrdinal(schemeCategory10)
+const color = (n: number) => scaleSequential(interpolateRainbow)(((n - 1) % 8) / 8)
 
 export const vD3Chart: ObjectDirective<SVGElement, Data> = {
   beforeMount(el, binding) {
@@ -41,7 +41,7 @@ export const vD3Chart: ObjectDirective<SVGElement, Data> = {
       .data(nodes)
       .join('text')
       .text((d) => d.name)
-      .attr('fill', (d) => color(d.name))
+      .attr('fill', ({ depth }) => color(depth))
 
     const link = svgSelection
       .append('g')
@@ -61,8 +61,8 @@ export const vD3Chart: ObjectDirective<SVGElement, Data> = {
       .data(nodes)
       .join('circle')
       .attr('r', 8)
-      .attr('stroke', (d) => color(d.name))
-      .attr('fill', (d) => color(d.name))
+      .attr('stroke', ({ depth }) => color(depth))
+      .attr('fill', ({ depth }) => color(depth))
       .on('click', (_, d) => togglePackage(d.name))
 
     enableZoom(svgSelection)
