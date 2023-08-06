@@ -32,5 +32,13 @@ module.exports = {
     'vue/multi-word-component-names': ['error', { ignores: ['index'] }],
     '@unocss/order': 'warn',
     '@unocss/order-attributify': 'warn'
-  }
+  },
+  overrides: [
+    {
+      files: ['packages/web/src/**/*.{vue,ts}'],
+      rules: {
+        'no-console': 'error'
+      }
+    }
+  ]
 }
