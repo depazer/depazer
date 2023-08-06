@@ -2,6 +2,8 @@
 
 <p align="center">👁️‍🗨️<b>A visual dependency analysis tool for node.js</b></p>
 
+<p align="center"><img width="50%" alt="snapshot" src="https://github.com/package-dependency-analyze/dependency-analyzer/assets/86412303/a6393614-dfaf-4e23-842b-4f608fa1d5b1" /></p>
+
 <p align="center">
 <a href="/docs/index.md">🧑‍💻 开发文档(zh-CN)</a> |
 <a href="/README.zh-CN.md">🌐 README (zh-CN)</a>
