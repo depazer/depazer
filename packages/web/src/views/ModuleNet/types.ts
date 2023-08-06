@@ -5,7 +5,7 @@ export interface GraphData {
   dependencies: string[]
 }
 
-type NodeInfo = GraphData & SimulationNodeDatum
-type LinkInfo = SimulationLinkDatum<SimulationNodeDatum & { value: number }>
+export type NodeInfo = GraphData & SimulationNodeDatum
+export type LinkInfo = SimulationLinkDatum<SimulationNodeDatum>
 
 export type Data = { nodes: NodeInfo[]; links: LinkInfo[] }

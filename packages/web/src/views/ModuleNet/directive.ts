@@ -8,21 +8,22 @@ import {
   scaleOrdinal,
   schemeCategory10,
   select,
-  type SimulationNodeDatum
+  zoom
 } from 'd3'
 import { usePackageStore } from '@/stores/package'
 
 import type { ObjectDirective } from 'vue'
-import type { Data } from './types'
+import type { Data, NodeInfo } from './types'
+import type { SimulationNodeDatum, Simulation } from 'd3'
 
 const color = scaleOrdinal(schemeCategory10)
 
 export const vD3Chart: ObjectDirective<SVGElement, Data> = {
-  mounted(el, binding) {
+  beforeMount(el, binding) {
     const { togglePackage } = usePackageStore()
     const { nodes, links } = binding.value
 
-    const simulation = forceSimulation(nodes)
+    const simulation: Simulation<NodeInfo, undefined> = forceSimulation(nodes)
       .force(
         'link',
         forceLink(links).id(({ name }: any) => name)
@@ -35,6 +36,7 @@ export const vD3Chart: ObjectDirective<SVGElement, Data> = {
     const svgSelection = select(el)
 
     const title = svgSelection
+      .append('g')
       .selectAll('text')
       .data(nodes)
       .join('text')
@@ -45,12 +47,11 @@ export const vD3Chart: ObjectDirective<SVGElement, Data> = {
       .append('g')
       .attr('stroke', '#999')
       .attr('stroke-opacity', 0.6)
+      .attr('marker-end', 'url(#arrow)')
+      .attr('stroke-width', 2)
       .selectAll('line')
       .data(links)
       .join('line')
-      /** @todo 使用箭头 */
-      // .attr('marker-end', 'url(#arrow)')
-      .attr('stroke-width', 2)
 
     const node = svgSelection
       .append('g')
@@ -59,41 +60,52 @@ export const vD3Chart: ObjectDirective<SVGElement, Data> = {
       .selectAll('circle')
       .data(nodes)
       .join('circle')
-      .attr('stroke', (d) => color(d.name))
       .attr('r', 8)
+      .attr('stroke', (d) => color(d.name))
       .attr('fill', (d) => color(d.name))
       .on('click', (_, d) => togglePackage(d.name))
 
-    type VDragEvent = DragEvent & { subject: SimulationNodeDatum; active: number }
-    const nodeDrag = drag()
-      .on('start', (event: VDragEvent) => {
-        if (!event.active) simulation.alphaTarget(0.3).restart()
-        event.subject.fx = event.subject.x
-        event.subject.fy = event.subject.y
-      })
-      .on('drag', (event: VDragEvent) => {
-        event.subject.fx = event.x
-        event.subject.fy = event.y
-      })
-      .on('end', (event: VDragEvent) => {
-        if (!event.active) simulation.alphaTarget(0)
-        event.subject.fx = null
-        event.subject.fy = null
-      })
-    node.call(nodeDrag as any)
+    enableZoom(svgSelection)
+    enableDrag(node, simulation)
 
     simulation.on('tick', () => {
       link
-        .attr('x1', (d) => (d.source as Record<'x' | 'y', number>).x)
-        .attr('y1', (d) => (d.source as Record<'x' | 'y', number>).y)
-        .attr('x2', (d) => (d.target as Record<'x' | 'y', number>).x)
-        .attr('y2', (d) => (d.target as Record<'x' | 'y', number>).y)
+        .attr('x1', (d) => (d.source as SimulationNodeDatum)?.x ?? 0)
+        .attr('y1', (d) => (d.source as SimulationNodeDatum)?.y ?? 0)
+        .attr('x2', (d) => (d.target as SimulationNodeDatum)?.x ?? 0)
+        .attr('y2', (d) => (d.target as SimulationNodeDatum)?.y ?? 0)
 
-      node
-        .attr('cx', (d) => (d as Record<'x' | 'y', number>).x)
-        .attr('cy', (d) => (d as Record<'x' | 'y', number>).y)
+      node.attr('cx', (d) => d?.x ?? 0).attr('cy', (d) => d?.y ?? 0)
 
       title.attr('x', (d) => (d?.x ?? 0) - d.name.length * 4).attr('y', (d) => (d?.y ?? 0) - 16)
     })
   }
+}
+
+function enableZoom(selection: any) {
+  zoom()
+    .scaleExtent([1, 8])
+    .on('zoom', ({ transform }: Record<'transform', string>) => {
+      selection.selectAll('g').attr('transform', transform)
+    })(selection)
+}
+
+function enableDrag(selection: any, simulation: Simulation<NodeInfo, undefined>) {
+  type VDragEvent = DragEvent & { subject: SimulationNodeDatum; active: number }
+
+  drag()
+    .on('start', (event: VDragEvent) => {
+      if (!event.active) simulation.alphaTarget(0.3).restart()
+      event.subject.fx = event.subject.x
+      event.subject.fy = event.subject.y
+    })
+    .on('drag', (event: VDragEvent) => {
+      event.subject.fx = event.x
+      event.subject.fy = event.y
+    })
+    .on('end', (event: VDragEvent) => {
+      if (!event.active) simulation.alphaTarget(0)
+      event.subject.fx = null
+      event.subject.fy = null
+    })(selection)
 }
