@@ -3,9 +3,9 @@
 layout: home
 
 hero:
-  name: "dependency-analyzer"
+  name: "Depazer"
   text: "A CLI tool for analyzing package dependencies"
-  tagline: My great project tagline
+  #  tagline: My great project tagline
   actions:
     - theme: brand
       text: Markdown Examples
