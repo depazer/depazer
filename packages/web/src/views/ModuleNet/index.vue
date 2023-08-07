@@ -1,63 +1,31 @@
 <script lang="ts" setup>
+import ForceChart from './components/ForceChart.vue'
 import PackageInfo from './components/PackageInfo.vue'
 
-import { ref } from 'vue'
-import { vD3Chart } from './directive'
-import { ApiGetGraph } from './mockModuleData'
-import { usePackageStore } from '@/stores/package'
-import { useForceUpdate } from '@/hooks/forceUpdate'
-import { useToggle, useWindowSize } from '@vueuse/core'
-
+import { ref, reactive, shallowRef } from 'vue'
+import { useToggle } from '@vueuse/core'
 import type { Data } from './types'
+import { ApiGetGraph } from './mockModuleData'
 
-/**
- * 点击节点(circle)会调用 togglePackage 方法
- * 将 packageInfoVisible 设置为 true
- */
 const packageInfoVisible = ref<boolean>(false)
 const togglePackageInfoVisible = useToggle(packageInfoVisible)
-const packageStore = usePackageStore()
-packageStore.$onAction(({ name }) => {
-  if (name === 'togglePackage') packageInfoVisible.value = true
-})
+const currentPackage = reactive<Record<'name' | 'version', string>>({ name: '', version: '' })
+function handleClick(packageID: string) {
+  packageInfoVisible.value = true
+  currentPackage.version = packageID.split('@').slice(-1)[0] // === at(-1)
+  currentPackage.name = packageID.split('@').slice(0, -1).join('@')
+}
 
-const { key, forceUpdate } = useForceUpdate()
-const { width, height } = useWindowSize()
-
-let data: Data = { nodes: [], links: [] }
+const graphData = shallowRef<Data>({ nodes: [], links: [] })
 ApiGetGraph().then((res) => {
-  data = res
-  forceUpdate()
+  graphData.value = res
 })
 </script>
 
 <template>
   <div class="w-full h-100vh overflow-hidden">
     <Transition name="chart">
-      <svg
-        :key="key"
-        v-if="key !== 0"
-        v-d3-chart="data"
-        :width="width"
-        :height="height"
-        :viewBox="`${-width / 2} ${-height / 2} ${width} ${height}`"
-        class="ma-0 block pa-0"
-      >
-        <defs>
-          <marker
-            id="arrow"
-            viewBox="0 0 10 10"
-            refX="22"
-            refY="5"
-            markerUnits="strokeWidth"
-            markerWidth="4"
-            markerHeight="8"
-            orient="auto"
-          >
-            <path d="M 0 0 L 10 5 L 0 10 z" fill="#999" />
-          </marker>
-        </defs>
-      </svg>
+      <ForceChart @nodeClick="handleClick" :graphData="graphData" v-if="graphData.nodes.length" />
       <i
         v-else
         class="absolute i-svg-spinners-blocks-shuffle-3 top-[calc(50%-3rem)] text-8xl left-[calc(50%-3rem)]"
@@ -66,7 +34,7 @@ ApiGetGraph().then((res) => {
 
     <Transition name="package-info">
       <aside v-if="packageInfoVisible" class="absolute top-16 left-4">
-        <PackageInfo @close="togglePackageInfoVisible" />
+        <PackageInfo :currentPackage="currentPackage" @close="togglePackageInfoVisible" />
       </aside>
     </Transition>
   </div>

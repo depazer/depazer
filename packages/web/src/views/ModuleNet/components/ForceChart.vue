@@ -1,3 +1,4 @@
+<script lang="ts" setup>
 import {
   drag,
   forceX,
@@ -10,18 +11,23 @@ import {
   select,
   zoom
 } from 'd3'
-import { usePackageStore } from '@/stores/package'
+import { useWindowSize } from '@vueuse/core'
+import { shallowRef, watchEffect } from 'vue'
+import { useAppStore } from '@/stores/app'
 
-import type { ObjectDirective } from 'vue'
-import type { Data, NodeInfo } from './types'
+import type { Data, NodeInfo } from '../types'
 import type { SimulationNodeDatum, Simulation } from 'd3'
 
-const color = (n: number) => scaleSequential(interpolateRainbow)(((n - 1) % 8) / 8)
+const props = defineProps<{ graphData: Data }>()
+const emit = defineEmits<{ nodeClick: [packageWithVersion: string] }>()
 
-export const vD3Chart: ObjectDirective<SVGElement, Data> = {
-  beforeMount(el, binding) {
-    const { togglePackage } = usePackageStore()
-    const { nodes, links } = binding.value
+const { width, height } = useWindowSize()
+const appStore = useAppStore()
+const svgRef = shallowRef<SVGSVGElement | null>(null)
+const color = (n: number) => scaleSequential(interpolateRainbow)(((n - 1) % 8) / 8)
+watchEffect(() => {
+  if (svgRef.value) {
+    const { nodes, links } = props.graphData
 
     const simulation: Simulation<NodeInfo, undefined> = forceSimulation(nodes)
       .force(
@@ -33,7 +39,7 @@ export const vD3Chart: ObjectDirective<SVGElement, Data> = {
       .force('y', forceY())
       .alphaTarget(0)
 
-    const svgSelection = select(el)
+    const svgSelection = select(svgRef.value)
 
     const title = svgSelection
       .append('g')
@@ -63,7 +69,7 @@ export const vD3Chart: ObjectDirective<SVGElement, Data> = {
       .attr('r', 8)
       .attr('stroke', ({ depth }) => color(depth))
       .attr('fill', ({ depth }) => color(depth))
-      .on('click', (_, d) => togglePackage(d.name))
+      .on('click', (_, { name }) => emit('nodeClick', name))
 
     enableZoom(svgSelection)
     enableDrag(node, simulation)
@@ -80,7 +86,7 @@ export const vD3Chart: ObjectDirective<SVGElement, Data> = {
       title.attr('x', (d) => (d?.x ?? 0) - d.name.length * 4).attr('y', (d) => (d?.y ?? 0) - 16)
     })
   }
-}
+})
 
 function enableZoom(selection: any) {
   zoom()
@@ -105,7 +111,33 @@ function enableDrag(selection: any, simulation: Simulation<NodeInfo, undefined>)
     })
     .on('end', (event: VDragEvent) => {
       if (!event.active) simulation.alphaTarget(0)
-      event.subject.fx = null
-      event.subject.fy = null
+      event.subject.fx = appStore.fixedNailModel ? event.x : null
+      event.subject.fy = appStore.fixedNailModel ? event.y : null
     })(selection)
 }
+</script>
+
+<template>
+  <svg
+    ref="svgRef"
+    :width="width"
+    :height="height"
+    :viewBox="`${-width / 2} ${-height / 2} ${width} ${height}`"
+    class="ma-0 block pa-0"
+  >
+    <defs>
+      <marker
+        id="arrow"
+        viewBox="0 0 10 10"
+        refX="22"
+        refY="5"
+        markerUnits="strokeWidth"
+        markerWidth="4"
+        markerHeight="8"
+        orient="auto"
+      >
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#999" />
+      </marker>
+    </defs>
+  </svg>
+</template>

@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { usePackageStore } from '@/stores/package'
 import { useAppStore } from '@/stores/app'
 import { storeToRefs } from 'pinia'
 import { computed, ref, watchEffect } from 'vue'
@@ -7,8 +6,8 @@ import { ApiGetNpmPackageInfo } from '@/api/npmRegistry'
 
 const appStore = useAppStore()
 const { currentRegistry } = storeToRefs(appStore)
-const packageStore = usePackageStore()
-const { currentPackage } = storeToRefs(packageStore)
+
+const props = defineProps<{ currentPackage: Record<'name' | 'version', string> }>()
 
 const emit = defineEmits<{ close: [] }>()
 const fetching = ref<boolean>(false)
@@ -16,8 +15,8 @@ const fetching = ref<boolean>(false)
 watchEffect(async () => {
   fetching.value = true
   const { data } = await ApiGetNpmPackageInfo(
-    currentPackage.value.name,
-    currentPackage.value.version,
+    props.currentPackage.name,
+    props.currentPackage.version,
     currentRegistry.value
   )
   packageInfo.value = data
@@ -49,20 +48,25 @@ const formattedPackageInfo = computed(() => {
     bg="gray-3 dark:slate-7"
     class="rounded-md pa-4 w-xs h-[calc(100vh-8rem)]"
     shadow="lg gray-3 dark:slate-6"
+    flex="~ col"
   >
     <header flex="~ justify-between items-center">
       <div>
-        <code class="px-1 rounded-l dark:bg-blue-6 bg-indigo-3 text-indigo-8 dark:text-blue-2">
+        <code
+          class="font-sans px-1 rounded-l dark:bg-blue-6 bg-indigo-3 text-indigo-8 dark:text-blue-2"
+        >
           {{ currentPackage.name }}
         </code>
-        <code class="px-1 rounded-r bg-lime-2 dark:bg-lime-6 text-lime-6 dark:text-lime-1">
+        <code
+          class="font-sans px-1 rounded-r bg-lime-2 dark:bg-lime-6 text-lime-6 dark:text-lime-1"
+        >
           {{ currentPackage.version }}
         </code>
       </div>
       <button
         type="button"
         title="关闭"
-        class="rounded-md pa-1 ma-0 border-none"
+        class="rounded-md ma-0 pa-1 border-none"
         bg="transparent hover:gray-2 hover:dark:slate-8"
         @click="emit('close')"
       >
@@ -70,20 +74,22 @@ const formattedPackageInfo = computed(() => {
       </button>
     </header>
 
-    <section v-show="!fetching">
+    <section class="overflow-auto flex-grow" v-show="!fetching">
       <div class="my-4">
         <span class="font-bold select-none">概述</span>
         <p class="my-2">{{ formattedPackageInfo.description }}</p>
       </div>
       <p class="select-none">
         <span class="font-bold mr-2">大小</span>
-        <code>{{ formattedPackageInfo.dist.size }}</code>
+        <code font-sans>{{ formattedPackageInfo.dist.size }}</code>
         <span class="font-bold mx-2">解压大小</span>
-        <code>{{ formattedPackageInfo.dist.unpackedSize }}</code>
+        <code font-sans>{{ formattedPackageInfo.dist.unpackedSize }}</code>
       </p>
       <p class="select-none">
         <span class="mr-2 font-bold">开源协议</span>
-        <code class="px-1 rounded-sm bg-red-1 text-red-6 dark:text-red-3 dark:bg-red-1/30">
+        <code
+          class="font-sans px-1 rounded-sm bg-red-1 text-red-6 dark:text-red-3 dark:bg-red-1/30"
+        >
           {{ packageInfo?.license }}
         </code>
       </p>
@@ -91,7 +97,7 @@ const formattedPackageInfo = computed(() => {
         <span class="mr-2 font-bold">关键字</span>
         <div flex="~ wrap items-start" class="gap-1 mt-2">
           <code
-            class="px-1 rounded-sm text-cyan-6 bg-cyan-1 dark:text-cyan-3 dark:bg-cyan-1/30"
+            class="font-sans px-1 rounded-sm text-cyan-6 bg-cyan-1 dark:text-cyan-3 dark:bg-cyan-1/30"
             v-for="key of packageInfo?.keywords ?? []"
             :key="key"
           >
