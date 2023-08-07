@@ -1,4 +1,4 @@
-# Dependency Analyzer
+# Depazer
 
 <p align="center">👁️‍🗨️<b>A visual dependency analysis tool for node.js</b></p>
 
@@ -59,4 +59,4 @@ Options:
 
 ## License
 
-[MIT](./LICENSE) License &copy; 2023-PRESENT [package-dependency-analyze](https://github.com/package-dependency-analyze)
+[MIT](./LICENSE) License &copy; 2023-PRESENT [depazer](https://github.com/depazer)

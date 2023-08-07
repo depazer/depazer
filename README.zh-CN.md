@@ -1,4 +1,4 @@
-# Dependency Analyzer
+# Depazer
 
 <p align="center">👁️‍🗨️<b>一个 node.js 依赖可视化分析工具</b></p>
 
@@ -59,4 +59,4 @@ Options:
 
 ## 开源协议
 
-[MIT](./LICENSE) License &copy; 2023-PRESENT [package-dependency-analyze](https://github.com/package-dependency-analyze)
+[MIT](./LICENSE) License &copy; 2023-PRESENT [depazer](https://github.com/depazer)
