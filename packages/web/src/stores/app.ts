@@ -1,6 +1,5 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-
 import { useToggle } from '@vueuse/core'
 
 export const useAppStore = defineStore('app', () => {
@@ -11,8 +10,8 @@ export const useAppStore = defineStore('app', () => {
   ]
   const currentRegistry = ref<string>(npmRegistryURLs[0])
 
-  const settingVisible = ref<boolean>(false)
-  const toggleSettingVisible = useToggle(settingVisible)
+  const fixedNailModel = ref<boolean>(false)
+  const toggleFixedNailModel = useToggle(fixedNailModel)
 
-  return { currentRegistry, npmRegistryURLs, settingVisible, toggleSettingVisible }
+  return { currentRegistry, npmRegistryURLs, toggleFixedNailModel, fixedNailModel }
 })

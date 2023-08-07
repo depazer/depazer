@@ -1,9 +1,11 @@
 <script lang="ts" setup>
 import { useAppStore } from '@/stores/app'
+import { storeToRefs } from 'pinia'
 
 const emit = defineEmits<{ close: [] }>()
 
 const appStore = useAppStore()
+const { fixedNailModel } = storeToRefs(appStore)
 </script>
 
 <template>
@@ -26,6 +28,24 @@ const appStore = useAppStore()
     </header>
 
     <div>
+      <div my-4 flex="~ justify-between items-center">
+        <span>拖拽固定</span>
+        <button
+          type="button"
+          title="开关"
+          @click="appStore.toggleFixedNailModel()"
+          border="2 solid gray-1 dark:slate-6"
+          flex="~ justify-center items-center"
+          :bg="fixedNailModel && 'gray-3 dark:slate-2'"
+          class="h-6 rounded-3 w-12 bg-gray-2 dark:bg-slate-8"
+        >
+          <span
+            :transform="fixedNailModel && 'translate-x-3'"
+            class="inline-block w-4 h-4 rounded-2 bg-gray-4 -translate-x-3 transition-transform"
+          ></span>
+        </button>
+      </div>
+
       <p>注册表API</p>
       <div
         flex="~ items-center"
