@@ -1,4 +1,4 @@
-lockfileVersion: '6.1'
+lockfileVersion: '6.0'
 
 settings:
   autoInstallPeers: true
@@ -99,8 +99,8 @@ importers:
         specifier: ^21.1.1
         version: 21.1.1
       '@unocss/reset':
-        specifier: ^0.54.0
-        version: 0.54.0
+        specifier: ^0.54.1
+        version: 0.54.1
       '@vitejs/plugin-vue':
         specifier: ^4.2.3
         version: 4.2.3(vite@4.4.7)(vue@3.3.4)
@@ -2236,6 +2236,10 @@ packages:
 
   /@unocss/reset@0.54.0:
     resolution: {integrity: sha512-zxvr96hVsmvJtxCLatLSCc67RBEgqvVDhEtkIFxIz5oCJzxvipJTGdKxM4F6Akyzx1A+q7zM8dimqvmC6D5Idw==}
+    dev: true
+
+  /@unocss/reset@0.54.1:
+    resolution: {integrity: sha512-qZcmybayQTX4QP7ya7jteN9IySU/ViK8HcCpixHA1ttUrsQeSURgdy01E74p+TsWDH0SY7vYmOy+HbYfQNycqQ==}
     dev: true
 
   /@unocss/scope@0.54.0:
