@@ -1,6 +1,6 @@
 ---
-'@package-dependency-analyze/cli': patch
-'@package-dependency-analyze/web': patch
+'@depazer/cli': patch
+'@depazer/web': patch
 ---
 
 feat(web): add unocss dependenices

@@ -1,6 +1,6 @@
 ---
-'@package-dependency-analyze/cli': patch
-'@package-dependency-analyze/web': patch
+'@depazer/cli': patch
+'@depazer/web': patch
 ---
 
 fix: fix package name field spelling mistakes

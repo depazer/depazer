@@ -1,6 +1,6 @@
 ---
-'@package-dependency-analyze/web': patch
-'@package-dependency-analyze/cli': patch
+'@depazer/web': patch
+'@depazer/cli': patch
 ---
 
 chore: config dependencies move to root
