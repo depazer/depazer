@@ -1,4 +1,4 @@
-name: deploy docs
+name: deploy
 
 on:
   push:
@@ -48,7 +48,7 @@ jobs:
           path: docs/.vitepress/dist
 
       - name: Build @depazer/web
-        run: pnpm --filter web build:playground
+        run: pnpm --filter web build
       - name: Vue-Router History Mode
         run: cp packages/web/dist/index.html packages/web/dist/404.html
       - name: Deploy playground
