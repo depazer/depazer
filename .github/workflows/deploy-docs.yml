@@ -52,12 +52,13 @@ jobs:
       - name: Vue-Router History Mode
         run: cp packages/web/dist/index.html packages/web/dist/404.html
       - name: Deploy playground
-        uses: JamesIves/github-pages-deploy-action@releases/v3
+        uses: JamesIves/github-pages-deploy-action@releases/v4
         with:
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-          REPOSITORY_NAME: depazer/playground
-          BRANCH: master
-          FOLDER: packages/web/dist
+          token: ${{ secrets.ACCESS_TOKEN }}
+          repository-name: depazer/playground
+          branch: master
+          folder: packages/web/dist
+          commit-message: "build: deploy playground"
 
   deploy:
     environment:
