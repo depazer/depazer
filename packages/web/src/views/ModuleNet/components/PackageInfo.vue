@@ -5,7 +5,10 @@ import { computed, ref, watchEffect } from 'vue'
 import { ApiGetNpmPackageInfo } from '@/api/npmRegistry'
 
 const appStore = useAppStore()
+const _this = getCurrentInstance()!.appContext.config.globalProperties
+
 const { currentRegistry } = storeToRefs(appStore)
+
 
 const props = defineProps<{ currentPackage: Record<'name' | 'version', string> }>()
 
@@ -76,17 +79,17 @@ const formattedPackageInfo = computed(() => {
 
     <section class="overflow-auto flex-grow" v-show="!fetching">
       <div class="my-4">
-        <span class="font-bold select-none">概述</span>
+        <span class="font-bold select-none">{{ _this.$t('summarize') }}</span>
         <p class="my-2">{{ formattedPackageInfo.description }}</p>
       </div>
       <p class="select-none">
-        <span class="font-bold mr-2">大小</span>
+        <span class="font-bold mr-2">{{ _this.$t('size') }}</span>
         <code font-sans>{{ formattedPackageInfo.dist.size }}</code>
-        <span class="font-bold mx-2">解压大小</span>
+        <span class="font-bold mx-2">{{ _this.$t('decompressionSize') }}</span>
         <code font-sans>{{ formattedPackageInfo.dist.unpackedSize }}</code>
       </p>
       <p class="select-none">
-        <span class="mr-2 font-bold">开源协议</span>
+        <span class="mr-2 font-bold">{{ _this.$t('openSourceProtocol') }}</span>
         <code
           class="font-sans px-1 rounded-sm bg-red-1 text-red-6 dark:text-red-3 dark:bg-red-1/30"
         >
@@ -94,7 +97,7 @@ const formattedPackageInfo = computed(() => {
         </code>
       </p>
       <div v-show="packageInfo?.keywords?.length" class="select-none my-4">
-        <span class="mr-2 font-bold">关键字</span>
+        <span class="mr-2 font-bold">{{ _this.$t('keyword') }}</span>
         <div flex="~ wrap items-start" class="gap-1 mt-2">
           <code
             class="font-sans px-1 rounded-sm text-cyan-6 bg-cyan-1 dark:text-cyan-3 dark:bg-cyan-1/30"
