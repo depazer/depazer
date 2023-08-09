@@ -3,11 +3,22 @@ import { ref } from 'vue'
 import GlobalSetting from '@/components/GlobalSetting.vue'
 
 import { useDark, useFullscreen, useToggle } from '@vueuse/core'
+import useLocale from '@/hooks/useLocale'
 
 const isDark = useDark()
 const toggleDark = useToggle(isDark)
 
 const { isFullscreen, toggle: toggleFullscreen } = useFullscreen()
+
+const { currentLocale, changeLocale } = useLocale()
+
+const switchLang = () => {
+  if (currentLocale.value == 'zh-CN') {
+    changeLocale('en-US')
+  } else {
+    changeLocale('zh-CN')
+  }
+}
 
 const settingVisible = ref<boolean>(false)
 const toggleSettingVisible = useToggle(settingVisible)
@@ -36,6 +47,7 @@ const toggleSettingVisible = useToggle(settingVisible)
         class="mr-2 cursor-pointer rounded-full pa-1"
         bg="gray-1 hover:gray-2 active:gray-3 dark:slate-6 hover:dark:slate-7 active:dark:slate-8"
         border="solid 1 gray-3 dark:slate-5"
+        @click="() => switchLang()"
       >
         <i class="i-uil-english-to-chinese" text="2xl gray-6 dark:slate-1" />
       </button>
