@@ -47,6 +47,18 @@ jobs:
         with:
           path: docs/.vitepress/dist
 
+      - name: Build @depazer/web
+        run: pnpm --filter web build:playground
+      - name: Vue-Router History Mode
+        run: cp packages/web/dist/index.html packages/web/dist/404.html
+      - name: Deploy playground
+        uses: JamesIves/github-pages-deploy-action@releases/v3
+        with:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          REPOSITORY_NAME: depazer/playground
+          BRANCH: master
+          FOLDER: packages/web/dist
+
   deploy:
     environment:
       name: github-pages

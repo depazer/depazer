@@ -8,9 +8,11 @@
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check build-only",
+    "build:playground": "run-p type-check build-playground",
     "preview": "vite preview",
     "test": "vitest run",
     "build-only": "vite build --emptyOutDir",
+    "build-playground": "vite build --base /playground/",
     "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix",
     "format": "prettier --write src/"
