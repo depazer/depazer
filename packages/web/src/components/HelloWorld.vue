@@ -4,25 +4,6 @@ defineProps<{
   msg: string
 }>()
 
-/**
- * unplugin-auto-import test
- */
-const msg = ref("Hi there!")
-const stores = defineStore('test', {
-  state: () => ({
-    count: 0
-  }),
-  getters: {
-    doubleCount: (state) => state.count * 2
-  },
-  actions: {
-    increment() {
-      this.count++
-    }
-  }
-})
-const l = useLocalStorage('test', 1)
-const router = useRouter()
 </script>
 
 <template>
