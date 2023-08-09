@@ -8,6 +8,7 @@ coverage
 .changeset/README.md
 
 /docs/.vitepress/cache
+/packages/web/auto-imports.d.ts
 
 .idea/**/*
 .vscode/**/*

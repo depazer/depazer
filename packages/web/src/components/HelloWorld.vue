@@ -1,7 +1,28 @@
 <script setup lang="ts">
+
 defineProps<{
   msg: string
 }>()
+
+/**
+ * unplugin-auto-import test
+ */
+const msg = ref("Hi there!")
+const stores = defineStore('test', {
+  state: () => ({
+    count: 0
+  }),
+  getters: {
+    doubleCount: (state) => state.count * 2
+  },
+  actions: {
+    increment() {
+      this.count++
+    }
+  }
+})
+const l = useLocalStorage('test', 1)
+const router = useRouter()
 </script>
 
 <template>
@@ -12,6 +33,7 @@ defineProps<{
       <a href="https://vitejs.dev/" target="_blank" rel="noopener">Vite</a> +
       <a href="https://vuejs.org/" target="_blank" rel="noopener">Vue 3</a>. What's next?
     </h3>
+
   </div>
 </template>
 
