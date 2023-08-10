@@ -1,4 +1,4 @@
-# Depazer 
+# Depazer
 
 <p align="center">👁️‍🗨️<b>A visual dependency analysis tool for node.js</b></p>
 
