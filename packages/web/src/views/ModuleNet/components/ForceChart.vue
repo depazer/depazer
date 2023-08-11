@@ -90,7 +90,7 @@ watchEffect(() => {
 
 function enableZoom(selection: any) {
   zoom()
-    .scaleExtent([1, 8])
+    .scaleExtent([0.1, 8])
     .on('zoom', ({ transform }: Record<'transform', string>) => {
       selection.selectAll('g').attr('transform', transform)
     })(selection)
