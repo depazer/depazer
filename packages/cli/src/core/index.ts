@@ -1,6 +1,5 @@
 import { resolve } from 'path'
-import { hasFile } from '@/utils/hasFile'
-import { errorLogger } from '@/utils/logger'
+
 import { commonAdaptor } from './adaptors/commonAdaptor'
 import { environmentScanner } from './environmentScanner'
 import { readPackageJSON } from '@/utils/readPackageJSON'
@@ -29,12 +28,6 @@ export async function getModuleResolver(root: string, includeDeps: boolean) {
 
 async function initModuleObject(root: string, includeDeps: boolean) {
   const rootPackageJson = resolve(root, 'package.json')
-
-  /** @todo 待移除 移至environmentScanner */
-  const hasPackageFile = hasFile(rootPackageJson)
-  if (!hasPackageFile) {
-    return errorLogger('package.json not found: ' + root)
-  }
 
   const { name, version, dependencies, devDependencies } = await readPackageJSON(rootPackageJson)
   return formatModuleObject(name, version, dependencies, includeDeps ? devDependencies : undefined)
