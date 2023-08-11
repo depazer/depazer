@@ -1,4 +1,8 @@
+import { resolve } from 'path'
+
 import { noteLogger } from '@/utils/logger'
+import { hasFile } from '@/utils/hasFile'
+import { errorLogger } from '@/utils/logger'
 
 interface Environment {
   packageManager: 'npm' | 'pnpm' | 'yarn'
@@ -13,9 +17,24 @@ interface Environment {
  */
 export async function environmentScanner(root: string): Promise<Environment> {
   noteLogger(root, 'ENV')
+
+  let error = false
+  const rootPackageJson = resolve(root, 'package.json')
+
+  const hasPackageFile = hasFile(rootPackageJson)
+  if (!hasPackageFile) {
+    error = true
+    // TODO 错误信息待补全
+    errorLogger('')
+  }
+
+  // TODO 鉴别包管理器
+
+  // TODO node_modules 校验
+
   return {
     packageManager: 'pnpm',
     monorepo: false,
-    error: false
+    error
   }
 }
