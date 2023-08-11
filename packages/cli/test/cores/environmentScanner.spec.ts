@@ -5,6 +5,7 @@ import { describe, test } from 'vitest'
 const rootDir = resolve(__dirname, '..', '..', '..', '..')
 const cliDir = resolve(__dirname, '..', '..', '..', 'cli')
 const webDir = resolve(__dirname, '..', '..', '..', 'web')
+const docsDir = resolve(__dirname, '..', '..', '..', '..', 'docs')
 
 describe.concurrent('environmentScanner', () => {
   test('scanner root dir', async ({ expect }) => {
@@ -25,6 +26,12 @@ describe.concurrent('environmentScanner', () => {
 
   test('scanner web dir', async ({ expect }) => {
     const { error } = await environmentScanner(webDir)
+
+    expect(error).toBe(true)
+  })
+
+  test('scanner docs dir', async ({ expect }) => {
+    const { error } = await environmentScanner(docsDir)
 
     expect(error).toBe(true)
   })
