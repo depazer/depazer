@@ -15,6 +15,7 @@
   },
   "license": "MIT",
   "scripts": {
+    "dev:cli": "pnpm --filter cli dev",
     "dev:web": "pnpm --filter web dev",
     "prepare": "husky install",
     "build": "turbo build --no-daemon",
