@@ -21,11 +21,15 @@ import type { SimulationNodeDatum, Simulation } from 'd3'
 const props = defineProps<{ graphData: Data }>()
 const emit = defineEmits<{ nodeClick: [packageWithVersion: string] }>()
 
-const { width, height } = useWindowSize()
-const appStore = useAppStore()
-const svgRef = shallowRef<SVGSVGElement | null>(null)
 const color = (n: number) => scaleSequential(interpolateRainbow)(((n - 1) % 8) / 8)
-watchEffect(() => {
+const { width, height } = useWindowSize()
+
+const appStore = useAppStore()
+const { repulsion } = storeToRefs(appStore)
+const debouncedRepulsion = refDebounced(repulsion)
+
+const svgRef = shallowRef<SVGSVGElement | null>(null)
+watchEffect((clean) => {
   if (svgRef.value) {
     const { nodes, links } = props.graphData
 
@@ -34,7 +38,7 @@ watchEffect(() => {
         'link',
         forceLink(links).id(({ name }: any) => name)
       )
-      .force('charge', forceManyBody().strength(-5000))
+      .force('charge', forceManyBody().strength(-debouncedRepulsion.value))
       .force('x', forceX())
       .force('y', forceY())
       .alphaTarget(0)
@@ -84,6 +88,13 @@ watchEffect(() => {
       node.attr('cx', (d) => d?.x ?? 0).attr('cy', (d) => d?.y ?? 0)
 
       title.attr('x', (d) => (d?.x ?? 0) - d.name.length * 4).attr('y', (d) => (d?.y ?? 0) - 16)
+    })
+
+    clean(() => {
+      simulation.stop()
+      node.remove()
+      link.remove()
+      title.remove()
     })
   }
 })

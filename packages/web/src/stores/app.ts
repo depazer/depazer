@@ -13,5 +13,7 @@ export const useAppStore = defineStore('app', () => {
   const fixedNailModel = ref<boolean>(false)
   const toggleFixedNailModel = useToggle(fixedNailModel)
 
-  return { currentRegistry, npmRegistryURLs, toggleFixedNailModel, fixedNailModel }
+  const repulsion = ref<number>(5000)
+
+  return { currentRegistry, npmRegistryURLs, toggleFixedNailModel, fixedNailModel, repulsion }
 })
