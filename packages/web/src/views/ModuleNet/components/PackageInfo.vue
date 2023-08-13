@@ -1,14 +1,10 @@
 <script lang="ts" setup>
 import { useAppStore } from '@/stores/app'
-import { storeToRefs } from 'pinia'
-import { computed, ref, watchEffect } from 'vue'
 import { ApiGetNpmPackageInfo } from '@/api/npmRegistry'
 
 const appStore = useAppStore()
-const _this = getCurrentInstance()!.appContext.config.globalProperties
 
 const { currentRegistry } = storeToRefs(appStore)
-
 
 const props = defineProps<{ currentPackage: Record<'name' | 'version', string> }>()
 
@@ -49,19 +45,19 @@ const formattedPackageInfo = computed(() => {
 <template>
   <div
     bg="gray-3 dark:slate-7"
-    class="rounded-md pa-4 w-xs h-[calc(100vh-8rem)]"
+    class="h-[calc(100vh-8rem)] w-xs rounded-md pa-4"
     shadow="lg gray-3 dark:slate-6"
     flex="~ col"
   >
     <header flex="~ justify-between items-center">
       <div>
         <code
-          class="font-sans px-1 rounded-l dark:bg-blue-6 bg-indigo-3 text-indigo-8 dark:text-blue-2"
+          class="rounded-l bg-indigo-3 px-1 font-sans text-indigo-8 dark:bg-blue-6 dark:text-blue-2"
         >
           {{ currentPackage.name }}
         </code>
         <code
-          class="font-sans px-1 rounded-r bg-lime-2 dark:bg-lime-6 text-lime-6 dark:text-lime-1"
+          class="px-1 font-sans rounded-r bg-lime-2 text-lime-6 dark:bg-lime-6 dark:text-lime-1"
         >
           {{ currentPackage.version }}
         </code>
@@ -69,7 +65,7 @@ const formattedPackageInfo = computed(() => {
       <button
         type="button"
         title="关闭"
-        class="rounded-md ma-0 pa-1 border-none"
+        class="rounded-md pa-1 ma-0 border-none"
         bg="transparent hover:gray-2 hover:dark:slate-8"
         @click="emit('close')"
       >
@@ -77,31 +73,31 @@ const formattedPackageInfo = computed(() => {
       </button>
     </header>
 
-    <section class="overflow-auto flex-grow" v-show="!fetching">
+    <section class="flex-grow overflow-auto" v-show="!fetching">
       <div class="my-4">
-        <span class="font-bold select-none">{{ _this.$t('summarize') }}</span>
+        <span class="select-none font-bold">{{ $t('packageInfo.description') }}</span>
         <p class="my-2">{{ formattedPackageInfo.description }}</p>
       </div>
       <p class="select-none">
-        <span class="font-bold mr-2">{{ _this.$t('size') }}</span>
+        <span class="font-bold mr-2">{{ $t('packageInfo.size') }}</span>
         <code font-sans>{{ formattedPackageInfo.dist.size }}</code>
-        <span class="font-bold mx-2">{{ _this.$t('decompressionSize') }}</span>
+        <span class="font-bold mx-2">{{ $t('packageInfo.unpackedSize') }}</span>
         <code font-sans>{{ formattedPackageInfo.dist.unpackedSize }}</code>
       </p>
       <p class="select-none">
-        <span class="mr-2 font-bold">{{ _this.$t('openSourceProtocol') }}</span>
+        <span class="mr-2 font-bold">{{ $t('packageInfo.license') }}</span>
         <code
-          class="font-sans px-1 rounded-sm bg-red-1 text-red-6 dark:text-red-3 dark:bg-red-1/30"
+          class="px-1 font-sans rounded-sm bg-red-1 text-red-6 dark:bg-red-1/30 dark:text-red-3"
         >
           {{ packageInfo?.license }}
         </code>
       </p>
-      <div v-show="packageInfo?.keywords?.length" class="select-none my-4">
-        <span class="mr-2 font-bold">{{ _this.$t('keyword') }}</span>
-        <div flex="~ wrap items-start" class="gap-1 mt-2">
+      <div v-show="formattedPackageInfo.keywords.length" class="my-4 select-none">
+        <span class="mr-2 font-bold">{{ $t('packageInfo.keywords') }}</span>
+        <div flex="~ wrap items-start" class="mt-2 gap-1">
           <code
-            class="font-sans px-1 rounded-sm text-cyan-6 bg-cyan-1 dark:text-cyan-3 dark:bg-cyan-1/30"
-            v-for="key of packageInfo?.keywords ?? []"
+            class="rounded-sm px-1 font-sans bg-cyan-1 text-cyan-6 dark:bg-cyan-1/30 dark:text-cyan-3"
+            v-for="key of formattedPackageInfo.keywords"
             :key="key"
           >
             {{ key }}
@@ -109,14 +105,14 @@ const formattedPackageInfo = computed(() => {
         </div>
       </div>
       <div
-        v-show="Object.keys(packageInfo?.dependencies ?? {}).length !== 0"
+        v-show="formattedPackageInfo.dependencies.length !== 0"
         flex="~ wrap col items-start"
-        class="gap-1 my-4"
+        class="my-4 gap-1"
       >
-        <span class="font-bold select-none">生产依赖</span>
+        <span class="select-none font-bold">{{ $t('packageInfo.dependencies') }}</span>
         <li
           class="px-1"
-          v-for="[dependency, version] of Object.entries(packageInfo?.dependencies ?? {})"
+          v-for="[dependency, version] of formattedPackageInfo.dependencies"
           :key="dependency + version"
         >
           {{ dependency }}@{{ version }}
@@ -125,12 +121,12 @@ const formattedPackageInfo = computed(() => {
     </section>
     <!-- 骨架屏 -->
     <section v-show="fetching" class="animate-pulse py-4">
-      <span class="mr-2 inline-block bg-gray h-4 rounded w-1/4"></span>
-      <span class="inline-block bg-gray h-4 rounded w-1/3"></span>
-      <p class="bg-gray h-4 rounded"></p>
-      <p class="bg-gray h-4 rounded w-3/4"></p>
-      <p class="bg-gray h-4 rounded"></p>
-      <p class="bg-gray h-4 rounded"></p>
+      <span class="mr-2 inline-block h-4 w-1/4 rounded bg-gray"></span>
+      <span class="inline-block h-4 rounded bg-gray w-1/3"></span>
+      <p class="h-4 rounded bg-gray"></p>
+      <p class="h-4 rounded bg-gray w-3/4"></p>
+      <p class="h-4 rounded bg-gray"></p>
+      <p class="h-4 rounded bg-gray"></p>
     </section>
   </div>
 </template>
