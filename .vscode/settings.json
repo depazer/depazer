@@ -5,5 +5,12 @@
   "editor.formatOnSaveMode": "file",
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
-  }
+  },
+  "i18n-ally.keystyle": "auto",
+  "i18n-ally.sortKeys": true,
+  "i18n-ally.enabledParsers": ["ts", "json"],
+  "i18n-ally.sourceLanguage": "zh-CN",
+  "i18n-ally.displayLanguage": "zh-CN",
+  "i18n-ally.enabledFrameworks": ["vue"],
+  "i18n-ally.localesPaths": ["packages/web/src/locale", "packages/web/src/views/ModuleNet/locale"]
 }
