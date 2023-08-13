@@ -45,6 +45,7 @@
     "esbuild": "^0.18.19"
   },
   "dependencies": {
+    "@types/koa": "^2.13.8",
     "koa": "^2.14.2"
   }
 }
