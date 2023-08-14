@@ -55,13 +55,13 @@ watchEffect((clean) => {
 
     const link = svgSelection
       .append('g')
-      .attr('stroke', '#999')
       .attr('stroke-opacity', 0.6)
       .attr('marker-end', 'url(#arrow)')
       .attr('stroke-width', 2)
       .selectAll('line')
       .data(links)
       .join('line')
+      .attr('stroke', ({ isDeps }: any) => (isDeps ? '#999' : '#417de0'))
 
     const node = svgSelection
       .append('g')
@@ -140,14 +140,14 @@ function enableDrag(selection: any, simulation: Simulation<NodeInfo, undefined>)
       <marker
         id="arrow"
         viewBox="0 0 10 10"
-        refX="22"
+        refX="20"
         refY="5"
         markerUnits="strokeWidth"
         markerWidth="4"
         markerHeight="8"
         orient="auto"
       >
-        <path d="M 0 0 L 10 5 L 0 10 z" fill="#999" />
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="gold" />
       </marker>
     </defs>
   </svg>

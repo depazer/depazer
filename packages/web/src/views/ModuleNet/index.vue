@@ -23,17 +23,17 @@ ApiGetGraph().then((res) => {
 </script>
 
 <template>
-  <div class="w-full h-100vh overflow-hidden">
+  <div class="h-100vh w-full overflow-hidden">
     <Transition name="chart">
       <ForceChart @nodeClick="handleClick" :graphData="graphData" v-if="graphData.nodes.length" />
       <i
         v-else
-        class="absolute i-svg-spinners-blocks-shuffle-3 top-[calc(50%-3rem)] text-8xl left-[calc(50%-3rem)]"
+        class="i-svg-spinners-blocks-shuffle-3 absolute left-[calc(50%-3rem)] top-[calc(50%-3rem)] text-8xl"
       />
     </Transition>
 
     <Transition name="package-info">
-      <aside v-if="packageInfoVisible" class="absolute top-16 left-4">
+      <aside v-if="packageInfoVisible" class="absolute left-4 top-16">
         <PackageInfo :currentPackage="currentPackage" @close="togglePackageInfoVisible" />
       </aside>
     </Transition>
