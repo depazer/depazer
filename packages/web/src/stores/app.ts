@@ -1,7 +1,3 @@
-import { ref } from 'vue'
-import { defineStore } from 'pinia'
-import { useToggle } from '@vueuse/core'
-
 export const useAppStore = defineStore('app', () => {
   const npmRegistryURLs = [
     'https://registry.npmmirror.com/',
@@ -13,7 +9,17 @@ export const useAppStore = defineStore('app', () => {
   const fixedNailModel = ref<boolean>(false)
   const toggleFixedNailModel = useToggle(fixedNailModel)
 
+  /** @desc 递归深度 */
+  const depth = ref<number>(10)
+  /** @desc 斥力大小 */
   const repulsion = ref<number>(5000)
 
-  return { currentRegistry, npmRegistryURLs, toggleFixedNailModel, fixedNailModel, repulsion }
+  return {
+    currentRegistry,
+    depth,
+    fixedNailModel,
+    npmRegistryURLs,
+    repulsion,
+    toggleFixedNailModel
+  }
 })

@@ -9,6 +9,7 @@ export interface ModuleObject {
   name: string
   version: string
   dependencies: ModuleObject[]
+  devDependencies?: ModuleObject[]
 }
 
 export type ModuleGraph = ModuleInfo[]

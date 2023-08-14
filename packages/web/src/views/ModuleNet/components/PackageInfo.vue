@@ -57,7 +57,7 @@ const formattedPackageInfo = computed(() => {
           {{ currentPackage.name }}
         </code>
         <code
-          class="px-1 font-sans rounded-r bg-lime-2 text-lime-6 dark:bg-lime-6 dark:text-lime-1"
+          class="rounded-r bg-lime-2 px-1 font-sans text-lime-6 dark:bg-lime-6 dark:text-lime-1"
         >
           {{ currentPackage.version }}
         </code>
@@ -65,7 +65,7 @@ const formattedPackageInfo = computed(() => {
       <button
         type="button"
         title="关闭"
-        class="rounded-md pa-1 ma-0 border-none"
+        class="ma-0 rounded-md border-none pa-1"
         bg="transparent hover:gray-2 hover:dark:slate-8"
         @click="emit('close')"
       >
@@ -79,15 +79,15 @@ const formattedPackageInfo = computed(() => {
         <p class="my-2">{{ formattedPackageInfo.description }}</p>
       </div>
       <p class="select-none">
-        <span class="font-bold mr-2">{{ $t('packageInfo.size') }}</span>
+        <span class="mr-2 font-bold">{{ $t('packageInfo.size') }}</span>
         <code font-sans>{{ formattedPackageInfo.dist.size }}</code>
-        <span class="font-bold mx-2">{{ $t('packageInfo.unpackedSize') }}</span>
+        <span class="mx-2 font-bold">{{ $t('packageInfo.unpackedSize') }}</span>
         <code font-sans>{{ formattedPackageInfo.dist.unpackedSize }}</code>
       </p>
       <p class="select-none">
         <span class="mr-2 font-bold">{{ $t('packageInfo.license') }}</span>
         <code
-          class="px-1 font-sans rounded-sm bg-red-1 text-red-6 dark:bg-red-1/30 dark:text-red-3"
+          class="rounded-sm bg-red-1 px-1 font-sans text-red-6 dark:bg-red-1/30 dark:text-red-3"
         >
           {{ packageInfo?.license }}
         </code>
@@ -96,7 +96,7 @@ const formattedPackageInfo = computed(() => {
         <span class="mr-2 font-bold">{{ $t('packageInfo.keywords') }}</span>
         <div flex="~ wrap items-start" class="mt-2 gap-1">
           <code
-            class="rounded-sm px-1 font-sans bg-cyan-1 text-cyan-6 dark:bg-cyan-1/30 dark:text-cyan-3"
+            class="rounded-sm bg-cyan-1 px-1 font-sans text-cyan-6 dark:bg-cyan-1/30 dark:text-cyan-3"
             v-for="key of formattedPackageInfo.keywords"
             :key="key"
           >
@@ -122,9 +122,9 @@ const formattedPackageInfo = computed(() => {
     <!-- 骨架屏 -->
     <section v-show="fetching" class="animate-pulse py-4">
       <span class="mr-2 inline-block h-4 w-1/4 rounded bg-gray"></span>
-      <span class="inline-block h-4 rounded bg-gray w-1/3"></span>
+      <span class="inline-block h-4 w-1/3 rounded bg-gray"></span>
       <p class="h-4 rounded bg-gray"></p>
-      <p class="h-4 rounded bg-gray w-3/4"></p>
+      <p class="h-4 w-3/4 rounded bg-gray"></p>
       <p class="h-4 rounded bg-gray"></p>
       <p class="h-4 rounded bg-gray"></p>
     </section>
