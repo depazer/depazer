@@ -39,12 +39,15 @@ function formatModuleObject(
   dependencies: Record<string, string>,
   devDependencies?: Record<string, string>
 ): ModuleObject {
-  const mergedDependencies = { ...(devDependencies ?? {}), ...(dependencies ?? {}) }
-
   return {
     name,
     version,
-    dependencies: Object.entries(mergedDependencies).map(([name, version]) => ({
+    dependencies: Object.entries(dependencies).map(([name, version]) => ({
+      name,
+      version,
+      dependencies: []
+    })),
+    devDependencies: Object.entries(devDependencies ?? {}).map(([name, version]) => ({
       name,
       version,
       dependencies: []

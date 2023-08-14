@@ -30,16 +30,23 @@ export async function commonAdaptor(
   moduleObject: ModuleObject,
   depth: number
 ): Promise<ModuleObject> {
+  if (depth <= 1) return moduleObject
+
   _global.markSet.clear()
   _global.maxDepth = depth
   _global.packageManager = packageManager
 
   moduleObject.dependencies = await Promise.all(
     moduleObject.dependencies.map(async ({ name }) => {
-      return await resolveModule(root, root, name, 1)
+      return await resolveModule(root, root, name, 2)
     })
   )
 
+  moduleObject.devDependencies = await Promise.all(
+    moduleObject.devDependencies!.map(async ({ name }) => {
+      return await resolveModule(root, root, name, 2)
+    })
+  )
   return moduleObject
 }
 
