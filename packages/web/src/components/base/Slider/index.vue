@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { clamp } from '@/utils/math'
+
 const props = withDefaults(
   defineProps<{
     modelValue?: number
@@ -19,10 +21,6 @@ const percent = computed({
   set: (newValue: number) => emit('update:modelValue', range.value * (newValue / 100) + props.min)
 })
 const slider = ref<HTMLElement>()
-
-function clamp(value: number, min: number = 0, max: number = 100) {
-  return Math.min(Math.max(value, min), max)
-}
 
 const sliderBounds = computed(() => {
   const { left, width } = slider.value?.getBoundingClientRect() ?? { left: 0, width: 100 }
@@ -57,7 +55,7 @@ function handleMouseUp() {
     ref="slider"
     @click="handleClick"
     @mousedown="handleMouseDown"
-    class="h-1 rounded bg-gray-2 dark:bg-slate-8"
+    class="rounded bg-gray-2 dark:bg-slate-8 h-1"
   >
     <div :style="`width: ${percent}%`" class="h-1 rounded w-1/4 bg-gray dark:bg-slate" />
     <button
