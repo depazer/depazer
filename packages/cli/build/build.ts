@@ -18,20 +18,9 @@ async function main() {
     target: ['node14'],
     outfile: resolve(libPath, 'index.js'),
     format: 'esm',
-    minify: true,
     treeShaking: true,
     define: {
       'process.env.NODE_ENV': '"production"'
-    },
-    banner: {
-      js: `
-      import path from 'path';      
-      import { fileURLToPath } from 'url';
-      import { createRequire as topLevelCreateRequire } from 'module';
-      const require = topLevelCreateRequire(import.meta.url);
-      const __filename = fileURLToPath(import.meta.url);
-      const __dirname = path.dirname(__filename);
-      `
     }
   })
 
