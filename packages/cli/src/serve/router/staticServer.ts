@@ -4,14 +4,14 @@ import { ServerResponse } from 'node:http'
 import { createReadStream } from 'node:fs'
 import { extname } from 'node:path'
 import { hasFile } from '@/utils/hasFile'
+import { handleNotFound } from './utils/response'
 
 export async function handleStaticResource(url: string, res: ServerResponse) {
   const staticPath = webBaseUrl + url
 
-  // 文件不存在，直接404
+  // 文件不存在，404
   if (!(await hasFile(staticPath))) {
-    res.statusCode = 404
-    res.end('Not Found')
+    handleNotFound(res)
     return
   }
 

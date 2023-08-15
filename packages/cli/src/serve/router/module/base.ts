@@ -3,6 +3,7 @@ import type { ServerResponse } from 'node:http'
 
 import { webBaseUrl } from '../env'
 import { Route, routeInfo } from '../types'
+import { handleMethodNotAllowed } from '../utils/response'
 
 const baseRoute: Route = {
   '/': rootHandler,
@@ -11,8 +12,8 @@ const baseRoute: Route = {
 
 function rootHandler(res: ServerResponse, info: routeInfo) {
   if (info.method !== 'GET') {
-    res.statusCode = 405
-    res.end('method no allow')
+    handleMethodNotAllowed(res)
+    return
   }
 
   if (info.pathname === '/') info.pathname = '/index.html'
