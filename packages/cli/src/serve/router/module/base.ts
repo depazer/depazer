@@ -1,19 +1,24 @@
 import { createReadStream } from 'node:fs'
-import type { IncomingMessage, ServerResponse } from 'node:http'
+import type { ServerResponse } from 'node:http'
 
 import { webBaseUrl } from '../env'
-import { Route } from '../types'
+import { Route, routeInfo } from '../types'
 
 const baseRoute: Route = {
   '/': rootHandler,
   '/index.html': rootHandler
 }
 
-function rootHandler(req: IncomingMessage, res: ServerResponse) {
-  if (req.url === '/') req.url = '/index.html'
+function rootHandler(res: ServerResponse, info: routeInfo) {
+  if (info.method !== 'GET') {
+    res.statusCode = 405
+    res.end('method no allow')
+  }
+
+  if (info.pathname === '/') info.pathname = '/index.html'
 
   // 绝对路径
-  const filePath = `${webBaseUrl}${req.url}`
+  const filePath = `${webBaseUrl}${info.pathname}`
 
   res.statusCode = 200
   res.setHeader('Content-Type', 'text/html;charset=UTF-8')

@@ -1,10 +1,12 @@
 import { createServer } from 'node:http'
 import { exec } from 'node:child_process'
-import { noteLogger } from '@/utils/logger'
-
 import type { Server } from 'node:http'
+import { URL } from 'node:url'
+
+import { noteLogger } from '@/utils/logger'
 import { matchRoute } from './router'
 import { handleStaticResource } from './router/staticServer'
+import { Method } from './router/types'
 
 export async function startServer(port: number) {
   const config = {
@@ -16,14 +18,14 @@ export async function startServer(port: number) {
   }
 
   const server = createServer(async function (req, res) {
-    const url = req.url!
+    const { searchParams, pathname } = new URL(req.url!, `http://${config.hostname}:${config.port}`)
 
-    const handler = matchRoute(url)
+    const handler = matchRoute(pathname)
     if (handler) {
-      handler(req, res)
+      handler(res, { pathname, params: searchParams, method: req.method as Method })
     } else {
       // active static or 404
-      handleStaticResource(url, res)
+      handleStaticResource(pathname, res)
     }
   })
 
