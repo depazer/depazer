@@ -1,17 +1,14 @@
-import type Application from 'koa'
-import Router from 'koa-router'
-import staticHandler from 'koa-static'
+import { Routes } from './types'
+import { installRoutes } from './install'
 
-import installAPI from './api'
-import { webBaseUrl } from './env'
+const routes: Routes = new Map()
 
-export const router = new Router()
+installRoutes(routes)
 
-export const installRoute = () => {
-  installAPI(router)
-}
+export function matchRoute(path: string) {
+  if (routes.has(path)) {
+    return routes.get(path)
+  }
 
-// 设置静态资源目录
-export const installStatic = (app: Application) => {
-  app.use(staticHandler(webBaseUrl))
+  return null
 }

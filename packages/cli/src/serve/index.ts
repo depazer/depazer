@@ -1,3 +1,3 @@
-import { startService } from './startServer'
+import { startServer } from './startServer'
 
-export { startService }
+export { startServer }

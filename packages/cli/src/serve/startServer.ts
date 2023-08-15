@@ -1,11 +1,12 @@
-import koa from 'koa'
-import type Application from 'koa'
+import { createServer } from 'node:http'
 import { exec } from 'node:child_process'
-
 import { noteLogger } from '@/utils/logger'
-import { router, installRoute, installStatic } from '@/serve/router/index'
 
-export function startService(port: number) {
+import type { Server } from 'node:http'
+import { matchRoute } from './router'
+import { handleStaticResource } from './router/staticServer'
+
+export async function startServer(port: number) {
   const config = {
     hostname: 'localhost',
     /** @desc 监听端口 */
@@ -14,17 +15,23 @@ export function startService(port: number) {
     open: false
   }
 
-  const app = new koa()
+  const server = createServer(async function (req, res) {
+    const url = req.url!
 
-  installRoute()
-  installStatic(app)
-  app.use(router.routes())
+    const handler = matchRoute(url)
+    if (handler) {
+      handler(req, res)
+    } else {
+      // active static or 404
+      handleStaticResource(url, res)
+    }
+  })
 
-  listenServer(app, config.port, config.hostname, config.open)
+  listenServer(server, config.port, config.hostname, config.open)
 }
 
-function listenServer(app: Application, port: number, hostname: string, open: boolean) {
-  app.listen(port, hostname, () => {
+function listenServer(server: Server, port: number, hostname: string, open: boolean) {
+  server.listen(port, hostname, () => {
     const link = `http://${hostname}:${port}`
     console.clear()
     noteLogger(link, 'LOCAL')
@@ -33,7 +40,7 @@ function listenServer(app: Application, port: number, hostname: string, open: bo
   })
 
   /** @desc 端口占用 */
-  app.on('error', (err) => {
-    if (err.message.endsWith(port + '')) return listenServer(app, port + 1, hostname, open)
+  server.on('error', (err) => {
+    if (err.message.endsWith(port + '')) return listenServer(server, port + 1, hostname, open)
   })
 }
