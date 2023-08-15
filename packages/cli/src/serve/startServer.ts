@@ -35,7 +35,7 @@ export async function startServer(port: number) {
 function listenServer(server: Server, port: number, hostname: string, open: boolean) {
   server.listen(port, hostname, () => {
     const link = `http://${hostname}:${port}`
-    console.clear()
+    process.env.NODE_ENV === 'production' && console.clear()
     noteLogger(link, 'LOCAL')
     /** @desc 启动默认浏览器 */
     open && exec(`start ${link}`)
