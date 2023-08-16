@@ -16,7 +16,7 @@
  <img src="https://codecov.io/gh/depazer/depazer/branch/main/graph/badge.svg?token=IOMUECCGVD"/> 
  </a>
 <a href="https://github.com/depazer/depazer/actions/workflows/unit-test.yaml"><img src="https://github.com/depazer/depazer/actions/workflows/unit-test.yaml/badge.svg" alt="unit-test" /></a>
-<a href="https://depazer.github.io/depazer/"><img src="https://github.com/depazer/depazer/actions/workflows/deploy-docs.yml/badge.svg" /></a>
+<a href="https://depazer.github.io/depazer/"><img src="https://github.com/depazer/depazer/actions/workflows/deploy.yml/badge.svg" /></a>
 </p>
 
 ## 快速开始

@@ -4,7 +4,7 @@ import { startAnalyzer } from './startAnalyzer'
 
 import type { AnalyzeOption } from '../types'
 
-export default function ({ jsonFile, port, '--': args }: AnalyzeOption) {
+export default function ({ depth, dev, jsonFile, port, '--': args }: AnalyzeOption) {
   if (args.length !== 0) {
     throw new CACError('Unknown option ' + JSON.stringify(args))
   }
@@ -15,7 +15,7 @@ export default function ({ jsonFile, port, '--': args }: AnalyzeOption) {
        * @example pnpm dev a -j  |  depazer analyze --jsonFile
        * @example pnpm dev a -j report.json  |  depazer a --jsonFile report.json
        */
-      return generateReport(typeof jsonFile === 'boolean' ? 'analyzer.json' : jsonFile)
+      return generateReport(typeof jsonFile === 'boolean' ? 'analyzer.json' : jsonFile, depth, dev)
     default:
       /**
        * @example pnpm dev a  |  pnpm dev analyzer

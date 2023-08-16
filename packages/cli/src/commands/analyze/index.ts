@@ -20,6 +20,20 @@ export const createAnalyzeCommand: CreateCommand<AnalyzeOption> = function () {
       {
         rawName: '-j, --jsonFile [file name]',
         description: 'Generate json file for analysis'
+      },
+      {
+        rawName: '-d, --depth <number>',
+        description: 'Depth of analysis',
+        config: {
+          default: Infinity
+        }
+      },
+      {
+        rawName: '--dev',
+        description: 'Include devDependencies',
+        config: {
+          default: false
+        }
       }
     ]
   }

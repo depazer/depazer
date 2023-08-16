@@ -21,11 +21,15 @@ import type { SimulationNodeDatum, Simulation } from 'd3'
 const props = defineProps<{ graphData: Data }>()
 const emit = defineEmits<{ nodeClick: [packageWithVersion: string] }>()
 
-const { width, height } = useWindowSize()
-const appStore = useAppStore()
-const svgRef = shallowRef<SVGSVGElement | null>(null)
 const color = (n: number) => scaleSequential(interpolateRainbow)(((n - 1) % 8) / 8)
-watchEffect(() => {
+const { width, height } = useWindowSize()
+
+const appStore = useAppStore()
+const { repulsion } = storeToRefs(appStore)
+const debouncedRepulsion = refDebounced(repulsion)
+
+const svgRef = shallowRef<SVGSVGElement | null>(null)
+watchEffect((clean) => {
   if (svgRef.value) {
     const { nodes, links } = props.graphData
 
@@ -34,7 +38,7 @@ watchEffect(() => {
         'link',
         forceLink(links).id(({ name }: any) => name)
       )
-      .force('charge', forceManyBody().strength(-5000))
+      .force('charge', forceManyBody().strength(-debouncedRepulsion.value))
       .force('x', forceX())
       .force('y', forceY())
       .alphaTarget(0)
@@ -51,13 +55,13 @@ watchEffect(() => {
 
     const link = svgSelection
       .append('g')
-      .attr('stroke', '#999')
       .attr('stroke-opacity', 0.6)
       .attr('marker-end', 'url(#arrow)')
       .attr('stroke-width', 2)
       .selectAll('line')
       .data(links)
       .join('line')
+      .attr('stroke', ({ isDeps }: any) => (isDeps ? '#999' : '#417de0'))
 
     const node = svgSelection
       .append('g')
@@ -85,12 +89,19 @@ watchEffect(() => {
 
       title.attr('x', (d) => (d?.x ?? 0) - d.name.length * 4).attr('y', (d) => (d?.y ?? 0) - 16)
     })
+
+    clean(() => {
+      simulation.stop()
+      node.remove()
+      link.remove()
+      title.remove()
+    })
   }
 })
 
 function enableZoom(selection: any) {
   zoom()
-    .scaleExtent([1, 8])
+    .scaleExtent([0.1, 8])
     .on('zoom', ({ transform }: Record<'transform', string>) => {
       selection.selectAll('g').attr('transform', transform)
     })(selection)
@@ -129,14 +140,14 @@ function enableDrag(selection: any, simulation: Simulation<NodeInfo, undefined>)
       <marker
         id="arrow"
         viewBox="0 0 10 10"
-        refX="22"
+        refX="20"
         refY="5"
         markerUnits="strokeWidth"
         markerWidth="4"
         markerHeight="8"
         orient="auto"
       >
-        <path d="M 0 0 L 10 5 L 0 10 z" fill="#999" />
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="gold" />
       </marker>
     </defs>
   </svg>
