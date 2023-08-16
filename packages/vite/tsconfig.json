@@ -1,5 +1,5 @@
 {
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "test/**/*", "vitest.config.*", "package.json"],
   "compilerOptions": {
     "lib": ["es2023"],
     "target": "ES2020",
