@@ -15,13 +15,13 @@ module.exports = {
     'plugin:vue/vue3-essential',
     'eslint:recommended',
     '@vue/eslint-config-typescript',
-    '@vue/eslint-config-prettier',
-    '@unocss'
+    '@vue/eslint-config-prettier'
   ],
   parserOptions: {
     ecmaVersion: 'latest'
   },
   rules: {
+    complexity: ['error', 8],
     '@typescript-eslint/no-unused-vars': [
       'warn',
       {
@@ -29,9 +29,7 @@ module.exports = {
         varsIgnorePattern: '^_'
       }
     ],
-    'vue/multi-word-component-names': ['error', { ignores: ['index'] }],
-    '@unocss/order': 'warn',
-    '@unocss/order-attributify': 'warn'
+    'vue/multi-word-component-names': ['error', { ignores: ['index'] }]
   },
   overrides: [
     {

@@ -102,4 +102,3 @@ body {
   overflow: hidden;
 }
 </style>
-@/hooks/locale
