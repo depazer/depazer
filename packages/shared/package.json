@@ -1,20 +1,24 @@
 {
   "name": "@depazer/shared",
-  "version": "0.0.0",
+  "description": "Shared code for Depazer's projects",
+  "version": "0.0.1",
   "type": "module",
   "scripts": {
-    "build": "tsc"
+    "build-single": "esbuild --bundle --platform=node --target=node16 --outfile=lib/index.js --format=esm src/index.ts",
+    "build-type": "tsc -p tsconfig.build.json",
+    "build": "pnpm build-single && pnpm build-type",
+    "test": "vitest run"
   },
   "files": [
-    "dist"
+    "lib"
   ],
-  "main": "./dist/src/index.js",
-  "types": "./dist/src/index.d.ts",
+  "main": "./lib/index.js",
+  "types": "./lib/src/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/src/index.d.ts",
-      "import": "./dist/src/index.js",
-      "require": "./dist/src/index.js"
+      "types": "./lib/src/index.d.ts",
+      "import": "./lib/index.js",
+      "require": "./lib/index.js"
     }
   },
   "devDependencies": {
