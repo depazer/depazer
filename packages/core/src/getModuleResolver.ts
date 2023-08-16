@@ -9,21 +9,22 @@ import type { ModuleObject } from '@/types/moduleGraph'
 /**
  *
  * @example
- *  const resolver = await getModuleResolver(resolve(), true)
- *  const res = await resolver?.(4)
+ * const resolver = await getModuleResolver(resolve(), true)
  *
- *  writeFile(resolve('/.json'), JSON.stringify(res, null, 2))
- *  writeFile(resolve('/flat.json'), JSON.stringify(flatPipe(res), null, 2))
+ * if (typeof resolver !== 'string') {
+ *   const res = await resolver(4)
+ *
+ *   writeFile(resolve('/.json'), JSON.stringify(res, null, 2))
+ *   writeFile(resolve('/flat.json'), JSON.stringify(flatPipe(res), null, 2))
+ * }
  */
 export async function getModuleResolver(root: string, includeDeps: boolean) {
   const { packageManager, monorepo: _, error } = await environmentScanner(root)
-  if (error) return
+  if (typeof error === 'string') return error
 
   const moduleObject = await initModuleObject(root, includeDeps)
 
-  return moduleObject
-    ? (depth: number = Infinity) => commonAdaptor(packageManager, root, moduleObject, depth)
-    : undefined
+  return (depth: number = Infinity) => commonAdaptor(packageManager, root, moduleObject, depth)
 }
 
 async function initModuleObject(root: string, includeDeps: boolean) {

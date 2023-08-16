@@ -5,12 +5,18 @@ type PackageManager = 'npm' | 'pnpm' | 'yarn'
 interface Environment {
   packageManager: PackageManager
   monorepo: boolean
-  error: boolean
+  error: false | string
+}
+
+const enum ErrorMessage {
+  PackageNotFound = 'package.json file was not found in the current directory.',
+  NodeModulesNotFound = 'node_modules folder was not found in the current directory. Please install dependencies.',
+  LockFileNotFound = 'Lock file not found. You must provide a lock file.For example, you can install dependencies using your current package manager, which will automatically generate a lock file.',
+  MultipleLockFile = 'Multiple lock files found. Please choose a package manager for installation and delete unnecessary lock files.'
 }
 
 /**
  * @desc 获取项目信息 包管理器 是否是monorepo
- * @desc 检查package.json是否存在 node_modules是否存在 不存在error为true 并打印错误信息
  * @param root 待处理的package.json绝对路径
  */
 export async function environmentScanner(root: string): Promise<Environment> {
@@ -24,13 +30,6 @@ export async function environmentScanner(root: string): Promise<Environment> {
     packageManager: 'npm',
     monorepo: false,
     error: false
-  }
-
-  const enum ErrorMessage {
-    PackageNotFound = 'package.json file was not found in the current directory.',
-    NodeModulesNotFound = 'node_modules folder was not found in the current directory. Please install dependencies.',
-    LockFileNotFound = 'Lock file not found. You must provide a lock file.For example, you can install dependencies using your current package manager, which will automatically generate a lock file.',
-    MultipleLockFile = 'Multiple lock files found. Please choose a package manager for installation and delete unnecessary lock files.'
   }
 
   // 判断package.json是否存在
@@ -57,8 +56,8 @@ export async function environmentScanner(root: string): Promise<Environment> {
   return environment
 }
 
-function errorHandle(environment: Environment, message: string) {
+function errorHandle(environment: Environment, message: ErrorMessage) {
   errorLogger(message)
-  environment.error = true
+  environment.error = message
   return environment
 }

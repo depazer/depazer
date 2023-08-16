@@ -12,29 +12,28 @@ export function graphTranslator(
     isDevDependency = false
   }
 
-  const name = moduleObject.name + '@' + moduleObject.version
+  const name = generateModuleName(moduleObject)
   const isExist = graph.find((item) => item.name === name)
 
-  if (isExist === undefined) {
-    graph.push({
-      name,
-      depth,
-      isDevDependency,
-      dependencies: moduleObject.dependencies.map((item) => item.name + '@' + item.version)
-    })
-    if (depth === 0)
-      graph[0].dependencies.push(
-        ...moduleObject.devDependencies!.map((item) => item.name + '@' + item.version)
-      )
-  } else if (isExist.isDevDependency && isDevDependency === false) {
-    isExist.isDevDependency = false
-    isExist.depth = depth
-  } else {
-    return graph
+  if (isExist !== undefined) return graph
+
+  graph.push({
+    name,
+    depth,
+    isDevDependency,
+    dependencies: moduleObject.dependencies.map(generateModuleName)
+  })
+  if (depth === 0) {
+    graph[0].dependencies.push(...moduleObject.devDependencies!.map(generateModuleName))
+    graph[0].dependencies = [...new Set(graph[0].dependencies)]
   }
 
   moduleObject.dependencies.forEach((item) => graphTranslator(item, depth + 1, isDevDependency))
   moduleObject.devDependencies?.forEach((item) => graphTranslator(item, depth + 1))
 
   return graph
+}
+
+function generateModuleName(module: ModuleObject) {
+  return module.name + '@' + module.version
 }
