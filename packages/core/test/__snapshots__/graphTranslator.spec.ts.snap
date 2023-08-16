@@ -1,0 +1,74 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`graphTranslator > should translate a module object to a graph 1`] = `
+[
+  {
+    "dependencies": [
+      "b@1.0.0",
+    ],
+    "depth": 0,
+    "isDevDependency": false,
+    "name": "a@1.0.0",
+  },
+  {
+    "dependencies": [],
+    "depth": 1,
+    "isDevDependency": false,
+    "name": "b@1.0.0",
+  },
+]
+`;
+
+exports[`graphTranslator > should translate a module object with devDependencies to a graph 1`] = `
+[
+  {
+    "dependencies": [
+      "b@1.0.0",
+      "c@1.0.0",
+    ],
+    "depth": 0,
+    "isDevDependency": false,
+    "name": "a@1.0.0",
+  },
+  {
+    "dependencies": [],
+    "depth": 1,
+    "isDevDependency": false,
+    "name": "b@1.0.0",
+  },
+  {
+    "dependencies": [],
+    "depth": 1,
+    "isDevDependency": true,
+    "name": "c@1.0.0",
+  },
+]
+`;
+
+exports[`graphTranslator > should translate a module object with loop / repetitive dependencies 1`] = `
+[
+  {
+    "dependencies": [
+      "c@1.0.0",
+      "b@1.0.0",
+    ],
+    "depth": 0,
+    "isDevDependency": false,
+    "name": "a@1.0.0",
+  },
+  {
+    "dependencies": [
+      "b@1.0.0",
+    ],
+    "depth": 1,
+    "isDevDependency": false,
+    "name": "c@1.0.0",
+  },
+  {
+    "dependencies": [],
+    "depth": 2,
+    "isDevDependency": false,
+    "name": "b@1.0.0",
+  },
+]
+`;
