@@ -23,12 +23,12 @@ export async function copyDir(from: string, to: string) {
   await mkdir(to).catch(() => void 0)
   const list = await readdir(from)
   for (const item of list) {
-    const filePath = resolve(from, item)
-    const fileStat = await stat(filePath)
-    if (fileStat.isFile()) {
-      copyFile(filePath, resolve(to, item))
+    const sourcePath = resolve(from, item)
+    const targetPath = resolve(to, item)
+    if (await hasFile(sourcePath)) {
+      copyFile(sourcePath, targetPath)
     } else {
-      copyDir(filePath, resolve(to, item))
+      copyDir(sourcePath, targetPath)
     }
   }
 }
