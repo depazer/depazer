@@ -1,15 +1,16 @@
-node_modules
-.turbo
 lib
 dist
-.eslintcache
+cache
+.cache
+.turbo
 coverage
+node_modules
 
+.eslintcache
 .changeset/README.md
+*.tsbuildinfo
 
-/docs/.vitepress/cache
-
-.idea/**/*
+.idea
 .vscode/**/*
 !.vscode/settings.json
 !.vscode/extensions.json
