@@ -91,10 +91,13 @@ importers:
         version: 0.18.19
 
   packages/core:
-    dependencies:
+    devDependencies:
       '@depazer/shared':
         specifier: workspace:*
         version: link:../shared
+      esbuild:
+        specifier: ^0.19.2
+        version: 0.19.2
 
   packages/shared:
     devDependencies:
