@@ -36,19 +36,17 @@ const getMatchItems = (target: string, all: boolean = false): Data => {
 
   return data.filter((item) => item.indexOf(target) !== -1)
 }
-
 </script>
 
-
 <template>
-    <input
-      class="auto-complete-input"
-      :placeholder="placeholder"
-      :value="modelValue"
-      @focus="handleFocus"
-      @input="handleSelect"
-      @blur="handleBlur"
-    />
+  <input
+    class="auto-complete-input"
+    :placeholder="placeholder"
+    :value="modelValue"
+    @focus="handleFocus"
+    @input="handleSelect"
+    @blur="handleBlur"
+  />
 
-    <div v-show="isShow">test</div>
+  <div v-show="isShow">test</div>
 </template>
