@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import BaseSlider from './base/Slider/index.vue'
 import BaseCounter from './base/Counter/index.vue'
+import BaseAutoComplete from './base/AutoComplete/index.vue'
 
 import { useAppStore } from '@/stores/app'
 
@@ -57,20 +58,11 @@ const { depth, fixedNailModel, repulsion } = storeToRefs(appStore)
       <BaseSlider :max="10000" :min="100" v-model="repulsion" class="mr-4" />
 
       <p>注册表API</p>
-      <div
-        flex="~ items-center"
-        class="rounded pa-1"
-        bg="gray-2 focus-within:gray-1  dark:slate-6 focus-within:dark:slate-8"
-      >
-        <i class="i-logos-npm-icon mx-2 text-base" />
-        <input
-          v-model="appStore.currentRegistry"
-          type="text"
-          class="w-full rounded-md border-none pa-1 text-base focus:outline-none"
-          bg="transparent"
-          placeholder="https://registry.npmjs.org/"
-        />
-      </div>
+      <BaseAutoComplete v-model="appStore.currentRegistry" :data="appStore.npmRegistryURLs">
+        <template #prefix>
+          <i class="i-logos-npm-icon mx-2 text-base" />
+        </template>
+      </BaseAutoComplete>
     </div>
   </div>
 </template>
