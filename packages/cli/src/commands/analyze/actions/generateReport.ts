@@ -1,14 +1,13 @@
-import { getModuleResolver } from '@/core'
 import { resolve } from 'path'
 import { writeFile } from 'fs/promises'
-import { graphTranslator } from '@/core/graphTranslator'
-import { successLogger } from '@/utils/logger'
+import { getModuleResolver, graphTranslator } from '@depazer/core'
+import { successLogger } from '@depazer/shared'
 
 export async function generateReport(fileName: string, depth: number, includeDeps: boolean) {
   const RUN_PATH = resolve()
 
   const resolver = await getModuleResolver(RUN_PATH, includeDeps)
-  if (!resolver) return
+  if (typeof resolver === 'string') return
 
   const res = await resolver(depth)
   const targetPath = resolve(RUN_PATH, fileName)

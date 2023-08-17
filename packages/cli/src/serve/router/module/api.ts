@@ -1,8 +1,6 @@
-import { getModuleResolver } from '@/core'
 import { resolve } from 'path'
-import { graphTranslator } from '@/core/graphTranslator'
 import { Route } from '../types'
-import { environmentScanner } from '@/core/environmentScanner'
+import { environmentScanner, getModuleResolver, graphTranslator } from '@depazer/core'
 import { handleSuccessRes, handleServerErrorRes, handleMethodNotAllowed } from '../utils/response'
 
 const RUN_PATH = process.env.NODE_ENV === 'production' ? resolve() : resolve('..', '..')
@@ -28,7 +26,7 @@ const apiRoute: Route = {
     }
 
     const resolver = await getModuleResolver(RUN_PATH, includeDeps)
-    if (!resolver) {
+    if (typeof resolver === 'string') {
       handleServerErrorRes(res)
       return
     }
