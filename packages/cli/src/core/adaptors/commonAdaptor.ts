@@ -70,7 +70,7 @@ async function resolveModule(
   if ((await hasFile(packageJSONPath)) === false) {
     /** @desc 防止文件夹越界，超出根目录 */
     if (currentPath === root) {
-      return depth === 2 && _global.packageManager === 'pnpm'
+      return depth === 3 && _global.packageManager === 'pnpm'
         ? resolveModule(root, resolve(root, 'node_modules/.pnpm'), dependency, depth)
         : { name: dependency, ...defaultDependency }
     }

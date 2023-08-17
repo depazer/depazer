@@ -24,7 +24,7 @@ async function main() {
     }
   })
 
-  copyDir(resolve(rootPath, 'node_modules/@depazer/web/dist'), resolve(libPath, 'web'))
+  copyDir(resolve(rootPath, 'node_modules/@depazer/web/dist/cli'), resolve(libPath, 'web'))
 }
 
 async function copyDir(from: string, to: string) {
