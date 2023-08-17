@@ -1,12 +1,9 @@
-import { resolve } from 'path'
 import { Route } from '../types'
 import { environmentScanner, getModuleResolver, graphTranslator } from '@depazer/core'
 import { handleSuccessRes, handleServerErrorRes, handleMethodNotAllowed } from '../utils/response'
 
-const RUN_PATH = process.env.NODE_ENV === 'production' ? resolve() : resolve('..', '..')
-
 const apiRoute: Route = {
-  '/api/graph': async (res, { method, params }) => {
+  '/api/graph': async (res, { method, params }, root) => {
     if (method !== 'GET') {
       handleMethodNotAllowed(res)
       return
@@ -25,7 +22,7 @@ const apiRoute: Route = {
       includeDeps = true
     }
 
-    const resolver = await getModuleResolver(RUN_PATH, includeDeps)
+    const resolver = await getModuleResolver(root, includeDeps)
     if (typeof resolver === 'string') {
       handleServerErrorRes(res)
       return
@@ -35,13 +32,13 @@ const apiRoute: Route = {
     handleSuccessRes(res, data)
   },
 
-  '/api/environment': async (res, { method }) => {
+  '/api/environment': async (res, { method }, root) => {
     if (method !== 'GET') {
       handleMethodNotAllowed(res)
       return
     }
 
-    const { packageManager, error } = await environmentScanner(RUN_PATH)
+    const { packageManager, error } = await environmentScanner(root)
 
     if (error) {
       handleServerErrorRes(res)

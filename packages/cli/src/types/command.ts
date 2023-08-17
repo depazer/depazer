@@ -11,16 +11,20 @@ interface Option {
 
 type CommandOption = object
 
-type ICommandAction<T extends CommandOption = CommandOption> = (option: T) => unknown
+type ICommandAction<T extends CommandOption = CommandOption, U = undefined> = U extends undefined
+  ? (option: T) => unknown
+  : (commandArg: U, option: T) => unknown
 
-interface ICommand<T extends CommandOption = CommandOption> {
+interface ICommand<T extends CommandOption = CommandOption, U = undefined> {
   command: string
-  action: ICommandAction<T>
+  action: ICommandAction<T, U>
   description: string
   alias?: string
   options?: Option[]
 }
 
-type CreateCommand<T extends CommandOption = CommandOption> = (cli: CAC) => ICommand<T>
+type CreateCommand<T extends CommandOption = CommandOption, U = undefined> = (
+  cli: CAC
+) => ICommand<T, U>
 
 export type { CreateCommand, ICommandAction }

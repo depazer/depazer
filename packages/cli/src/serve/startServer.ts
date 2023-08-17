@@ -9,13 +9,13 @@ import { handleStaticResource } from './router/staticServer'
 import type { Server } from 'node:http'
 import type { Method } from './router/types'
 
-export async function startServer(port: number) {
+export async function startServer(port: number, root: string) {
   const config = {
     hostname: 'localhost',
     /** @desc 监听端口 */
     port,
     /** @desc 是否打开浏览器 */
-    open: false
+    open: true
   }
 
   const server = createServer(async function (req, res) {
@@ -23,7 +23,7 @@ export async function startServer(port: number) {
 
     const handler = matchRoute(pathname)
     if (handler) {
-      handler(res, { pathname, params: searchParams, method: req.method as Method })
+      handler(res, { pathname, params: searchParams, method: req.method as Method }, root)
     } else {
       // active static or 404
       handleStaticResource(pathname, res)

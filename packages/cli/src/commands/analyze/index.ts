@@ -3,12 +3,12 @@ import action from './actions'
 import type { AnalyzeOption } from './types'
 import type { CreateCommand } from '@/types/command'
 
-export const createAnalyzeCommand: CreateCommand<AnalyzeOption> = function () {
+export const createAnalyzeCommand: CreateCommand<AnalyzeOption, string> = function () {
   return {
     action,
     alias: 'a',
-    command: 'analyze',
-    description: 'Analyze package dependencies',
+    command: 'analyze [root]',
+    description: 'Analyze package dependencies (root default .)',
     options: [
       {
         rawName: '-p, --port <number>',

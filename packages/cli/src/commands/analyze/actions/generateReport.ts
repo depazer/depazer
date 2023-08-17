@@ -3,14 +3,17 @@ import { writeFile } from 'fs/promises'
 import { getModuleResolver, graphTranslator } from '@depazer/core'
 import { successLogger } from '@depazer/shared'
 
-export async function generateReport(fileName: string, depth: number, includeDeps: boolean) {
-  const RUN_PATH = resolve()
-
-  const resolver = await getModuleResolver(RUN_PATH, includeDeps)
+export async function generateReport(
+  fileName: string,
+  depth: number,
+  includeDeps: boolean,
+  root: string
+) {
+  const resolver = await getModuleResolver(root, includeDeps)
   if (typeof resolver === 'string') return
 
   const res = await resolver(depth)
-  const targetPath = resolve(RUN_PATH, fileName)
+  const targetPath = resolve(root, fileName)
 
   successLogger('Report generated: ' + targetPath)
   successLogger('Flat report generated: ' + resolve(targetPath, '..', 'flat.json'))

@@ -3,8 +3,13 @@ import { generateReport } from './generateReport'
 import { startAnalyzer } from './startAnalyzer'
 
 import type { AnalyzeOption } from '../types'
+import { resolve } from 'path'
 
-export default function ({ depth, dev, jsonFile, port, '--': args }: AnalyzeOption) {
+export default function (root: string, { depth, dev, jsonFile, port, '--': args }: AnalyzeOption) {
+  root = resolve(process.cwd(), root ?? '.')
+  jsonFile = jsonFile === true ? 'analyzer.json' : jsonFile
+  console.log('root', root)
+
   if (args.length !== 0) {
     throw new CACError('Unknown option ' + JSON.stringify(args))
   }
@@ -15,12 +20,12 @@ export default function ({ depth, dev, jsonFile, port, '--': args }: AnalyzeOpti
        * @example pnpm dev a -j  |  depazer analyze --jsonFile
        * @example pnpm dev a -j report.json  |  depazer a --jsonFile report.json
        */
-      return generateReport(typeof jsonFile === 'boolean' ? 'analyzer.json' : jsonFile, depth, dev)
+      return generateReport(jsonFile as string, depth, dev, root)
     default:
       /**
        * @example pnpm dev a  |  pnpm dev analyzer
        * @example depazer a  |  depazer analyzer
        */
-      return startAnalyzer(port)
+      return startAnalyzer(port, root)
   }
 }
