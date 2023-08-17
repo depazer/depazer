@@ -17,7 +17,11 @@ async function main() {
     platform: 'node',
     target: ['node14'],
     outfile: resolve(libPath, 'index.js'),
-    format: 'esm'
+    format: 'esm',
+    treeShaking: true,
+    define: {
+      'process.env.NODE_ENV': '"production"'
+    }
   })
 
   copyDir(resolve(rootPath, 'node_modules/@depazer/web/dist'), resolve(libPath, 'web'))
