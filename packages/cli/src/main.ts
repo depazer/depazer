@@ -1,5 +1,5 @@
 import { cac } from 'cac'
-import { chalk, errorLogger } from './utils/logger'
+import { errorLogger } from '@depazer/shared'
 import { registerCommand } from './utils/registerCommand'
 import { createCommandFunctions, helpCallback } from './commands'
 
@@ -26,7 +26,7 @@ export function parseCommand() {
     if (error instanceof Error && error.name === 'CACError') {
       errorLogger(error.message, 'COMMAND ERROR')
     } else {
-      errorLogger(chalk.red(error), 'UNKNOWN ERROR')
+      errorLogger(error + '', 'UNKNOWN ERROR')
       throw error
     }
 

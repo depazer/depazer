@@ -1,4 +1,4 @@
-import { chalk } from '@/utils/logger'
+import { Colors, colorful } from '@depazer/shared'
 import { description } from '../../../package.json'
 
 export interface HelpSection {
@@ -7,7 +7,7 @@ export interface HelpSection {
 }
 
 export function helpCallback(sections: HelpSection[]): HelpSection[] {
-  sections[0].body = '📦 ' + chalk.cyan(sections[0].body)
-  sections.unshift({ body: `🪧  ${chalk.blue(description)}.` })
+  sections[0].body = '📦 ' + colorful(sections[0].body, { color: Colors.CYAN })
+  sections.unshift({ body: `🪧  ${colorful(description, { color: Colors.BLUE })}.` })
   return sections
 }

@@ -1,12 +1,13 @@
+import { URL } from 'node:url'
 import { createServer } from 'node:http'
 import { exec } from 'node:child_process'
-import type { Server } from 'node:http'
-import { URL } from 'node:url'
 
-import { noteLogger } from '@/utils/logger'
 import { matchRoute } from './router'
+import { noteLogger } from '@depazer/shared'
 import { handleStaticResource } from './router/staticServer'
-import { Method } from './router/types'
+
+import type { Server } from 'node:http'
+import type { Method } from './router/types'
 
 export async function startServer(port: number) {
   const config = {

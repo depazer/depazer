@@ -1,4 +1,4 @@
-import { chalk } from '@/utils/logger'
+import { Colors, colorful } from '@depazer/shared'
 
 import type { CAC } from 'cac'
 import type { CreateCommand } from '@/types/command'
@@ -17,10 +17,12 @@ export function registerCommand(cli: CAC, createCommandFunctions: CreateCommand[
 }
 
 export function createDescription(description: string, alias?: string): string {
-  return createAliasTip(alias) + chalk.yellow(description)
+  return createAliasTip(alias) + colorful(description, { color: Colors.YELLOW })
 }
 
 export function createAliasTip(alias?: string): string {
   const space = '             '
-  return chalk.magenta((alias ? `alias: ${alias + space}` : space).slice(0, 10))
+  return colorful((alias ? `alias: ${alias + space}` : space).slice(0, 10), {
+    color: Colors.MAGENTA
+  })
 }

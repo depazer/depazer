@@ -1,9 +1,8 @@
 import { webBaseUrl } from './env'
-import { ServerResponse } from 'node:http'
-
-import { createReadStream } from 'node:fs'
 import { extname } from 'node:path'
-import { hasFile } from '@/utils/hasFile'
+import { hasFile } from '@depazer/shared'
+import { ServerResponse } from 'node:http'
+import { createReadStream } from 'node:fs'
 import { handleNotFound } from './utils/response'
 
 export async function handleStaticResource(url: string, res: ServerResponse) {
