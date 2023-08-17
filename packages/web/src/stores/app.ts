@@ -10,7 +10,7 @@ export const useAppStore = defineStore('app', () => {
   const toggleFixedNailModel = useToggle(fixedNailModel)
 
   /** @desc 递归深度 */
-  const depth = ref<number>(10)
+  const depth = ref<number>(2)
   /** @desc 斥力大小 */
   const repulsion = ref<number>(5000)
 

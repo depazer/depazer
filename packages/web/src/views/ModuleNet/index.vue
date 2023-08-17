@@ -2,10 +2,8 @@
 import ForceChart from './components/ForceChart.vue'
 import PackageInfo from './components/PackageInfo.vue'
 
-import { ref, reactive, shallowRef } from 'vue'
-import { useToggle } from '@vueuse/core'
-import type { Data } from './types'
-import { ApiGetGraph } from './mockModuleData'
+import { useLocalModule } from '@/hooks/localModule'
+import { ref, reactive } from 'vue'
 
 const packageInfoVisible = ref<boolean>(false)
 const togglePackageInfoVisible = useToggle(packageInfoVisible)
@@ -16,10 +14,7 @@ function handleClick(packageID: string) {
   currentPackage.name = packageID.split('@').slice(0, -1).join('@')
 }
 
-const graphData = shallowRef<Data>({ nodes: [], links: [] })
-ApiGetGraph().then((res) => {
-  graphData.value = res
-})
+const { graphData } = useLocalModule()
 </script>
 
 <template>
