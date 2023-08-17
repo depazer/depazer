@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import ForceChart from './components/ForceChart.vue'
 import PackageInfo from './components/PackageInfo.vue'
+import EnvironmentInfo from './components/EnvironmentInfo.vue'
 
 import { useLocalModule } from '@/hooks/localModule'
 import { ref, reactive } from 'vue'
@@ -32,6 +33,8 @@ const { graphData } = useLocalModule()
         <PackageInfo :currentPackage="currentPackage" @close="togglePackageInfoVisible" />
       </aside>
     </Transition>
+
+    <EnvironmentInfo class="absolute right-4 bottom-4" />
   </div>
 </template>
 

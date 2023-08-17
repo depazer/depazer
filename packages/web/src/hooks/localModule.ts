@@ -2,18 +2,22 @@ import { useAppStore } from '@/stores/app'
 
 import type { Data, LinkInfo, NodeInfo } from '@/views/ModuleNet/types'
 
-export function useLocalModule(graphApi: string = '/api/graph') {
+export function useLocalModule(graphApi: string = 'api/graph') {
   const appStore = useAppStore()
   const { depth } = storeToRefs(appStore)
 
-  const apiURL = ref(graphApi + `?depth=${depth.value}&includeDeps=${true}`)
+  const apiGenerator = (depth: number) => {
+    return import.meta.env.BASE_URL + graphApi + `?depth=${depth}&includeDeps=${true}`
+  }
+
+  const apiURL = ref(apiGenerator(depth.value))
   const { data, execute, abort } = useFetch<NodeInfo[]>(apiURL).get().json()
 
   debouncedWatch(
     depth,
     (newDepth) => {
       abort()
-      apiURL.value = graphApi + `?depth=${newDepth}&includeDeps=${true}`
+      apiURL.value = apiGenerator(newDepth)
       execute()
     },
     { debounce: 300 }
