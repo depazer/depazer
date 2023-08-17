@@ -28,30 +28,35 @@ export function colorful(message: string, option: ColorfulOption = {}) {
 
 type Logger = (message: string, tag?: string) => void
 
+const tagCommonOptions = {
+  bold: true,
+  color: Colors.WHITE
+}
+
 export const noteLogger: Logger = function (message, tag = 'NOTE') {
   console.log(
-    colorful(` ${tag} `, { bgColor: Colors.BLUE, bold: true }),
+    colorful(` ${tag} `, { ...tagCommonOptions, bgColor: Colors.BLUE }),
     colorful(message, { color: Colors.BLUE })
   )
 }
 
 export const errorLogger: Logger = function (message, tag = 'ERROR') {
   console.log(
-    colorful(` ${tag} `, { bgColor: Colors.RED, bold: true }),
+    colorful(` ${tag} `, { ...tagCommonOptions, bgColor: Colors.RED }),
     colorful(message, { color: Colors.RED })
   )
 }
 
 export const successLogger: Logger = function (message, tag = 'SUCCESS') {
   console.log(
-    colorful(` ${tag} `, { bgColor: Colors.GREEN, bold: true }),
+    colorful(` ${tag} `, { ...tagCommonOptions, bgColor: Colors.GREEN, color: Colors.BLACK }),
     colorful(message, { color: Colors.GREEN })
   )
 }
 
 export const warnLogger: Logger = function (message, tag = 'WARN') {
   console.log(
-    colorful(` ${tag} `, { bgColor: Colors.YELLOW, bold: true }),
+    colorful(` ${tag} `, { ...tagCommonOptions, bgColor: Colors.YELLOW }),
     colorful(message, { color: Colors.YELLOW })
   )
 }
