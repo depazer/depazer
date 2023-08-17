@@ -4,18 +4,33 @@ import { useI18n } from 'vue-i18n'
 withDefaults(defineProps<{ modelValue: boolean }>(), { modelValue: false })
 const emit = defineEmits<{ 'update:modelValue': [value: boolean] }>()
 
-const { t } = useI18n()
+const { t } = useI18n({
+  messages: {
+    'zh-CN': {
+      switch: {
+        on: '开',
+        off: '关'
+      }
+    },
+    'en-US': {
+      switch: {
+        on: 'ON',
+        off: 'OFF'
+      }
+    }
+  }
+})
 </script>
 
 <template>
   <button
     type="button"
-    :title="t('switch.title')"
+    :title="t(modelValue ? 'switch.on' : 'switch.off')"
     @click="emit('update:modelValue', !modelValue)"
     border="2 solid gray-1 dark:slate-6"
     flex="~ justify-center items-center"
-    :bg="modelValue && '!gray-3 !dark:slate-2'"
-    class="h-6 w-12 rounded-3 bg-gray-2 transition-background-color dark:bg-slate-8"
+    :bg="modelValue && '!gray-5 !dark:slate-2'"
+    class="h-6 w-12 rounded-3 bg-gray-2 transition-background-color dark:bg-slate-8 transition-background-color"
   >
     <span
       :transform="modelValue && 'translate-x-3'"
@@ -23,13 +38,3 @@ const { t } = useI18n()
     />
   </button>
 </template>
-
-<i18n lang="yaml">
-messages:
-  zh-CN:
-    switch:
-      title: 开关
-  en-US:
-    switch:
-      title: Switch
-</i18n>
