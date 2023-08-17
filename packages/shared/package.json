@@ -7,6 +7,7 @@
     "build-single": "esbuild --bundle --platform=node --target=node16 --outfile=lib/index.js --format=esm src/index.ts",
     "build-type": "tsc -p tsconfig.build.json",
     "build": "pnpm build-single && pnpm build-type",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix",
     "test": "vitest run"
   },
   "files": [
@@ -20,8 +21,5 @@
       "import": "./lib/index.js",
       "require": "./lib/index.js"
     }
-  },
-  "devDependencies": {
-    "esbuild": "^0.19.2"
   }
 }
