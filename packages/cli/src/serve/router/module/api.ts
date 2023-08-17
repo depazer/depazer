@@ -51,8 +51,10 @@ const apiRoute: Route = {
     }
 
     const data = {
-      packageManager: packageManager
+      packageManager,
+      version: process.version
     }
+
     handleSuccessRes(res, data)
   }
 }
