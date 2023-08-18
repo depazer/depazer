@@ -1,3 +1,5 @@
 #!/usr/bin/env node
 'use strict'
-import('../lib/index.js')
+import('../lib/index.js').then((cli) => {
+  cli.parseCommand()
+})

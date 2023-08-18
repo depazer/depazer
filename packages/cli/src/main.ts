@@ -33,5 +33,3 @@ export function parseCommand() {
     cli.outputHelp()
   }
 }
-
-parseCommand()
