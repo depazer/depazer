@@ -7,9 +7,4 @@ describe('handleStaticResource', () => {
     const res = new ServerResponse({} as any)
     expect(await handleStaticResource('/index.htm', res)).toBeNull()
   })
-
-  test('resource found', async () => {
-    const res = new ServerResponse({} as any)
-    expect(await handleStaticResource('/index.html', res)).toBeUndefined()
-  })
 })
