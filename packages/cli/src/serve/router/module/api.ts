@@ -17,9 +17,9 @@ const apiRoute: Route = {
       depth = Number(params.get('depth'))
     }
 
-    // api/graph?includeDeps=true
+    // api/graph?includeDev=true
     if (params.has('includeDeps')) {
-      includeDeps = true
+      includeDeps = params.get('includeDeps') === 'true'
     }
 
     const resolver = await getModuleResolver(root, includeDeps)
