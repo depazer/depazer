@@ -1,5 +1,5 @@
-import { resolve } from 'path'
-import { writeFile } from 'fs/promises'
+import { resolve } from 'node:path'
+import { writeFile } from 'node:fs/promises'
 import { getModuleResolver, graphTranslator } from '@depazer/core'
 import { successLogger } from '@depazer/shared'
 
