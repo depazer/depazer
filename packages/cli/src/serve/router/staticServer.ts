@@ -11,7 +11,7 @@ export async function handleStaticResource(url: string, res: ServerResponse) {
   // 文件不存在，404
   if (!(await hasFile(staticPath))) {
     handleNotFound(res)
-    return
+    return null
   }
 
   // 访问静态资源
