@@ -1,1 +1,1 @@
-export type ApiServer = (params: URLSearchParams) => Object
+export type ApiService = (params: URLSearchParams) => Object

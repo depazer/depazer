@@ -1,4 +1,4 @@
-import { helloServer } from './servers/hello'
+import { helloService } from './services/hello'
 
 const NOT_FOUND_PAYLOAD = { error: { message: 'not found' } }
 
@@ -7,7 +7,7 @@ export async function apiRouter(pathname: string) {
 
   switch (url.pathname) {
     case '/hello':
-      return helloServer(url.searchParams)
+      return helloService(url.searchParams)
     default:
       return NOT_FOUND_PAYLOAD
   }

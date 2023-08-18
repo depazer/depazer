@@ -3,7 +3,7 @@ import { createReadStream } from 'node:fs'
 
 import type { IncomingMessage, ServerResponse } from 'node:http'
 
-export default function staticServer(
+export default function staticService(
   filePath: string,
   res: ServerResponse<IncomingMessage> & { req: IncomingMessage }
 ) {

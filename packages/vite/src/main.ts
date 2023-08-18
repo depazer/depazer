@@ -1,7 +1,7 @@
 import { resolve } from 'node:path'
 import { apiRouter } from './router'
 import { hasFile } from '@depazer/shared'
-import staticServer from './servers/static'
+import staticService from './services/static'
 
 import type { Plugin, ViteDevServer } from 'vite'
 
@@ -57,7 +57,7 @@ export function vitePluginDepazer(option: Partial<Config> = {}): Plugin {
             return res.end()
           }
 
-          staticServer(filePath, res)
+          staticService(filePath, res)
         }
       })
     }
