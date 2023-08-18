@@ -1,0 +1,37 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`getModuleResolver > should return an environment object without devDependency 1`] = `
+{
+  "dependencies": [
+    {
+      "dependencies": [],
+      "name": "test-dep",
+      "version": "unknown",
+    },
+  ],
+  "devDependencies": [],
+  "name": "test",
+  "version": "1.0.0",
+}
+`;
+
+exports[`getModuleResolver > should return module Object with devDeps 1`] = `
+{
+  "dependencies": [
+    {
+      "dependencies": [],
+      "name": "test-dep",
+      "version": "unknown",
+    },
+  ],
+  "devDependencies": [
+    {
+      "dependencies": [],
+      "name": "test-dev-dep",
+      "version": "unknown",
+    },
+  ],
+  "name": "test",
+  "version": "1.0.0",
+}
+`;

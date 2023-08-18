@@ -27,7 +27,7 @@ export async function getModuleResolver(root: string, includeDeps: boolean) {
   return (depth: number = Infinity) => commonAdaptor(packageManager, root, moduleObject, depth)
 }
 
-async function initModuleObject(root: string, includeDeps: boolean) {
+export async function initModuleObject(root: string, includeDeps: boolean) {
   const rootPackageJson = resolve(root, 'package.json')
 
   const { name, version, dependencies, devDependencies } = await readPackageJSON(rootPackageJson)
