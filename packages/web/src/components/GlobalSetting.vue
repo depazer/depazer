@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import BaseSwitch from './base/Switch/index.vue'
 import BaseSlider from './base/Slider/index.vue'
 import BaseCounter from './base/Counter/index.vue'
 import BaseAutoComplete from './base/AutoComplete/index.vue'
@@ -8,7 +9,7 @@ import { useAppStore } from '@/stores/app'
 const emit = defineEmits<{ close: [] }>()
 
 const appStore = useAppStore()
-const { depth, fixedNailModel, repulsion } = storeToRefs(appStore)
+const { depth, fixedNailModel, includeDev, repulsion } = storeToRefs(appStore)
 </script>
 
 <template>
@@ -33,20 +34,12 @@ const { depth, fixedNailModel, repulsion } = storeToRefs(appStore)
     <div>
       <div my-4 flex="~ justify-between items-center">
         <span>拖拽固定</span>
-        <button
-          type="button"
-          title="开关"
-          @click="appStore.toggleFixedNailModel()"
-          border="2 solid gray-1 dark:slate-6"
-          flex="~ justify-center items-center"
-          :bg="fixedNailModel && '!gray-3 !dark:slate-2'"
-          class="h-6 w-12 rounded-3 bg-gray-2 dark:bg-slate-8"
-        >
-          <span
-            :transform="fixedNailModel && 'translate-x-3'"
-            class="inline-block h-4 w-4 rounded-2 bg-gray-4 transition-transform -translate-x-3"
-          ></span>
-        </button>
+        <BaseSwitch v-model="fixedNailModel" />
+      </div>
+
+      <div my-4 flex="~ justify-between items-center">
+        <span>包含开发依赖</span>
+        <BaseSwitch v-model="includeDev" />
       </div>
 
       <div class="mt-4" flex="~ justify-between items-center">
