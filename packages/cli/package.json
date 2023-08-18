@@ -42,7 +42,6 @@
     "@depazer/core": "workspace:*",
     "@depazer/shared": "workspace:*",
     "@depazer/web": "workspace:*",
-    "cac": "^6.7.14",
-    "chalk": "^5.3.0"
+    "cac": "^6.7.14"
   }
 }
