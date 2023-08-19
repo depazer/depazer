@@ -8,7 +8,6 @@ import { version, bin } from '../package.json'
 import type { CreateCommand } from '@/types/command'
 
 export function createCli() {
-  /** @todo 命令名未定 与package.bin字段第一个命令同步 */
   const cli = cac(Object.keys(bin)[0])
 
   registerCommand(cli, createCommandFunctions as CreateCommand[])
@@ -17,14 +16,15 @@ export function createCli() {
   return cli
 }
 
-export function parseCommand() {
+export function parseCommand(run: boolean) {
   const cli = createCli()
 
   try {
-    cli.parse()
+    cli.parse(process.argv, { run })
   } catch (error: unknown) {
     if (error instanceof Error && error.name === 'CACError') {
       errorLogger(error.message, 'COMMAND ERROR')
+      /* c8 ignore next 4 */
     } else {
       errorLogger(error + '', 'UNKNOWN ERROR')
       throw error
@@ -33,3 +33,5 @@ export function parseCommand() {
     cli.outputHelp()
   }
 }
+
+parseCommand(process.env.NODE_ENV !== 'test')
