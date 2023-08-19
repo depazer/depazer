@@ -65,8 +65,10 @@ exports[`graphTranslator > should translate a module object with loop / repetiti
     "name": "c@1.0.0",
   },
   {
-    "dependencies": [],
-    "depth": 2,
+    "dependencies": [
+      "a@1.0.0",
+    ],
+    "depth": 1,
     "isDevDependency": false,
     "name": "b@1.0.0",
   },
