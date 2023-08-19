@@ -1,5 +1,6 @@
 export default {
   packageInfo: {
+    version: 'Version',
     license: 'LICENSE',
     description: 'Description',
     size: 'Size',

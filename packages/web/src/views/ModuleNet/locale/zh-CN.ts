@@ -1,5 +1,6 @@
 export default {
   packageInfo: {
+    version: '版本号',
     license: '许可证',
     description: '描述',
     size: '大小',

@@ -6,9 +6,12 @@ const appStore = useAppStore()
 
 const { currentRegistry } = storeToRefs(appStore)
 
-const props = defineProps<{ currentPackage: Record<'name' | 'version', string> }>()
+const props = defineProps<{
+  currentPackage: Record<'name' | 'version', string>
+  modelValue: string
+}>()
 
-const emit = defineEmits<{ close: [] }>()
+const emit = defineEmits<{ close: []; 'update:modelValue': [rootModule: string] }>()
 const fetching = ref<boolean>(false)
 
 watchEffect(async () => {
@@ -50,18 +53,12 @@ const formattedPackageInfo = computed(() => {
     flex="~ col"
   >
     <header flex="~ justify-between items-center">
-      <div>
-        <code
-          class="rounded-l bg-indigo-3 px-1 font-sans text-indigo-8 dark:bg-blue-6 dark:text-blue-2"
-        >
-          {{ currentPackage.name }}
-        </code>
-        <code
-          class="rounded-r bg-lime-2 px-1 font-sans text-lime-6 dark:bg-lime-6 dark:text-lime-1"
-        >
-          {{ currentPackage.version }}
-        </code>
-      </div>
+      <code
+        class="rounded bg-indigo-3 px-1 font-sans text-indigo-8 dark:bg-blue-6 dark:text-blue-2"
+      >
+        {{ currentPackage.name }}
+      </code>
+
       <button
         type="button"
         title="关闭"
@@ -74,16 +71,53 @@ const formattedPackageInfo = computed(() => {
     </header>
 
     <section class="flex-grow overflow-auto" v-show="!fetching">
+      <div class="select-none mt-2 flex justify-between items-center gap-2">
+        <div>
+          <span class="mr-2 font-bold">{{ $t('packageInfo.version') }}</span>
+          <code
+            class="rounded bg-lime-2 px-1 font-sans text-lime-6 dark:bg-lime-6 dark:text-lime-1"
+          >
+            {{ currentPackage.version }}
+          </code>
+        </div>
+
+        <div>
+          <button
+            v-show="currentPackage.version.match(/^\d/)"
+            type="button"
+            title="设为根"
+            class="ma-0 rounded-md border-none pa-1"
+            bg="transparent hover:gray-2 hover:dark:slate-8"
+            @click="emit('update:modelValue', currentPackage.name + '@' + currentPackage.version)"
+          >
+            <i class="i-uil-location-point" text="lg red" />
+          </button>
+          <button
+            v-show="modelValue !== 'root'"
+            type="button"
+            title="返回主包"
+            class="ma-0 rounded-md border-none pa-1"
+            bg="transparent hover:gray-2 hover:dark:slate-8"
+            @click="emit('update:modelValue', 'root')"
+          >
+            <i class="i-uil-focus-target" text="lg green-6" />
+          </button>
+        </div>
+      </div>
       <div class="my-4">
         <span class="select-none font-bold">{{ $t('packageInfo.description') }}</span>
         <p class="my-2">{{ formattedPackageInfo.description }}</p>
       </div>
-      <p class="select-none">
-        <span class="mr-2 font-bold">{{ $t('packageInfo.size') }}</span>
-        <code font-sans>{{ formattedPackageInfo.dist.size }}</code>
-        <span class="mx-2 font-bold">{{ $t('packageInfo.unpackedSize') }}</span>
-        <code font-sans>{{ formattedPackageInfo.dist.unpackedSize }}</code>
-      </p>
+      <div class="select-none flex flex-wrap justify-between gap-2">
+        <p my-1>
+          <span class="mr-2 font-bold">{{ $t('packageInfo.size') }}</span>
+          <code font-sans>{{ formattedPackageInfo.dist.size }}</code>
+        </p>
+        <p my-1>
+          <span class="mr-2 font-bold">{{ $t('packageInfo.unpackedSize') }}</span>
+          <code font-sans>{{ formattedPackageInfo.dist.unpackedSize }}</code>
+        </p>
+      </div>
       <p class="select-none">
         <span class="mr-2 font-bold">{{ $t('packageInfo.license') }}</span>
         <code

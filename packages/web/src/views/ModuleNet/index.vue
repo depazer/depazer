@@ -15,7 +15,7 @@ function handleClick(packageID: string) {
   currentPackage.name = packageID.split('@').slice(0, -1).join('@')
 }
 
-const { graphData } = useLocalModule()
+const { graphData, rootModule } = useLocalModule()
 </script>
 
 <template>
@@ -30,7 +30,11 @@ const { graphData } = useLocalModule()
 
     <Transition name="package-info">
       <aside v-if="packageInfoVisible" class="absolute left-4 top-16">
-        <PackageInfo :currentPackage="currentPackage" @close="togglePackageInfoVisible" />
+        <PackageInfo
+          v-model="rootModule"
+          :currentPackage="currentPackage"
+          @close="togglePackageInfoVisible"
+        />
       </aside>
     </Transition>
 
