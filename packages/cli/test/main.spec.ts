@@ -10,8 +10,26 @@ describe('cli', () => {
   test('parseCommand', ({ expect }) => {
     console.log = vi.fn()
 
-    parseCommand()
+    parseCommand(false)
+
+    expect(console.log).not.toBeCalled()
+
+    parseCommand(true)
 
     expect(console.log).toBeCalled()
+  })
+
+  test('parseCommand with error command', ({ expect }) => {
+    console.log = vi.fn()
+
+    process.argv = ['start', 'depazer', 'error', '--error']
+
+    parseCommand(true)
+
+    expect(console.log).toHaveBeenNthCalledWith(
+      1,
+      expect.stringContaining('COMMAND ERROR'),
+      expect.stringContaining('--error')
+    )
   })
 })
