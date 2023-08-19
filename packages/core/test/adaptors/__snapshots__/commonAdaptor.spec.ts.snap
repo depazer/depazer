@@ -1,0 +1,273 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`commonAdaptor > npm & depth 1 1`] = `
+{
+  "dependencies": [
+    {
+      "dependencies": [],
+      "name": "test-dep",
+      "version": "1.0.0",
+    },
+  ],
+  "devDependencies": [
+    {
+      "dependencies": [],
+      "name": "test-dev-dep",
+      "version": "1.0.0",
+    },
+  ],
+  "name": "test",
+  "version": "1.0.0",
+}
+`;
+
+exports[`commonAdaptor > npm & depth 5 1`] = `
+{
+  "dependencies": [
+    {
+      "dependencies": [
+        {
+          "dependencies": [
+            {
+              "dependencies": [
+                {
+                  "dependencies": [
+                    {
+                      "dependencies": [],
+                      "name": "test-dep",
+                      "version": "1.0.0",
+                    },
+                  ],
+                  "name": "test",
+                  "version": "1.0.0",
+                },
+              ],
+              "name": "test",
+              "version": "1.0.0",
+            },
+          ],
+          "name": "test",
+          "version": "1.0.0",
+        },
+      ],
+      "name": "test",
+      "version": "1.0.0",
+    },
+    {
+      "dependencies": [
+        {
+          "dependencies": [
+            {
+              "dependencies": [
+                {
+                  "dependencies": [
+                    {
+                      "dependencies": [],
+                      "name": "test-dep",
+                      "version": "1.0.0",
+                    },
+                  ],
+                  "name": "test",
+                  "version": "1.0.0",
+                },
+              ],
+              "name": "test",
+              "version": "1.0.0",
+            },
+          ],
+          "name": "test",
+          "version": "1.0.0",
+        },
+      ],
+      "name": "test",
+      "version": "1.0.0",
+    },
+  ],
+  "devDependencies": [
+    {
+      "dependencies": [],
+      "name": "test-dep",
+      "version": "1.0.0",
+    },
+    {
+      "dependencies": [
+        {
+          "dependencies": [
+            {
+              "dependencies": [
+                {
+                  "dependencies": [
+                    {
+                      "dependencies": [],
+                      "name": "test-dep",
+                      "version": "1.0.0",
+                    },
+                  ],
+                  "name": "test",
+                  "version": "1.0.0",
+                },
+              ],
+              "name": "test",
+              "version": "1.0.0",
+            },
+          ],
+          "name": "test",
+          "version": "1.0.0",
+        },
+      ],
+      "name": "test",
+      "version": "1.0.0",
+    },
+  ],
+  "name": "test",
+  "version": "1.0.0",
+}
+`;
+
+exports[`commonAdaptor > pnpm & depth 1 1`] = `
+{
+  "dependencies": [
+    {
+      "dependencies": [],
+      "name": "test-dep",
+      "version": "1.0.0",
+    },
+  ],
+  "devDependencies": [
+    {
+      "dependencies": [],
+      "name": "test-dev-dep",
+      "version": "1.0.0",
+    },
+  ],
+  "name": "test",
+  "version": "1.0.0",
+}
+`;
+
+exports[`commonAdaptor > pnpm & depth 4 & search .pnpm/node_modules 1`] = `
+{
+  "dependencies": [
+    {
+      "dependencies": [
+        {
+          "dependencies": [
+            {
+              "dependencies": [],
+              "name": "test-dep",
+              "version": "1.0.0",
+            },
+          ],
+          "name": "test",
+          "version": "1.0.0",
+        },
+      ],
+      "name": "test",
+      "version": "1.0.0",
+    },
+  ],
+  "devDependencies": [],
+  "name": "test",
+  "version": "1.0.0",
+}
+`;
+
+exports[`commonAdaptor > pnpm & depth 5 & with same dependency 1`] = `
+{
+  "dependencies": [
+    {
+      "dependencies": [
+        {
+          "dependencies": [
+            {
+              "dependencies": [
+                {
+                  "dependencies": [
+                    {
+                      "dependencies": [],
+                      "name": "test-dep",
+                      "version": "1.0.0",
+                    },
+                  ],
+                  "name": "test",
+                  "version": "1.0.0",
+                },
+              ],
+              "name": "test",
+              "version": "1.0.0",
+            },
+          ],
+          "name": "test",
+          "version": "1.0.0",
+        },
+      ],
+      "name": "test",
+      "version": "1.0.0",
+    },
+    {
+      "dependencies": [],
+      "name": "test",
+      "version": "unknown",
+    },
+  ],
+  "devDependencies": [
+    {
+      "dependencies": [],
+      "name": "test-dep",
+      "version": "1.0.0",
+    },
+    {
+      "dependencies": [
+        {
+          "dependencies": [
+            {
+              "dependencies": [
+                {
+                  "dependencies": [
+                    {
+                      "dependencies": [],
+                      "name": "test-dep",
+                      "version": "1.0.0",
+                    },
+                  ],
+                  "name": "test",
+                  "version": "1.0.0",
+                },
+              ],
+              "name": "test",
+              "version": "1.0.0",
+            },
+          ],
+          "name": "test",
+          "version": "1.0.0",
+        },
+      ],
+      "name": "test",
+      "version": "1.0.0",
+    },
+  ],
+  "name": "test",
+  "version": "1.0.0",
+}
+`;
+
+exports[`commonAdaptor > yarn & depth 1 1`] = `
+{
+  "dependencies": [
+    {
+      "dependencies": [],
+      "name": "test-dep",
+      "version": "1.0.0",
+    },
+  ],
+  "devDependencies": [
+    {
+      "dependencies": [],
+      "name": "test-dev-dep",
+      "version": "1.0.0",
+    },
+  ],
+  "name": "test",
+  "version": "1.0.0",
+}
+`;

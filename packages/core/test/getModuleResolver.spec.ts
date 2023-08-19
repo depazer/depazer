@@ -48,7 +48,7 @@ describe('getModuleResolver', () => {
     expect(res).toMatchSnapshot()
   })
 
-  test('should return an environment object without devDependency', async ({ expect }) => {
+  test('should return a module object without devDependency', async ({ expect }) => {
     const resolver = await getModuleResolver('.', false)
     expect(typeof resolver).toBe('function')
     if (typeof resolver !== 'function') return
