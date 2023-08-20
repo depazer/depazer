@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+<polygon points="50,5 95,50 69.5,80 30.5,80 5,50" style="fill: rgba(239,68,68,1);"></polygon>
+
+<line x1="50" y1="5" x2="5" y2="50" style="stroke-linecap: round;stroke: rgba(252,165,165,1);stroke-width: 2px;"></line>
+<line x1="50" y1="5" x2="95" y2="50" stroke="stroke-linecap: round;stroke: rgba(252,165,165,1);stroke-width: 2px;"></line>
+<circle cx="50" cy="5" r="5" style="fill: rgba(71,85,105,var(--un-fill-opacity));"></circle>
+
+<line x1="5" y1="50" x2="30" y2="80" style="stroke: rgba(74,222,128,1);stroke-width: 5px;stroke-width: 2px;"></line>
+<line x1="30" y1="80" x2="70" y2="80" style="stroke: rgba(74,222,128,1);stroke-width: 5px;stroke-width: 2px;"></line>
+<line x1="70" y1="80" x2="95" y2="50" style="stroke: rgba(74,222,128,1);stroke-width: 5px;stroke-width: 2px;"></line>
+
+<line x1="2" y1="53" x2="27" y2="83" style="stroke: rgba(22,163,74,1);stroke-width: 5px;stroke-width: 2px;"></line>
+<line x1="28" y1="83" x2="72" y2="83" style="stroke: rgba(22,163,74,1);stroke-width: 5px;stroke-width: 2px;"></line>
+<line x1="72" y1="83" x2="97" y2="53" style="stroke: rgba(22,163,74,1);stroke-width: 5px;stroke-width: 2px;"></line>
+</svg>
