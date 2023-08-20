@@ -11,7 +11,8 @@ const defaultDependency = {
 const _global = {
   markSet: new Set<string>(),
   maxDepth: Infinity,
-  packageManager: 'npm'
+  packageManager: 'npm',
+  pnpmRoot: ''
 }
 
 /**
@@ -34,6 +35,7 @@ export async function commonAdaptor(
   _global.markSet.clear()
   _global.maxDepth = depth
   _global.packageManager = packageManager
+  if (packageManager === 'pnpm') _global.pnpmRoot = resolve(root, 'node_modules/.pnpm')
 
   moduleObject.dependencies = await Promise.all(
     moduleObject.dependencies.map(async ({ name }) => {
@@ -67,10 +69,13 @@ async function resolveModule(
   const packageJSONPath = resolve(dependencyPath, 'package.json')
 
   if ((await hasFile(packageJSONPath)) === false) {
+    const isPNPM = _global.packageManager === 'pnpm'
+    const isPNPMRoot = isPNPM && currentPath === _global.pnpmRoot
+
     /** @desc 防止文件夹越界，超出根目录 */
-    if (currentPath === root) {
-      return depth === 3 && _global.packageManager === 'pnpm'
-        ? resolveModule(root, resolve(root, 'node_modules/.pnpm'), dependency, depth)
+    if (currentPath === root || isPNPMRoot) {
+      return isPNPM && !isPNPMRoot
+        ? resolveModule(root, _global.pnpmRoot, dependency, depth)
         : { name: dependency, ...defaultDependency }
     }
     /** @desc 查找父级目录 */

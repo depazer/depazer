@@ -114,6 +114,30 @@ describe('commonAdaptor', () => {
     expect(res).toMatchSnapshot()
   })
 
+  test('pnpm & depth 4 & have multiple in root/node_modules & search .pnpm/node_modules', async ({
+    expect
+  }) => {
+    vi.mocked(mockedHasFile).mockResolvedValueOnce(true)
+    vi.mocked(mockedHasFile).mockResolvedValueOnce(false)
+    vi.mocked(mockedHasFile).mockResolvedValueOnce(false)
+    vi.mocked(mockedHasFile).mockResolvedValueOnce(false)
+    vi.mocked(mockedHasFile).mockResolvedValue(true)
+
+    const res = await commonAdaptor(
+      'pnpm',
+      process.cwd(),
+      {
+        name: 'test',
+        version: '1.0.0',
+        dependencies: [{ name: 'test-dep', version: '1.0.0', dependencies: [] }],
+        devDependencies: []
+      },
+      3
+    )
+
+    expect(res).toMatchSnapshot()
+  })
+
   test('pnpm & depth 5 & with same dependency', async ({ expect }) => {
     vi.mocked(mockedHasFile).mockResolvedValueOnce(true)
     vi.mocked(mockedHasFile).mockResolvedValueOnce(false)
