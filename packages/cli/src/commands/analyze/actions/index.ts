@@ -4,11 +4,12 @@ import { startAnalyzer } from './startAnalyzer'
 
 import type { AnalyzeOption } from '../types'
 import { resolve } from 'path'
+import { noteLogger } from '@depazer/shared'
 
 export default function (root: string, { depth, dev, jsonFile, port, '--': args }: AnalyzeOption) {
   root = resolve(process.cwd(), root ?? '.')
   jsonFile = jsonFile === true ? 'analyzer.json' : jsonFile
-  console.log('root', root)
+  noteLogger(root, 'BASE')
 
   if (args.length !== 0) {
     throw new CACError('Unknown option ' + JSON.stringify(args))
