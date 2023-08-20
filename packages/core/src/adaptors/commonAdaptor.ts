@@ -69,12 +69,11 @@ async function resolveModule(
   const packageJSONPath = resolve(dependencyPath, 'package.json')
 
   if ((await hasFile(packageJSONPath)) === false) {
-    const isPNPM = _global.packageManager === 'pnpm'
-    const isPNPMRoot = isPNPM && currentPath === _global.pnpmRoot
-
     /** @desc 防止文件夹越界，超出根目录 */
-    if (currentPath === root || isPNPMRoot) {
-      return isPNPM && !isPNPMRoot
+    if (currentPath === root) {
+      const isPNPM = _global.packageManager === 'pnpm'
+
+      return isPNPM && (await hasFile(_global.pnpmRoot, `node_modules/${dependency}/package.json`))
         ? resolveModule(root, _global.pnpmRoot, dependency, depth)
         : { name: dependency, ...defaultDependency }
     }

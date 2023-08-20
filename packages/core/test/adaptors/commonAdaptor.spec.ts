@@ -119,7 +119,7 @@ describe('commonAdaptor', () => {
   }) => {
     vi.mocked(mockedHasFile).mockResolvedValueOnce(true)
     vi.mocked(mockedHasFile).mockResolvedValueOnce(false)
-    vi.mocked(mockedHasFile).mockResolvedValueOnce(false)
+    vi.mocked(mockedHasFile).mockResolvedValueOnce(true)
     vi.mocked(mockedHasFile).mockResolvedValueOnce(false)
     vi.mocked(mockedHasFile).mockResolvedValue(true)
 
