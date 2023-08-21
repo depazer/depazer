@@ -45,7 +45,7 @@ const selectValue = (val: string) => {
       :value="searchValue"
       @input="handleInput(($event.target as HTMLInputElement).value)"
       @blur="searchedVisible = false"
-      @focus="searchedVisible = true"
+      @focus="handleInput(searchValue)"
     />
   </div>
 
