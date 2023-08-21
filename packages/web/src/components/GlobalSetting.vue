@@ -51,7 +51,7 @@ const { depth, fixedNailModel, includeDev, repulsion } = storeToRefs(appStore)
       <p>斥力大小</p>
       <BaseSlider :max="10000" :min="100" v-model="repulsion" class="mr-4" />
 
-      <p>搜索节点</p>
+      <p>搜索节点（最多显示 10 条）</p>
       <BaseSearch placeholder="Enter start search" />
 
       <p>注册表API</p>

@@ -19,7 +19,10 @@ const handleInput = useDebounceFn((val: string) => {
     .map(({ name }) => name)
 
   if (val) {
-    searchedList.push(...searchRes)
+    // 最多显示 10 条
+    searchRes.length > 10
+      ? searchedList.push(...searchRes.slice(0, 10))
+      : searchedList.push(...searchRes)
   }
 
   searchedVisible.value = !!val
