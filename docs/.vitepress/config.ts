@@ -14,19 +14,41 @@ export default defineConfig({
       { text: '在线体验', link: 'https://depazer.github.io/playground' }
     ],
 
+    search: {
+      provider: 'local'
+    },
+
     sidebar: [
       {
-        text: '开始',
+        text: '入门',
+        base: '/guide',
         items: [
-          { text: '简介', link: '/guide/introduction' },
-          { text: '快速开始', link: '/guide/quick-start' }
+          { text: '简介', link: '/introduction' },
+          { text: '快速开始', link: '/quick-start' }
         ]
       },
       {
-        text: 'Examples',
+        text: '操作手册',
+        base: '/guide',
         items: [
-          { text: 'Markdown Examples', link: '/markdown-examples' },
-          { text: 'Runtime API Examples', link: '/api-examples' }
+          {
+            text: 'WEB 可视化操作',
+            link: '/web'
+          },
+          {
+            text: 'CLI 命令详情',
+            link: '/cli'
+          }
+        ]
+      },
+      {
+        text: '贡献指南',
+        items: [
+          { text: '依赖json文件说明', link: '/markdown-examples' },
+          { text: '项目概述', link: '/markdown-examples' },
+          { text: 'cli', link: '/markdown-examples' },
+          { text: 'web', link: '/markdown-examples' },
+          { text: 'core', link: '/api-examples' }
         ]
       }
     ],
