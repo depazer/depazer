@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { useLocalModule } from '@/hooks/localModule'
+import { useAppStore } from '@/stores/app'
 
 const { placeholder } = defineProps<{ placeholder?: string }>()
 
@@ -9,6 +10,12 @@ const searchRef = ref<HTMLElement | null>(null)
 const searchedList: string[] = reactive([])
 
 const { graphData } = useLocalModule()
+const { rootModule } = storeToRefs(useAppStore())
+
+// init searchValue
+onMounted(() => {
+  searchValue.value = rootModule.value === 'root' ? '' : rootModule.value
+})
 
 const handleInput = useDebounceFn((val: string) => {
   searchedList.length = 0
@@ -23,6 +30,8 @@ const handleInput = useDebounceFn((val: string) => {
     searchRes.length > 10
       ? searchedList.push(...searchRes.slice(0, 10))
       : searchedList.push(...searchRes)
+  } else {
+    rootModule.value = 'root'
   }
 
   searchedVisible.value = !!val
@@ -31,6 +40,9 @@ const handleInput = useDebounceFn((val: string) => {
 const selectValue = (val: string) => {
   searchValue.value = val
   searchedVisible.value = false
+
+  // focus
+  rootModule.value = searchValue.value
 }
 </script>
 
