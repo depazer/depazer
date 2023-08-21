@@ -70,3 +70,25 @@ const selectValue = (val: string) => {
     </ul>
   </Transition>
 </template>
+
+<style scoped>
+.searched-enter-active {
+  position: absolute;
+  transform-origin: top;
+  animation: scale-options 150ms;
+}
+.searched-leave-active {
+  position: absolute;
+  transform-origin: top;
+  animation: scale-options 150ms reverse;
+}
+
+@keyframes scale-options {
+  0% {
+    transform: scale(1, 0);
+  }
+  100% {
+    transform: scale(1, 1);
+  }
+}
+</style>
