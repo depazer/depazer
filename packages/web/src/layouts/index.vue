@@ -16,7 +16,9 @@ const toggleSettingVisible = useToggle(settingVisible)
 
 <template>
   <header flex="~ justify-between items-center" class="fixed box-border w-full px-4 py-2">
-    <span class="select-none text-xl font-bold">Dependency Analyzer</span>
+    <span class="select-none text-xl font-bold">
+      <img src="/logo.svg" class="w-7 align-bottom" /> Depazer
+    </span>
     <div>
       <button
         title="全屏"

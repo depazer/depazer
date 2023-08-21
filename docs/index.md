@@ -14,7 +14,7 @@ hero:
       text: 在线体验
       link: https://depazer.github.io/playground
   image:
-    src: /logo.png
+    src: /logo.svg
     alt: depazer
 
 features:
@@ -37,3 +37,24 @@ features:
     title: 在线分析
     details: 支持使用npm注册表模拟模块依赖关系。
 ---
+
+<style>
+.image-src[alt="depazer"] {
+    max-width: 160px;
+    max-height: 160px;
+}
+
+@media (min-width: 640px) {
+.image-src[alt="depazer"] {
+    max-width: 200px;
+    max-height: 200px;
+}
+}
+
+@media (min-width: 960px) {
+.image-src[alt="depazer"] {
+    max-width: 340px;
+    max-height: 340px;
+}
+}
+</style>

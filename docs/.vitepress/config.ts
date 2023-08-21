@@ -8,7 +8,7 @@ export default defineConfig({
 
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
-    logo: { src: '/logo.svg', width: 20, height: 18 },
+    logo: { src: '/logo.svg', width: 32, height: 32 },
     nav: [
       { text: '指南', link: '/guide/introduction', activeMatch: '/guide/' },
       { text: '在线体验', link: 'https://depazer.github.io/playground' }
