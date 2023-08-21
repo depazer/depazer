@@ -5,6 +5,8 @@ export const useAppStore = defineStore('app', () => {
   const fixedNailModel = ref<boolean>(false)
   const toggleFixedNailModel = useToggle(fixedNailModel)
 
+  const rootModule = ref<string>('root')
+
   /** @desc 递归深度 */
   const depth = ref<number>(2)
   /** @desc 是否包含开发依赖 */
@@ -19,6 +21,7 @@ export const useAppStore = defineStore('app', () => {
     fixedNailModel,
     npmRegistryURLs,
     repulsion,
+    rootModule,
     toggleFixedNailModel
   }
 })

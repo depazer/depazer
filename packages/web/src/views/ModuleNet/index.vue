@@ -4,6 +4,7 @@ import PackageInfo from './components/PackageInfo.vue'
 import EnvironmentInfo from './components/EnvironmentInfo.vue'
 
 import { useLocalModule } from '@/hooks/localModule'
+import { useAppStore } from '@/stores/app'
 import { ref, reactive } from 'vue'
 
 const packageInfoVisible = ref<boolean>(false)
@@ -15,7 +16,8 @@ function handleClick(packageID: string) {
   currentPackage.name = packageID.split('@').slice(0, -1).join('@')
 }
 
-const { graphData, rootModule } = useLocalModule()
+const { graphData } = useLocalModule()
+const { rootModule } = storeToRefs(useAppStore())
 </script>
 
 <template>
