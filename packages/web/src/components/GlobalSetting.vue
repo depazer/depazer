@@ -3,6 +3,7 @@ import BaseSwitch from './base/Switch/index.vue'
 import BaseSlider from './base/Slider/index.vue'
 import BaseCounter from './base/Counter/index.vue'
 import BaseAutoComplete from './base/AutoComplete/index.vue'
+import BaseSearch from './base/Search/index.vue'
 
 import { useAppStore } from '@/stores/app'
 
@@ -49,6 +50,9 @@ const { depth, fixedNailModel, includeDev, repulsion } = storeToRefs(appStore)
 
       <p>斥力大小</p>
       <BaseSlider :max="10000" :min="100" v-model="repulsion" class="mr-4" />
+
+      <p>搜索节点（最多显示 10 条）</p>
+      <BaseSearch placeholder="Enter start search" />
 
       <p>注册表API</p>
       <BaseAutoComplete v-model="appStore.currentRegistry" :data="appStore.npmRegistryURLs">

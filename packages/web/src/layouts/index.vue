@@ -1,4 +1,5 @@
 <script setup lang="tsx">
+import html2canvas from 'html2canvas'
 import GlobalSetting from '@/components/GlobalSetting.vue'
 
 import { useLocale } from '@/hooks/locale'
@@ -12,6 +13,23 @@ const { toggleLocale } = useLocale()
 
 const settingVisible = ref<boolean>(false)
 const toggleSettingVisible = useToggle(settingVisible)
+
+const mainRef = ref<HTMLElement | null>(null)
+const handleScreenshot = () => {
+  if (!mainRef.value) return
+
+  html2canvas(mainRef.value, {
+    backgroundColor: isDark.value ? '#111729' : '#e1e4e8'
+  }).then((canvas) => {
+    const link = document.createElement('a')
+    canvas.toBlob((blob) => {
+      let url = URL.createObjectURL(blob!)
+      link.download = 'depazer.png'
+      link.href = url
+      link.click()
+    })
+  })
+}
 </script>
 
 <template>
@@ -54,6 +72,16 @@ const toggleSettingVisible = useToggle(settingVisible)
         <i class="i-uil-moonset dark:i-uil-sunset" text="2xl gray-6 dark:slate-1" />
       </button>
       <button
+        title="截图"
+        type="button"
+        class="mr-2 cursor-pointer rounded-full pa-1"
+        bg="gray-1 hover:gray-2 active:gray-3 dark:slate-6 hover:dark:slate-7 active:dark:slate-8"
+        border="solid 1 gray-3 dark:slate-5"
+        @click="() => handleScreenshot()"
+      >
+        <i class="i-ri-screenshot-fill" text="2xl gray-6 dark:slate-1" />
+      </button>
+      <button
         title="设置"
         type="button"
         class="cursor-pointer rounded-full pa-1"
@@ -72,7 +100,7 @@ const toggleSettingVisible = useToggle(settingVisible)
     </aside>
   </Transition>
 
-  <main>
+  <main ref="mainRef">
     <router-view />
   </main>
 </template>

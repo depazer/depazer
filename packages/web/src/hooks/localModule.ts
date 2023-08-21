@@ -4,7 +4,7 @@ import type { Data, LinkInfo, NodeInfo } from '@/views/ModuleNet/types'
 
 export function useLocalModule(graphApi: string = 'api/graph') {
   const appStore = useAppStore()
-  const { depth, includeDev } = storeToRefs(appStore)
+  const { depth, includeDev, rootModule } = storeToRefs(appStore)
 
   const apiGenerator = (depth: number, includeDev: boolean) => {
     return import.meta.env.BASE_URL + graphApi + `?depth=${depth}&includeDeps=${includeDev}`
@@ -20,7 +20,6 @@ export function useLocalModule(graphApi: string = 'api/graph') {
     apiURL.value = apiGenerator(depth.value, includeDev.value)
   })
 
-  const rootModule = ref<string>('root')
   const graphData = computed<Data>(() => {
     const nodes = data?.value ?? []
 
@@ -64,5 +63,5 @@ export function useLocalModule(graphApi: string = 'api/graph') {
     }
   })
 
-  return { graphData, rootModule }
+  return { graphData }
 }
