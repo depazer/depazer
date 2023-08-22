@@ -1,5 +1,8 @@
 ---
 '@depazer/shared': patch
+'@depazer/vite': patch
+'@depazer/core': patch
+'@depazer/cli': patch
 ---
 
-feat: add terminal output color
+✨ Feature: add terminal output color
