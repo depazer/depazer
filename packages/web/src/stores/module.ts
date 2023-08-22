@@ -1,4 +1,4 @@
-import type { Data, LinkInfo, NodeInfo } from '@/views/ModuleNet/types'
+import type { Data, NodeInfo } from '@/views/ModuleNet/types'
 
 export const useModuleStore = defineStore('module', () => {
   const moduleConfig = reactive({
@@ -26,48 +26,16 @@ export const useModuleStore = defineStore('module', () => {
 
   const nodesData = computed<NodeInfo[]>(() => data?.value ?? [])
 
-  const graphData = computed<Data>(() => {
-    const nodes = nodesData.value
-
-    const isRoot = moduleConfig.rootModule === ''
-    const rootNode = isRoot ? undefined : nodes.find(({ name }) => name === moduleConfig.rootModule)
-
-    const filteredNodes: NodeInfo[] = []
-    const links: LinkInfo[] = []
-    const markedSet = new Set()
-    rootNode && generateSubModule(rootNode)
-
-    function generateSubModule(rootNode: NodeInfo) {
-      markedSet.add(rootNode.name)
-      filteredNodes.push(rootNode)
-      links.push(
-        ...rootNode.dependencies.map((dep) => ({
-          source: rootNode.name,
-          target: dep,
-          isDeps: nodes.find((node) => node.name === dep)?.isDevDependency ?? false
-        }))
-      )
-      rootNode.dependencies.forEach((name) => {
-        !markedSet.has(name) && generateSubModule(nodes.find((node) => node.name === name)!)
-      })
-    }
-
-    return {
-      nodes: rootNode === undefined ? nodes : filteredNodes,
-      links:
-        rootNode === undefined
-          ? nodes.reduce<LinkInfo[]>((links, { name, dependencies }, _, nodes) => {
-              links.push(
-                ...dependencies.map((dep) => ({
-                  source: name,
-                  target: dep,
-                  isDeps: nodes.find((node) => node.name === dep)?.isDevDependency ?? false
-                }))
-              )
-              return links
-            }, [])
-          : links
-    }
+  const graphData = shallowRef<Data>({ nodes: [], links: [] })
+  const depsDigraphWorker = new Worker(new URL('../utils/depsDigraphWorker.ts', import.meta.url))
+  depsDigraphWorker.onmessage = (e: MessageEvent<{ type: number; data: Data }>) => {
+    graphData.value = e.data.data
+  }
+  watchEffect(() => {
+    depsDigraphWorker.postMessage({
+      nodes: nodesData.value,
+      rootModule: moduleConfig.rootModule
+    })
   })
 
   return { graphData, moduleConfig, nodesData }
