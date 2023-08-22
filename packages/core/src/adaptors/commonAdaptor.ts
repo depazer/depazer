@@ -17,7 +17,7 @@ const _global = {
 
 /**
  * @desc 通用模块解析器
- * @test pnpm - 8.6.12 npm - 9.6.7 yarn - 1.22.19
+ * @test pnpm - 8.6.12 npm - 9.6.7 yarn - 1.22.19 bun - 0.7.3
  * @param packageManager
  * @param root
  * @param moduleObject
@@ -25,7 +25,7 @@ const _global = {
  * @returns
  */
 export async function commonAdaptor(
-  packageManager: 'pnpm' | 'yarn' | 'npm',
+  packageManager: 'pnpm' | 'yarn' | 'npm' | 'bun',
   root: string,
   moduleObject: ModuleObject,
   depth: number

@@ -1,6 +1,6 @@
 import { errorLogger, hasFile, hasFolder } from '@depazer/shared'
 
-type PackageManager = 'npm' | 'pnpm' | 'yarn'
+type PackageManager = 'npm' | 'pnpm' | 'yarn' | 'bun'
 
 interface Environment {
   packageManager: PackageManager
@@ -23,7 +23,8 @@ export async function environmentScanner(root: string): Promise<Environment> {
   const packageManagerTuple: [PackageManager, string][] = [
     ['npm', 'package-lock.json'],
     ['pnpm', 'pnpm-lock.yaml'],
-    ['yarn', 'yarn.lock']
+    ['yarn', 'yarn.lock'],
+    ['bun', 'bun.lockb']
   ]
 
   const environment: Environment = {

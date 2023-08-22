@@ -75,14 +75,16 @@ describe('environmentScanner', () => {
   })
 
   test.each([
-    ['npm', true, false, false],
-    ['pnpm', false, true, false],
-    ['yarn', false, false, true]
-  ])('should return %s and error: false', async (packageManager, npm, pnpm, yarn) => {
+    ['npm', true, false, false, false],
+    ['pnpm', false, true, false, false],
+    ['yarn', false, false, true, false],
+    ['bun', false, false, false, true]
+  ])('should return %s and error: false', async (packageManager, npm, pnpm, yarn, bun) => {
     vi.mocked(mockedHasFile).mockResolvedValueOnce(true)
     vi.mocked(mockedHasFile).mockResolvedValueOnce(npm)
     vi.mocked(mockedHasFile).mockResolvedValueOnce(pnpm)
     vi.mocked(mockedHasFile).mockResolvedValueOnce(yarn)
+    vi.mocked(mockedHasFile).mockResolvedValueOnce(bun)
     vi.mocked(mockedHasFolder).mockResolvedValueOnce(true)
     const res = await environmentScanner('.')
 
