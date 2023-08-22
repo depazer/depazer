@@ -2,6 +2,8 @@ import { defineConfig } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
+  ignoreDeadLinks: 'localhostLinks',
+
   title: 'Depazer',
   description: 'JavaScript 依赖包可视化分析工具',
   head: [['link', { rel: 'icon', href: '/logo.svg' }]],
