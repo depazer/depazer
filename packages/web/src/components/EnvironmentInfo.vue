@@ -1,12 +1,13 @@
 <script lang="tsx" setup>
 const { data } = useFetch(import.meta.env.BASE_URL + 'api/environment')
   .get()
-  .json<{ packageManager: 'npm' | 'pnpm' | 'yarn'; version: string }>()
+  .json<{ packageManager: 'npm' | 'pnpm' | 'yarn' | 'bun'; version: string }>()
 
 const iconMap = {
   npm: 'i-logos-npm-icon',
   pnpm: 'i-devicon-pnpm',
-  yarn: 'i-devicon-yarn'
+  yarn: 'i-devicon-yarn',
+  bun: 'i-devicon-bun'
 }
 
 function InfoLi(props: { title: string; icon: string }) {
