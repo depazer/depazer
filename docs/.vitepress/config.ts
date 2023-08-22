@@ -46,7 +46,7 @@ export default defineConfig({
         items: [
           { text: '依赖json文件说明', link: '/markdown-examples' },
           { text: '项目概述', link: '/markdown-examples' },
-          { text: 'cli', link: '/markdown-examples' },
+          { text: 'cli', link: '/guide/contributing-cli' },
           { text: 'web', link: '/markdown-examples' },
           { text: 'core', link: '/api-examples' }
         ]
