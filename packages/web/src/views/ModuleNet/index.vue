@@ -1,11 +1,8 @@
 <script lang="ts" setup>
 import ForceChart from './components/ForceChart.vue'
 import PackageInfo from './components/PackageInfo.vue'
-import EnvironmentInfo from './components/EnvironmentInfo.vue'
 
-import { useLocalModule } from '@/hooks/localModule'
-import { useAppStore } from '@/stores/app'
-import { ref, reactive } from 'vue'
+import { useModuleStore } from '@/stores/module'
 
 const packageInfoVisible = ref<boolean>(false)
 const togglePackageInfoVisible = useToggle(packageInfoVisible)
@@ -16,8 +13,7 @@ function handleClick(packageID: string) {
   currentPackage.name = packageID.split('@').slice(0, -1).join('@')
 }
 
-const { graphData } = useLocalModule()
-const { rootModule } = storeToRefs(useAppStore())
+const { graphData, moduleConfig } = storeToRefs(useModuleStore())
 </script>
 
 <template>
@@ -33,14 +29,12 @@ const { rootModule } = storeToRefs(useAppStore())
     <Transition name="package-info">
       <aside v-if="packageInfoVisible" class="absolute left-4 top-16">
         <PackageInfo
-          v-model="rootModule"
+          v-model="moduleConfig.rootModule"
           :currentPackage="currentPackage"
           @close="togglePackageInfoVisible"
         />
       </aside>
     </Transition>
-
-    <EnvironmentInfo class="absolute right-4 bottom-4" />
   </div>
 </template>
 

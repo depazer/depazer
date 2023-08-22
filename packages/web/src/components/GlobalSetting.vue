@@ -6,11 +6,13 @@ import BaseAutoComplete from './base/AutoComplete/index.vue'
 import BaseSearch from './base/Search/index.vue'
 
 import { useAppStore } from '@/stores/app'
+import { useModuleStore } from '@/stores/module'
 
 const emit = defineEmits<{ close: [] }>()
 
 const appStore = useAppStore()
-const { depth, fixedNailModel, includeDev, repulsion } = storeToRefs(appStore)
+const { fixedNailModel, repulsion, currentRegistry } = storeToRefs(appStore)
+const { moduleConfig } = storeToRefs(useModuleStore())
 </script>
 
 <template>
@@ -40,12 +42,12 @@ const { depth, fixedNailModel, includeDev, repulsion } = storeToRefs(appStore)
 
       <div my-4 flex="~ justify-between items-center">
         <span>包含开发依赖</span>
-        <BaseSwitch v-model="includeDev" />
+        <BaseSwitch v-model="moduleConfig.includeDev" />
       </div>
 
       <div class="mt-4" flex="~ justify-between items-center">
         <span>最大深度</span>
-        <BaseCounter v-model="depth" :max="Infinity" class="max-w-24" />
+        <BaseCounter v-model="moduleConfig.depth" :max="Infinity" class="max-w-24" />
       </div>
 
       <p>斥力大小</p>
@@ -55,7 +57,7 @@ const { depth, fixedNailModel, includeDev, repulsion } = storeToRefs(appStore)
       <BaseSearch placeholder="Enter start search" />
 
       <p>注册表API</p>
-      <BaseAutoComplete v-model="appStore.currentRegistry" :data="appStore.npmRegistryURLs">
+      <BaseAutoComplete v-model="currentRegistry" :data="appStore.npmRegistryURLs">
         <template #prefix>
           <i class="i-logos-npm-icon mx-2 text-base" />
         </template>

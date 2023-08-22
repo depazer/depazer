@@ -98,7 +98,7 @@ const formattedPackageInfo = computed(() => {
             title="返回主包"
             class="ma-0 rounded-md border-none pa-1"
             bg="transparent hover:gray-2 hover:dark:slate-8"
-            @click="emit('update:modelValue', 'root')"
+            @click="emit('update:modelValue', '')"
           >
             <i class="i-uil-focus-target" text="lg green-6" />
           </button>

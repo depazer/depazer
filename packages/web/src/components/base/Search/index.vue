@@ -1,37 +1,28 @@
 <script lang="ts" setup>
-import { useLocalModule } from '@/hooks/localModule'
-import { useAppStore } from '@/stores/app'
+import { useModuleStore } from '@/stores/module'
+
+const { nodesData, moduleConfig } = storeToRefs(useModuleStore())
 
 const { placeholder } = defineProps<{ placeholder?: string }>()
 
-const searchValue = ref<string>('')
+const searchValue = ref<string>(moduleConfig.value.rootModule)
 const searchedVisible = ref<boolean>(false)
 const searchRef = ref<HTMLElement | null>(null)
 const searchedList: string[] = reactive([])
-
-const { graphData } = useLocalModule()
-const { rootModule } = storeToRefs(useAppStore())
-
-// init searchValue
-onMounted(() => {
-  searchValue.value = rootModule.value === 'root' ? '' : rootModule.value
-})
 
 const handleInput = useDebounceFn((val: string) => {
   searchedList.length = 0
   searchValue.value = val
 
-  const searchRes = graphData.value.nodes
+  const searchRes = nodesData.value
     .filter(({ name }) => name.startsWith(val))
+    .slice(0, 5)
     .map(({ name }) => name)
 
   if (val) {
-    // 最多显示 10 条
-    searchRes.length > 10
-      ? searchedList.push(...searchRes.slice(0, 10))
-      : searchedList.push(...searchRes)
+    searchedList.push(...searchRes)
   } else {
-    rootModule.value = 'root'
+    moduleConfig.value.rootModule = ''
   }
 
   searchedVisible.value = !!val
@@ -42,7 +33,7 @@ const selectValue = (val: string) => {
   searchedVisible.value = false
 
   // focus
-  rootModule.value = searchValue.value
+  moduleConfig.value.rootModule = searchValue.value
 }
 </script>
 
