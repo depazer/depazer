@@ -1,4 +1,4 @@
-import type { Data, NodeInfo } from '@/views/ModuleNet/types'
+import type { DependencyFetchData, DigraphWithLinks } from '@/types/dependency'
 
 export const useModuleStore = defineStore('module', () => {
   const moduleConfig = reactive({
@@ -11,30 +11,33 @@ export const useModuleStore = defineStore('module', () => {
   })
 
   const apiGenerator = (depth: number, includeDev: boolean) => {
-    return `${import.meta.env.BASE_URL}api/graph?depth=${depth}&includeDeps=${includeDev}`
+    return `${import.meta.env.BASE_URL}api/graph?depth=${depth}&includeDev=${includeDev}`
   }
 
   const apiURL = ref(apiGenerator(moduleConfig.depth, moduleConfig.includeDev))
   const { data, abort } = useFetch(debouncedRef(apiURL, 300), { refetch: true })
     .get()
-    .json<NodeInfo[]>()
+    .json<DependencyFetchData>()
 
   watchEffect(() => {
     abort()
-    apiURL.value = apiGenerator(moduleConfig.depth, moduleConfig.includeDev)
+    if (moduleConfig.isLocal)
+      apiURL.value = apiGenerator(moduleConfig.depth, moduleConfig.includeDev)
   })
 
-  const nodesData = computed<NodeInfo[]>(() => data?.value ?? [])
+  const nodesData = computed<DependencyFetchData>(
+    () => data?.value ?? { dependencyNodes: [], loopDependencies: [] }
+  )
 
-  const graphData = shallowRef<Data>({ nodes: [], links: [] })
+  const graphData = shallowRef<DigraphWithLinks>({ nodes: [], links: [] })
   const depsDigraphWorker = new Worker(new URL('../utils/depsDigraphWorker.ts', import.meta.url))
-  depsDigraphWorker.onmessage = (e: MessageEvent<{ type: number; data: Data }>) => {
+  depsDigraphWorker.onmessage = (e: MessageEvent<{ type: number; data: DigraphWithLinks }>) => {
     graphData.value = e.data.data
   }
   watchEffect(() => {
     depsDigraphWorker.postMessage({
-      nodes: nodesData.value,
-      rootModule: moduleConfig.rootModule
+      dependency: nodesData.value,
+      rootDependency: moduleConfig.rootModule
     })
   })
 

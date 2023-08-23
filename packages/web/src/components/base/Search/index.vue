@@ -14,7 +14,7 @@ const handleInput = useDebounceFn((val: string) => {
   searchedList.length = 0
   searchValue.value = val
 
-  const searchRes = nodesData.value
+  const searchRes = nodesData.value.dependencyNodes
     .filter(({ name }) => name.startsWith(val))
     .slice(0, 5)
     .map(({ name }) => name)
