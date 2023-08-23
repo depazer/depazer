@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import ForceChart from './components/ForceChart.vue'
-import PackageInfo from './components/PackageInfo.vue'
+import ForceChart from './ForceChart.vue'
+import PackageInfo from './PackageInfo.vue'
 
 import { useModuleStore } from '@/stores/module'
 

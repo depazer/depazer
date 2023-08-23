@@ -11,14 +11,12 @@ import {
   select,
   zoom
 } from 'd3'
-import { useWindowSize } from '@vueuse/core'
-import { shallowRef, watchEffect } from 'vue'
 import { useAppStore } from '@/stores/app'
 
-import type { Data, NodeInfo } from '../types'
 import type { SimulationNodeDatum, Simulation } from 'd3'
+import type { D3DependencyNode, D3DigraphWithLinks, D3DependencyLink } from '@/types/dependency'
 
-const props = defineProps<{ graphData: Data }>()
+const props = defineProps<{ graphData: D3DigraphWithLinks }>()
 const emit = defineEmits<{ nodeClick: [packageWithVersion: string] }>()
 
 const color = (n: number) => scaleSequential(interpolateRainbow)(((n - 1) % 8) / 8)
@@ -33,7 +31,7 @@ watchEffect((clean) => {
   if (svgRef.value) {
     const { nodes, links } = props.graphData
 
-    const simulation: Simulation<NodeInfo, undefined> = forceSimulation(nodes)
+    const simulation: Simulation<D3DependencyNode, undefined> = forceSimulation(nodes)
       .force(
         'link',
         forceLink(links).id(({ name }: any) => name)
@@ -58,10 +56,11 @@ watchEffect((clean) => {
       .attr('stroke-opacity', 0.6)
       .attr('marker-end', 'url(#arrow)')
       .attr('stroke-width', 2)
+      .attr('class', 'stroke-dash-[0_13_1000%] stroke-cap-round')
       .selectAll('line')
       .data(links)
       .join('line')
-      .attr('stroke', ({ isDeps }: any) => (isDeps ? '#999' : '#417de0'))
+      .attr('stroke', ({ linkColor }: D3DependencyLink) => linkColor)
 
     const node = svgSelection
       .append('g')
@@ -111,7 +110,7 @@ function enableZoom(selection: any) {
   zoomed(selection)
 }
 
-function enableDrag(selection: any, simulation: Simulation<NodeInfo, undefined>) {
+function enableDrag(selection: any, simulation: Simulation<D3DependencyNode, undefined>) {
   type VDragEvent = DragEvent & { subject: SimulationNodeDatum; active: number }
 
   drag()
@@ -144,14 +143,14 @@ function enableDrag(selection: any, simulation: Simulation<NodeInfo, undefined>)
       <marker
         id="arrow"
         viewBox="0 0 10 10"
-        refX="20"
+        refX="24"
         refY="5"
         markerUnits="strokeWidth"
         markerWidth="4"
         markerHeight="8"
         orient="auto"
       >
-        <path d="M 0 0 L 10 5 L 0 10 z" fill="gold" />
+        <path d="M 0 0 L 13 5 L 0 10 z" class="fill-green-5 stroke-join-round" />
       </marker>
     </defs>
   </svg>
