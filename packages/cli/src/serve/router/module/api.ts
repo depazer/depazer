@@ -2,8 +2,12 @@ import { Route } from '../types'
 import { environmentScanner, getModuleResolver, graphTranslator } from '@depazer/core'
 import { handleSuccessRes, handleServerErrorRes, handleMethodNotAllowed } from '../utils/response'
 
+import nodeCache from 'node-cache'
+
+const cache = new nodeCache()
+
 const apiRoute: Route = {
-  '/api/graph': async (res, { method, params }, root) => {
+  '/api/graph': async (res, { method, params, fullPath }, root) => {
     if (method !== 'GET') {
       handleMethodNotAllowed(res)
       return
@@ -22,6 +26,12 @@ const apiRoute: Route = {
       includeDeps = params.get('includeDeps') === 'true'
     }
 
+    // cache exist
+    if (cache.has(fullPath)) {
+      handleSuccessRes(res, cache.get(fullPath))
+      return
+    }
+
     const resolver = await getModuleResolver(root, includeDeps)
     if (typeof resolver === 'string') {
       handleServerErrorRes(res)
@@ -29,6 +39,7 @@ const apiRoute: Route = {
     }
 
     const data = graphTranslator(await resolver(depth))
+    cache.set(fullPath, data)
     handleSuccessRes(res, data)
   },
 

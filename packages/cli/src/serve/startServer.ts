@@ -23,7 +23,11 @@ export async function startServer(port: number, root: string) {
 
     const handler = matchRoute(pathname)
     if (handler) {
-      handler(res, { pathname, params: searchParams, method: req.method as Method }, root)
+      handler(
+        res,
+        { pathname, params: searchParams, method: req.method as Method, fullPath: req.url! },
+        root
+      )
     } else {
       // active static or 404
       handleStaticResource(pathname, res)
