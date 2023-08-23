@@ -43,5 +43,8 @@
     "@depazer/shared": "workspace:*",
     "@depazer/web": "workspace:*",
     "cac": "^6.7.14"
+  },
+  "dependencies": {
+    "node-cache": "^5.1.2"
   }
 }
