@@ -28,7 +28,7 @@
     "access": "public",
     "registry": "https://registry.npmjs.org/"
   },
-  "registry": "https://registry.npmjs.org/",
+  "registry": "https://github.com/depazer/depazer/tree/main/packages/cli",
   "scripts": {
     "prebuild": "rimraf ./lib",
     "build": "pnpm prebuild && tsx ./build/build.ts",
@@ -42,9 +42,7 @@
     "@depazer/core": "workspace:*",
     "@depazer/shared": "workspace:*",
     "@depazer/web": "workspace:*",
-    "cac": "^6.7.14"
-  },
-  "dependencies": {
+    "cac": "^6.7.14",
     "node-cache": "^5.1.2"
   }
 }
