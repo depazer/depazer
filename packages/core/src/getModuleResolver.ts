@@ -1,9 +1,9 @@
 import { resolve } from 'node:path'
 import { readPackageJSON } from '@depazer/shared'
-import { commonAdaptor } from '@/adaptors/commonAdaptor'
-import { environmentScanner } from '@/environmentScanner'
+import { commonAdaptor } from './adaptors/commonAdaptor'
+import { environmentScanner } from './environmentScanner'
 
-import type { DependencyTree } from '@/types/dependencyDigraph'
+import type { DependencyTree } from './types/dependencyDigraph'
 
 /**
  *
