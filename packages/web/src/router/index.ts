@@ -10,7 +10,7 @@ const router = createRouter({
         {
           path: '',
           name: 'home',
-          component: () => import('@/views/ModuleNet/index.vue')
+          component: () => import('@/views/index.vue')
         }
       ]
     }

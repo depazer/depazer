@@ -1,5 +1,11 @@
-import moduleNet from '@/views/ModuleNet/locale/en-US'
-
 export default {
-  ...moduleNet
+  packageInfo: {
+    version: 'Version',
+    license: 'LICENSE',
+    description: 'Description',
+    size: 'Size',
+    unpackedSize: 'Unpacked Size',
+    keywords: 'Keywords',
+    dependencies: 'Dependencies'
+  }
 }
