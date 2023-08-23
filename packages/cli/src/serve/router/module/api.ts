@@ -1,5 +1,10 @@
 import { Route } from '../types'
-import { environmentScanner, getModuleResolver, graphTranslator } from '@depazer/core'
+import {
+  environmentScanner,
+  getModuleResolver,
+  graphTranslator,
+  getLoopDependency
+} from '@depazer/core'
 import { handleSuccessRes, handleServerErrorRes, handleMethodNotAllowed } from '../utils/response'
 
 import nodeCache from 'node-cache'
@@ -14,7 +19,7 @@ const apiRoute: Route = {
     }
 
     let depth = Infinity,
-      includeDeps = false
+      includeDev = false
 
     // api/graph?depth=1
     if (params.has('depth')) {
@@ -22,8 +27,8 @@ const apiRoute: Route = {
     }
 
     // api/graph?includeDev=true
-    if (params.has('includeDeps')) {
-      includeDeps = params.get('includeDeps') === 'true'
+    if (params.has('includeDev')) {
+      includeDev = params.get('includeDev') === 'true'
     }
 
     // cache exist
@@ -32,13 +37,17 @@ const apiRoute: Route = {
       return
     }
 
-    const resolver = await getModuleResolver(root, includeDeps)
+    const resolver = await getModuleResolver(root, includeDev)
     if (typeof resolver === 'string') {
       handleServerErrorRes(res)
       return
     }
 
-    const data = graphTranslator(await resolver(depth))
+    const dependencyNodes = graphTranslator(await resolver(depth))
+    const data = {
+      dependencyNodes,
+      loopDependencies: getLoopDependency(dependencyNodes)
+    }
     cache.set(fullPath, data)
     handleSuccessRes(res, data)
   },
