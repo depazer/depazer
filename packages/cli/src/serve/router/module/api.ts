@@ -8,7 +8,6 @@ import {
 import { handleSuccessRes, handleServerErrorRes, handleMethodNotAllowed } from '../utils/response'
 import { createRequire } from 'module'
 
-// import nodeCache from 'node-cache'
 const require = createRequire(import.meta.url)
 const nodeCache = require('node-cache')
 
