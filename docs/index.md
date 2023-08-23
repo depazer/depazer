@@ -20,7 +20,7 @@ hero:
 features:
   - icon: 🦾
     title: 支持主流包管理器
-    details: 同时支持NPM、YARN、PNPM的本地依赖分析。
+    details: 同时支持NPM、YARN、PNPM、BUN的本地依赖分析。
   - icon: 🖨️
     title: 输出依赖信息
     details: 可输出依赖信息JSON文件，进行自定义分析。
