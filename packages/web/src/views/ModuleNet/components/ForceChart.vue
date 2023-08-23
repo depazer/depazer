@@ -100,11 +100,15 @@ watchEffect((clean) => {
 })
 
 function enableZoom(selection: any) {
-  zoom()
-    .scaleExtent([0.1, 8])
+  const zoomed = zoom()
+    .scaleExtent([0.1, 5])
     .on('zoom', ({ transform }: Record<'transform', string>) => {
       selection.selectAll('g').attr('transform', transform)
-    })(selection)
+    })
+
+  zoomed.translateTo(selection, 0, 0)
+  zoomed.scaleTo(selection, 1)
+  zoomed(selection)
 }
 
 function enableDrag(selection: any, simulation: Simulation<NodeInfo, undefined>) {
