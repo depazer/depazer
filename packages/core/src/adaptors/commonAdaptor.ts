@@ -1,7 +1,7 @@
 import { hasFile, readPackageJSON } from '@depazer/shared'
 import { resolve } from 'node:path'
 
-import type { DependencyTree, SupportedPackageManager } from '@/types/dependencyDigraph'
+import type { DependencyTree, SupportedPackageManager } from '../types/dependencyDigraph'
 
 /**
  * @desc 通用模块解析器

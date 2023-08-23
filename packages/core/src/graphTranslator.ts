@@ -1,4 +1,4 @@
-import type { DependencyNode, DependencyTree } from '@/types/dependencyDigraph'
+import type { DependencyNode, DependencyTree } from './types/dependencyDigraph'
 
 export function graphTranslator(dependencyTree: DependencyTree): DependencyNode[] {
   const dependencyNodes: DependencyNode[] = []

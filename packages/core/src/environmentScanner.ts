@@ -1,6 +1,6 @@
 import { errorLogger, hasFile, hasFolder } from '@depazer/shared'
 
-import type { SupportedPackageManager } from '@/types/dependencyDigraph'
+import type { SupportedPackageManager } from './types/dependencyDigraph'
 
 interface Environment {
   packageManager: SupportedPackageManager

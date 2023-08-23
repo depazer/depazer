@@ -1,4 +1,4 @@
-import { DependencyNode } from '@/types/dependencyDigraph'
+import type { DependencyNode } from './types/dependencyDigraph'
 
 export function getLoopDependency(dependencyNodes: DependencyNode[]) {
   const loopDependencies: string[][] = []
