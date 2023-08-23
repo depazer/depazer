@@ -119,7 +119,7 @@ importers:
   packages/web:
     devDependencies:
       '@depazer/core':
-        specifier: workspace:^
+        specifier: 'workspace: *'
         version: link:../core
       '@intlify/unplugin-vue-i18n':
         specifier: ^0.12.3
