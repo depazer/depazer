@@ -1,0 +1,11 @@
+# @depazer/core
+
+## 0.0.2
+
+### Patch Changes
+
+- f243d10: 🦾 Support bun
+- 9219ac6: 🐛 Fix pnpm module version unknown error when have same dependency in root/node_modules form sub module
+- d671da5: 🐛 Fix module parse lose error when have same dependency.
+- a9113f8: 🐛 Fix pnpm module lose error when have same dependency in root/node_modules.
+- d98e75c: ✨ Feature: add terminal output color
