@@ -1,9 +1,9 @@
 import { errorLogger, hasFile, hasFolder } from '@depazer/shared'
 
-type PackageManager = 'npm' | 'pnpm' | 'yarn' | 'bun'
+import type { SupportedPackageManager } from '@/types/dependencyDigraph'
 
 interface Environment {
-  packageManager: PackageManager
+  packageManager: SupportedPackageManager
   monorepo: boolean
   error: false | string
 }
@@ -20,7 +20,7 @@ const enum ErrorMessage {
  * @param root 待处理的package.json绝对路径
  */
 export async function environmentScanner(root: string): Promise<Environment> {
-  const packageManagerTuple: [PackageManager, string][] = [
+  const packageManagerTuple: [SupportedPackageManager, string][] = [
     ['npm', 'package-lock.json'],
     ['pnpm', 'pnpm-lock.yaml'],
     ['yarn', 'yarn.lock'],

@@ -1,10 +1,9 @@
 import { resolve } from 'node:path'
-
-import { commonAdaptor } from './adaptors/commonAdaptor'
-import { environmentScanner } from './environmentScanner'
 import { readPackageJSON } from '@depazer/shared'
+import { commonAdaptor } from '@/adaptors/commonAdaptor'
+import { environmentScanner } from '@/environmentScanner'
 
-import type { ModuleObject } from '@/types/moduleGraph'
+import type { DependencyTree } from '@/types/dependencyDigraph'
 
 /**
  *
@@ -22,24 +21,29 @@ export async function getModuleResolver(root: string, includeDeps: boolean) {
   const { packageManager, monorepo: _, error } = await environmentScanner(root)
   if (typeof error === 'string') return error
 
-  const moduleObject = await initModuleObject(root, includeDeps)
+  const dependencyTree = await initDependencyTree(root, includeDeps)
 
-  return (depth: number = Infinity) => commonAdaptor(packageManager, root, moduleObject, depth)
+  return (depth: number = Infinity) => commonAdaptor(packageManager, root, dependencyTree, depth)
 }
 
-export async function initModuleObject(root: string, includeDeps: boolean) {
+export async function initDependencyTree(root: string, includeDeps: boolean) {
   const rootPackageJson = resolve(root, 'package.json')
 
   const { name, version, dependencies, devDependencies } = await readPackageJSON(rootPackageJson)
-  return formatModuleObject(name, version, dependencies, includeDeps ? devDependencies : undefined)
+  return formatDependencyTree(
+    name,
+    version,
+    dependencies,
+    includeDeps ? devDependencies : undefined
+  )
 }
 
-function formatModuleObject(
+function formatDependencyTree(
   name: string,
   version: string,
   dependencies: Record<string, string>,
   devDependencies?: Record<string, string>
-): ModuleObject {
+): DependencyTree {
   return {
     name,
     version,

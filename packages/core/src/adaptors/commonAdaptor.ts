@@ -1,14 +1,14 @@
 import { hasFile, readPackageJSON } from '@depazer/shared'
 import { resolve } from 'node:path'
 
-import type { ModuleObject } from '@/types/moduleGraph'
+import type { DependencyTree, SupportedPackageManager } from '@/types/dependencyDigraph'
 
 const defaultDependency = {
   version: 'unknown',
   dependencies: []
 }
 
-const _global = {
+const SHARED = {
   markSet: new Set<string>(),
   maxDepth: Infinity,
   packageManager: 'npm',
@@ -25,17 +25,17 @@ const _global = {
  * @returns
  */
 export async function commonAdaptor(
-  packageManager: 'pnpm' | 'yarn' | 'npm' | 'bun',
+  packageManager: SupportedPackageManager,
   root: string,
-  moduleObject: ModuleObject,
+  moduleObject: DependencyTree,
   depth: number
-): Promise<ModuleObject> {
+): Promise<DependencyTree> {
   if (depth <= 1) return moduleObject
 
-  _global.markSet.clear()
-  _global.maxDepth = depth
-  _global.packageManager = packageManager
-  if (packageManager === 'pnpm') _global.pnpmRoot = resolve(root, 'node_modules/.pnpm')
+  SHARED.markSet.clear()
+  SHARED.maxDepth = depth
+  SHARED.packageManager = packageManager
+  if (packageManager === 'pnpm') SHARED.pnpmRoot = resolve(root, 'node_modules/.pnpm')
 
   moduleObject.dependencies = await Promise.all(
     moduleObject.dependencies.map(async ({ name }) => {
@@ -64,17 +64,17 @@ async function resolveModule(
   currentPath: string,
   dependency: string,
   depth: number
-): Promise<ModuleObject> {
+): Promise<DependencyTree> {
   const dependencyPath = resolve(currentPath, 'node_modules', dependency)
   const packageJSONPath = resolve(dependencyPath, 'package.json')
 
   if ((await hasFile(packageJSONPath)) === false) {
     /** @desc 防止文件夹越界，超出根目录 */
     if (currentPath === root) {
-      const isPNPM = _global.packageManager === 'pnpm'
+      const isPNPM = SHARED.packageManager === 'pnpm'
 
-      return isPNPM && (await hasFile(_global.pnpmRoot, `node_modules/${dependency}/package.json`))
-        ? resolveModule(root, _global.pnpmRoot, dependency, depth)
+      return isPNPM && (await hasFile(SHARED.pnpmRoot, `node_modules/${dependency}/package.json`))
+        ? resolveModule(root, SHARED.pnpmRoot, dependency, depth)
         : { name: dependency, ...defaultDependency }
     }
     /** @desc 查找父级目录 */
@@ -83,10 +83,10 @@ async function resolveModule(
 
   const { name, version, dependencies } = await readPackageJSON(packageJSONPath)
 
-  if (_global.markSet.has(packageJSONPath)) {
+  if (SHARED.markSet.has(packageJSONPath)) {
     return { ...defaultDependency, name: dependency, version }
   } else {
-    _global.markSet.add(packageJSONPath)
+    SHARED.markSet.add(packageJSONPath)
   }
 
   return {
@@ -111,7 +111,7 @@ async function generateModuleObject(
   dependencies: Record<string, string>,
   depth: number
 ) {
-  return depth >= _global.maxDepth
+  return depth >= SHARED.maxDepth
     ? Object.entries(dependencies).map(([name, version]) => ({
         ...defaultDependency,
         name,
