@@ -1,17 +1,17 @@
 # Depazer
 
-<p align="center">👁️‍🗨️<b>一个 node.js 依赖可视化分析工具</b></p>
+<p align="center">👁️‍🗨️<b>一个 JavaScript 依赖可视化分析工具</b></p>
 
-<p align="center"><img width="50%" alt="snapshot" src="https://github.com/depazer/depazer/assets/86412303/a6393614-dfaf-4e23-842b-4f608fa1d5b1" /></p>
+<p align="center"><img width="50%" alt="snapshot" src="https://github.com/depazer/depazer/assets/86412303/858660fa-2635-440a-a2df-8a598cfdd057" /></p>
 
 <p align="center">
-<a href="/docs/index.md">🧑‍💻 开发文档(zh-CN)</a> |
+<a href="https://depazer.github.io/depazer">🧑‍💻 开发文档(zh-CN)</a> |
 <a href="/README.md">🌐 README (en-US)</a>
 </p>
 
 <p align="center">
 <a href="https://www.npmjs.com/%40depazer/cli" target="_blank"><img src="https://img.shields.io/npm/v/%40depazer/cli" alt="NPM Version" /></a>
-<img alt="LICENCE" src="https://img.shields.io/github/license/depazer/depazer">
+<img alt="LICENSE" src="https://img.shields.io/github/license/depazer/depazer">
 <a href="https://codecov.io/gh/depazer/depazer" > 
  <img src="https://codecov.io/gh/depazer/depazer/branch/main/graph/badge.svg?token=IOMUECCGVD"/> 
  </a>
