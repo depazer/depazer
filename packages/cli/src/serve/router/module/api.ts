@@ -3,15 +3,17 @@ import {
   environmentScanner,
   getModuleResolver,
   graphTranslator,
-  getLoopDependency
+  getLoopDependency,
+  DependencyNode
 } from '@depazer/core'
 import { handleSuccessRes, handleServerErrorRes, handleMethodNotAllowed } from '../utils/response'
-import { createRequire } from 'module'
 
-const require = createRequire(import.meta.url)
-const nodeCache = require('node-cache')
+interface IGraphResponse {
+  dependencyNodes: DependencyNode[]
+  loopDependencies: string[][]
+}
 
-const cache = new nodeCache()
+const cache = new Map<string, IGraphResponse>()
 
 const apiRoute: Route = {
   '/api/graph': async (res, { method, params, fullPath }, root) => {
@@ -46,7 +48,7 @@ const apiRoute: Route = {
     }
 
     const dependencyNodes = graphTranslator(await resolver(depth))
-    const data = {
+    const data: IGraphResponse = {
       dependencyNodes,
       loopDependencies: getLoopDependency(dependencyNodes)
     }
