@@ -2,13 +2,14 @@
 import ForceChart from './ForceChart.vue'
 import PackageInfo from './PackageInfo.vue'
 
+import { useAppStore } from '@/stores/app'
 import { useModuleStore } from '@/stores/module'
 
-const packageInfoVisible = ref<boolean>(false)
-const togglePackageInfoVisible = useToggle(packageInfoVisible)
+const { packageInfoCardVisible } = storeToRefs(useAppStore())
+const togglePackageInfoVisible = useToggle(packageInfoCardVisible)
 const currentPackage = reactive<Record<'name' | 'version', string>>({ name: '', version: '' })
 function handleClick(packageID: string) {
-  packageInfoVisible.value = true
+  togglePackageInfoVisible(true)
   currentPackage.version = packageID.split('@').slice(-1)[0] // === at(-1)
   currentPackage.name = packageID.split('@').slice(0, -1).join('@')
 }
@@ -27,7 +28,7 @@ const { graphData, moduleConfig } = storeToRefs(useModuleStore())
     </Transition>
 
     <Transition name="package-info">
-      <aside v-if="packageInfoVisible" class="absolute left-4 top-16">
+      <aside v-show="packageInfoCardVisible" class="absolute left-4 top-16">
         <PackageInfo
           v-model="moduleConfig.rootModule"
           :currentPackage="currentPackage"

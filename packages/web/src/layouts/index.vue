@@ -4,6 +4,7 @@ import EnvironmentInfo from '@/components/EnvironmentInfo.vue'
 
 import html2canvas from 'html2canvas'
 import { useLocale } from '@/hooks/locale'
+import { useAppStore } from '@/stores/app'
 
 const isDark = useDark()
 const toggleDark = useToggle(isDark)
@@ -12,8 +13,8 @@ const { isFullscreen, toggle: toggleFullscreen } = useFullscreen()
 
 const { toggleLocale } = useLocale()
 
-const settingVisible = ref<boolean>(false)
-const toggleSettingVisible = useToggle(settingVisible)
+const { settingCardVisible } = storeToRefs(useAppStore())
+const toggleSettingVisible = useToggle(settingCardVisible)
 
 const mainRef = ref<HTMLElement | null>(null)
 const handleScreenshot = () => {
@@ -47,9 +48,14 @@ const buttonList = computed(() => [
 
 <template>
   <header flex="~ justify-between items-center" class="fixed box-border w-full px-4 py-2">
-    <span class="select-none text-xl font-bold">
+    <a
+      class="select-none text-xl font-bold decoration-none text-slate-9 dark:text-slate-1"
+      href="https://depazer.github.io/depazer"
+      target="_blank"
+      title="document"
+    >
       <img src="/logo.svg" class="w-7 align-bottom" /> Depazer
-    </span>
+    </a>
     <div>
       <button
         bg="gray-1 hover:gray-2 active:gray-3 dark:slate-6 hover:dark:slate-7 active:dark:slate-8"
@@ -67,7 +73,7 @@ const buttonList = computed(() => [
   </header>
 
   <Transition name="setting">
-    <aside v-if="settingVisible" class="absolute right-4 top-16">
+    <aside v-if="settingCardVisible" class="absolute right-4 top-16">
       <GlobalSetting @close="toggleSettingVisible" />
     </aside>
   </Transition>

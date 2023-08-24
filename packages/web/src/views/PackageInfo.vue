@@ -93,7 +93,7 @@ const formattedPackageInfo = computed(() => {
             <i class="i-uil-location-point" text="lg red" />
           </button>
           <button
-            v-show="modelValue !== 'root'"
+            v-show="modelValue !== ''"
             type="button"
             title="返回主包"
             class="ma-0 rounded-md border-none pa-1"
