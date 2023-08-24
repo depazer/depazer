@@ -1,5 +1,12 @@
 # @depazer/cli
 
+## 0.1.3
+
+### Patch Changes
+
+- map replace node-cache
+- 6d31943: delete readme zh-cn link
+
 ## 0.1.2
 
 ### Patch Changes
