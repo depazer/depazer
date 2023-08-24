@@ -1,5 +1,11 @@
 # @depazer/core
 
+## 0.0.4
+
+### Patch Changes
+
+- c77909f: 🙊 Set package private: true
+
 ## 0.0.3
 
 ### Patch Changes

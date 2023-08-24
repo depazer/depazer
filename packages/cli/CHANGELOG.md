@@ -1,5 +1,11 @@
 # @depazer/cli
 
+## 0.1.2
+
+### Patch Changes
+
+- 7def36d: 📄 Add README.md
+
 ## 0.1.1
 
 ### Patch Changes
