@@ -18,7 +18,7 @@
   "bugs": {
     "url": "https://github.com/depazer/depazer/issues"
   },
-  "homepage": "https://depazer.github.io/depazer",
+  "homepage": "https://github.com/depazer/depazer/tree/main/#readme",
   "packageManager": "pnpm@8.6.11",
   "engines": {
     "node": ">=14.17.0"
