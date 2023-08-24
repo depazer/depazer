@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import BaseCard from '@/components/base/Card/index.vue'
+
 import { useAppStore } from '@/stores/app'
 import { ApiGetNpmPackageInfo } from '@/api/npmRegistry'
 
@@ -11,7 +13,7 @@ const props = defineProps<{
   modelValue: string
 }>()
 
-const emit = defineEmits<{ close: []; 'update:modelValue': [rootModule: string] }>()
+const emit = defineEmits<{ 'update:modelValue': [rootModule: string] }>()
 const fetching = ref<boolean>(false)
 
 const packageInfo = ref()
@@ -48,30 +50,14 @@ const formattedPackageInfo = computed(() => {
 </script>
 
 <template>
-  <div
-    bg="gray-3 dark:slate-7"
-    class="h-[calc(100vh-8rem)] w-xs rounded-md pa-4"
-    shadow="lg gray-3 dark:slate-6"
-    flex="~ col"
-  >
-    <header flex="~ justify-between items-center">
+  <BaseCard class="h-[calc(100vh-8rem)] w-xs">
+    <template #header>
       <code
         class="rounded bg-indigo-3 px-1 font-sans text-indigo-8 dark:bg-blue-6 dark:text-blue-2"
       >
         {{ currentPackage.name }}
       </code>
-
-      <button
-        type="button"
-        title="关闭"
-        class="ma-0 rounded-md border-none pa-1"
-        bg="transparent hover:gray-2 hover:dark:slate-8"
-        @click="emit('close')"
-      >
-        <i class="i-uil-times" text="xl" />
-      </button>
-    </header>
-
+    </template>
     <section class="flex-grow overflow-auto" v-show="!fetching">
       <div class="select-none mt-2 flex justify-between items-center gap-2">
         <div>
@@ -164,5 +150,5 @@ const formattedPackageInfo = computed(() => {
       <p class="h-4 rounded bg-gray"></p>
       <p class="h-4 rounded bg-gray"></p>
     </section>
-  </div>
+  </BaseCard>
 </template>

@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import BaseCard from './base/Card/index.vue'
 import BaseSwitch from './base/Switch/index.vue'
 import BaseSlider from './base/Slider/index.vue'
 import BaseCounter from './base/Counter/index.vue'
@@ -8,32 +9,14 @@ import BaseSearch from './base/Search/index.vue'
 import { useAppStore } from '@/stores/app'
 import { useModuleStore } from '@/stores/module'
 
-const emit = defineEmits<{ close: [] }>()
-
 const appStore = useAppStore()
 const { fixedNailModel, repulsion, currentRegistry } = storeToRefs(appStore)
 const { moduleConfig } = storeToRefs(useModuleStore())
 </script>
 
 <template>
-  <div
-    bg="gray-3 dark:slate-7"
-    class="w-xs select-none rounded-md pa-4"
-    shadow="lg gray-3 dark:slate-6"
-  >
-    <header flex="~ justify-between items-center">
-      <span class="font-bold">设置</span>
-      <button
-        type="button"
-        title="关闭"
-        class="ma-0 rounded-md border-none pa-1"
-        bg="transparent hover:gray-2 hover:dark:slate-8"
-        @click="emit('close')"
-      >
-        <i class="i-uil-times" text="xl" />
-      </button>
-    </header>
-
+  <BaseCard class="w-xs">
+    <template #header><span class="font-bold">设置</span></template>
     <div>
       <div my-4 flex="~ justify-between items-center">
         <span>拖拽固定</span>
@@ -53,7 +36,7 @@ const { moduleConfig } = storeToRefs(useModuleStore())
       <p>斥力大小</p>
       <BaseSlider :max="10000" :min="100" v-model="repulsion" class="mr-4" />
 
-      <p>搜索节点（最多显示 10 条）</p>
+      <p>搜索节点</p>
       <BaseSearch placeholder="Enter start search" />
 
       <p>注册表API</p>
@@ -63,5 +46,5 @@ const { moduleConfig } = storeToRefs(useModuleStore())
         </template>
       </BaseAutoComplete>
     </div>
-  </div>
+  </BaseCard>
 </template>
