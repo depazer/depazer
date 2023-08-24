@@ -3,6 +3,8 @@ name: release
 on:
   push:
     branches: ['main']
+    tags:
+      - '@depazer/*'
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
@@ -34,7 +36,10 @@ jobs:
       - name: Create Release Pull Request
         uses: changesets/action@v1
         with:
-          commit: "chore(release): update release & CHANGELOG.md"
-          title: "📦 Update Packages Version"
+          commit: 'release: update release & CHANGELOG.md'
+          title: '📦 Update Packages Version'
+          publish: pnpm changeset-publish
+          version: pnpm changeset-version
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

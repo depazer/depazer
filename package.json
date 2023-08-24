@@ -27,7 +27,9 @@
     "test:cov": "vitest run --coverage",
     "docs": "vitepress dev docs",
     "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs"
+    "docs:preview": "vitepress preview docs",
+    "changeset-version": "changeset version",
+    "changeset-publish": "pnpm build && changeset publish"
   },
   "config": {
     "commitizen": {
