@@ -14,7 +14,10 @@ const props = defineProps<{
 const emit = defineEmits<{ close: []; 'update:modelValue': [rootModule: string] }>()
 const fetching = ref<boolean>(false)
 
-watchEffect(async () => {
+const packageInfo = ref()
+watchEffect(async (cancel) => {
+  if (props.currentPackage.name + props.currentPackage.version === '') return
+
   fetching.value = true
   const { data } = await ApiGetNpmPackageInfo(
     props.currentPackage.name,
@@ -22,10 +25,9 @@ watchEffect(async () => {
     currentRegistry.value
   )
   packageInfo.value = data
-  setTimeout(() => (fetching.value = false), 300)
+  const timer = setTimeout(() => (fetching.value = false), 300)
+  cancel(() => clearTimeout(timer))
 })
-
-const packageInfo = ref()
 
 const formattedPackageInfo = computed(() => {
   return {
