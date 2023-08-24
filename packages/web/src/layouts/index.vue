@@ -1,10 +1,12 @@
 <script setup lang="tsx">
 import GlobalSetting from '@/components/GlobalSetting.vue'
 import EnvironmentInfo from '@/components/EnvironmentInfo.vue'
+import LoopDependency from '@/components/LoopDependency.vue'
 
 import html2canvas from 'html2canvas'
 import { useLocale } from '@/hooks/locale'
 import { useAppStore } from '@/stores/app'
+import { useModuleStore } from '@/stores/module'
 
 const isDark = useDark()
 const toggleDark = useToggle(isDark)
@@ -13,8 +15,16 @@ const { isFullscreen, toggle: toggleFullscreen } = useFullscreen()
 
 const { toggleLocale } = useLocale()
 
-const { settingCardVisible } = storeToRefs(useAppStore())
+const appStore = useAppStore()
+const { settingCardVisible, loopDependencyCardVisible } = storeToRefs(appStore)
 const toggleSettingVisible = useToggle(settingCardVisible)
+
+const { moduleConfig } = storeToRefs(useModuleStore())
+function handleToggleRootDependency(rootDependency: string) {
+  loopDependencyCardVisible.value = false
+
+  moduleConfig.value.rootModule = rootDependency
+}
 
 const mainRef = ref<HTMLElement | null>(null)
 const handleScreenshot = () => {
@@ -82,7 +92,23 @@ const buttonList = computed(() => [
     <router-view />
   </main>
 
-  <EnvironmentInfo class="absolute right-4 bottom-4" />
+  <EnvironmentInfo @open="appStore.toggleLoopDependencyVisible" class="absolute right-4 bottom-4" />
+
+  <Transition name="loopDependencies">
+    <div
+      @mousedown="appStore.toggleLoopDependencyVisible"
+      v-show="loopDependencyCardVisible"
+      :bg="loopDependencyCardVisible ? 'gray-1/50 dark:slate-9/50' : ''"
+      class="absolute h-200vh w-full pt-[calc(100vh+4rem)] -top-100vh backdrop-blur-3 transition-background-color"
+    >
+      <LoopDependency
+        @mousedown.stop
+        @close="appStore.toggleLoopDependencyVisible"
+        @toggleRoot="handleToggleRootDependency"
+        class="w-full sm:w-lg md:w-xl lg:w-3xl xl:w-5xl mx-auto h-[calc(100vh-8rem)]"
+      />
+    </div>
+  </Transition>
 </template>
 
 <style scoped>
@@ -103,6 +129,25 @@ const buttonList = computed(() => [
   100% {
     opacity: 1;
     transform: translateX(0);
+  }
+}
+
+.loopDependencies-enter-active {
+  position: absolute;
+  animation: loopDependencies-enter 0.3s;
+}
+.loopDependencies-leave-active {
+  position: absolute;
+  animation: loopDependencies-enter 0.3s reverse;
+}
+@keyframes loopDependencies-enter {
+  0% {
+    opacity: 0;
+    transform: translateY(100vh);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 

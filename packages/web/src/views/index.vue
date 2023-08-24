@@ -15,12 +15,20 @@ function handleClick(packageID: string) {
 }
 
 const { graphData, moduleConfig } = storeToRefs(useModuleStore())
+const { width, height } = useWindowSize()
 </script>
 
 <template>
   <div class="h-100vh w-full overflow-hidden">
     <Transition name="chart">
-      <ForceChart @nodeClick="handleClick" :graphData="graphData" v-if="graphData.nodes.length" />
+      <ForceChart
+        :width="width"
+        :height="height"
+        :viewBox="`${-width / 2} ${-height / 2} ${width} ${height}`"
+        @nodeClick="handleClick"
+        :graphData="graphData"
+        v-if="graphData.nodes.length"
+      />
       <i
         v-else
         class="i-svg-spinners-blocks-shuffle-3 absolute left-[calc(50%-3rem)] top-[calc(50%-3rem)] text-8xl"

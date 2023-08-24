@@ -6,6 +6,16 @@ export const useAppStore = defineStore('app', () => {
   const settingCardVisible = ref<boolean>(false)
   /** @desc 依赖包信息卡片可见性 */
   const packageInfoCardVisible = ref<boolean>(false)
+  /** @desc 循环依赖包信息卡片可见性 */
+  const loopDependencyCardVisible = ref<boolean>(false)
+  function toggleLoopDependencyVisible() {
+    if (loopDependencyCardVisible.value === false) {
+      settingCardVisible.value = false
+      packageInfoCardVisible.value = false
+    }
+
+    loopDependencyCardVisible.value = !loopDependencyCardVisible.value
+  }
 
   /** @desc 节点拖拽后是否禁止节点移动 */
   const fixedNailModel = ref<boolean>(false)
@@ -16,6 +26,8 @@ export const useAppStore = defineStore('app', () => {
   return {
     settingCardVisible,
     packageInfoCardVisible,
+    loopDependencyCardVisible,
+    toggleLoopDependencyVisible,
 
     currentRegistry,
     fixedNailModel,

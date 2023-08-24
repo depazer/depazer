@@ -16,11 +16,14 @@ import { useAppStore } from '@/stores/app'
 import type { SimulationNodeDatum, Simulation } from 'd3'
 import type { D3DependencyNode, D3DigraphWithLinks, D3DependencyLink } from '@/types/dependency'
 
-const props = defineProps<{ graphData: D3DigraphWithLinks }>()
+const props = defineProps<{
+  graphData: D3DigraphWithLinks
+  translateTo?: [x: number, y: number]
+  zoomRange?: [number, number]
+}>()
 const emit = defineEmits<{ nodeClick: [packageWithVersion: string] }>()
 
 const color = (n: number) => scaleSequential(interpolateRainbow)(((n - 1) % 8) / 8)
-const { width, height } = useWindowSize()
 
 const appStore = useAppStore()
 const { repulsion } = storeToRefs(appStore)
@@ -39,7 +42,6 @@ watchEffect((clean) => {
       .force('charge', forceManyBody().strength(-debouncedRepulsion.value))
       .force('x', forceX())
       .force('y', forceY())
-      .alphaTarget(0)
 
     const svgSelection = select(svgRef.value)
 
@@ -100,12 +102,12 @@ watchEffect((clean) => {
 
 function enableZoom(selection: any) {
   const zoomed = zoom()
-    .scaleExtent([0.1, 5])
+    .scaleExtent([props.zoomRange?.[0] ?? 0.1, props.zoomRange?.[1] ?? 5])
     .on('zoom', ({ transform }: Record<'transform', string>) => {
       selection.selectAll('g').attr('transform', transform)
     })
 
-  zoomed.translateTo(selection, 0, 0)
+  zoomed.translateTo(selection, props.translateTo?.[0] ?? 0, props.translateTo?.[1] ?? 0)
   zoomed.scaleTo(selection, 1)
   zoomed(selection)
 }
@@ -132,13 +134,7 @@ function enableDrag(selection: any, simulation: Simulation<D3DependencyNode, und
 </script>
 
 <template>
-  <svg
-    ref="svgRef"
-    :width="width"
-    :height="height"
-    :viewBox="`${-width / 2} ${-height / 2} ${width} ${height}`"
-    class="ma-0 block pa-0"
-  >
+  <svg ref="svgRef" class="ma-0 block pa-0">
     <defs>
       <marker
         id="arrow"
