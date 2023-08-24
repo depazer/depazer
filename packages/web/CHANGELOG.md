@@ -1,5 +1,11 @@
 # @depazer/web
 
+## 0.2.0
+
+### Minor Changes
+
+- 30512e0: ✨ Add loop dependency card
+
 ## 0.1.1
 
 ### Patch Changes
