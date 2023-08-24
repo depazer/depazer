@@ -1,5 +1,11 @@
 # @depazer/shared
 
+## 0.0.3
+
+### Patch Changes
+
+- eb6d4cd: 📄 Update README.md
+
 ## 0.0.2
 
 ### Patch Changes

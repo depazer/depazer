@@ -1,5 +1,11 @@
 # @depazer/web
 
+## 0.1.1
+
+### Patch Changes
+
+- eb6d4cd: 📄 Update README.md
+
 ## 0.1.0
 
 ### Minor Changes
