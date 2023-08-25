@@ -1,13 +1,15 @@
-name: unit test
+name: ci
 
 on:
   push:
-    branches: ['main']
+    branches:
+      - '**'
   pull_request:
-    branches: ['main']
+    branches:
+      - main
 
 jobs:
-  build:
+  unit-test:
     runs-on: ubuntu-latest
 
     strategy:
@@ -26,8 +28,13 @@ jobs:
           cache: 'pnpm'
       - name: Install dependencies
         run: pnpm i
-      - name: Run Vitest
-        run: pnpm test
+
+      - name: Lint
+        run: pnpm -r lint
+
+      - name: Build & Preview
+        run: pnpm build && pnpm preview
+
       - name: Generate coverage reports
         run: pnpm test:cov
       - name: Upload coverage reports to Codecov
