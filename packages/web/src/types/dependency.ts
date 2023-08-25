@@ -18,4 +18,6 @@ export interface DigraphWithLinks {
 export interface DependencyFetchData {
   dependencyNodes: DependencyNode[]
   loopDependencies: string[][]
+  depth?: number
+  dev?: boolean
 }

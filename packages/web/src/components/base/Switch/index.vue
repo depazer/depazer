@@ -2,7 +2,15 @@
 import { useI18n } from 'vue-i18n'
 
 withDefaults(defineProps<{ modelValue: boolean }>(), { modelValue: false })
-const emit = defineEmits<{ 'update:modelValue': [value: boolean] }>()
+const emit = defineEmits<{
+  'update:modelValue': [value: boolean]
+  clearInitStatus: [value: boolean]
+}>()
+
+const handleToggle = (modelValue: boolean) => {
+  emit('update:modelValue', !modelValue)
+  emit('clearInitStatus', false)
+}
 
 const { t } = useI18n({
   messages: {
@@ -26,7 +34,7 @@ const { t } = useI18n({
   <button
     type="button"
     :title="t(modelValue ? 'switch.on' : 'switch.off')"
-    @click="emit('update:modelValue', !modelValue)"
+    @click="handleToggle(modelValue)"
     border="2 solid gray-1 dark:slate-6"
     flex="~ justify-center items-center"
     :bg="modelValue && '!gray-5 !dark:slate-2'"

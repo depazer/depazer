@@ -27,12 +27,20 @@ const { moduleConfig } = storeToRefs(useModuleStore())
 
       <div my-4 flex="~ justify-between items-center">
         <span>{{ $t('globalSetting.devDependencies') }}</span>
-        <BaseSwitch v-model="moduleConfig.includeDev" />
+        <BaseSwitch
+          v-model="moduleConfig.includeDev"
+          @clearInitStatus="moduleConfig.init = false"
+        />
       </div>
 
       <div class="mt-4" flex="~ justify-between items-center">
         <span>{{ $t('globalSetting.maxDepth') }}</span>
-        <BaseCounter v-model="moduleConfig.depth" :max="Infinity" class="max-w-24" />
+        <BaseCounter
+          v-model="moduleConfig.depth"
+          :max="Infinity"
+          @clearInitStatus="moduleConfig.init = false"
+          class="max-w-24"
+        />
       </div>
 
       <p>{{ $t('globalSetting.repulsion') }}</p>

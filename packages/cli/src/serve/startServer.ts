@@ -9,7 +9,12 @@ import { handleStaticResource } from './router/staticServer'
 import type { Server } from 'node:http'
 import type { Method } from './router/types'
 
-export async function startServer(port: number, root: string) {
+export async function startServer(
+  port: number,
+  depth: number = Infinity,
+  dev: boolean = false,
+  root: string
+) {
   const config = {
     hostname: 'localhost',
     /** @desc 监听端口 */
@@ -25,7 +30,14 @@ export async function startServer(port: number, root: string) {
     if (handler) {
       handler(
         res,
-        { pathname, params: searchParams, method: req.method as Method, fullPath: req.url! },
+        {
+          pathname,
+          params: searchParams,
+          method: req.method as Method,
+          fullPath: req.url!,
+          depth,
+          dev
+        },
         root
       )
     } else {

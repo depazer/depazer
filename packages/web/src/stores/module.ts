@@ -2,22 +2,32 @@ import type { DependencyFetchData, DigraphWithLinks } from '@/types/dependency'
 
 export const useModuleStore = defineStore('module', () => {
   const moduleConfig = reactive({
-    depth: 2,
+    depth: Infinity,
     includeDev: false,
     /** @desc 使用本地api获取模块图数据 */
     isLocal: true,
     /** @desc 根模块名 ${name}@${version} */
-    rootModule: ''
+    rootModule: '',
+    /** @desc 是否是初始化状态(初始化状态默认采用用户脚手架传递的 depth 和 includeDev) */
+    init: true
   })
 
   const apiGenerator = (depth: number, includeDev: boolean) => {
-    return `${import.meta.env.BASE_URL}api/graph?depth=${depth}&includeDev=${includeDev}`
+    const base = `${import.meta.env.BASE_URL}api/graph`,
+      params = `?depth=${depth}&includeDev=${includeDev}`
+
+    return moduleConfig.init ? base : base + params
   }
 
   const apiURL = ref(apiGenerator(moduleConfig.depth, moduleConfig.includeDev))
-  const { data, abort } = useFetch(debouncedRef(apiURL, 300), { refetch: true })
+  const { data, abort, onFetchResponse } = useFetch(debouncedRef(apiURL, 300), { refetch: true })
     .get()
     .json<DependencyFetchData>()
+
+  onFetchResponse(() => {
+    moduleConfig.depth = data.value?.depth! ?? Infinity
+    moduleConfig.includeDev = data.value?.dev! ?? false
+  })
 
   watchEffect(() => {
     abort()

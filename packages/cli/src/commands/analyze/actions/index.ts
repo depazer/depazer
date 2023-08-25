@@ -27,6 +27,6 @@ export default function (root: string, { depth, dev, jsonFile, port, '--': args 
        * @example pnpm dev a  |  pnpm dev analyzer
        * @example depazer a  |  depazer analyzer
        */
-      return startAnalyzer(port, root)
+      return startAnalyzer(port, depth, dev, root)
   }
 }

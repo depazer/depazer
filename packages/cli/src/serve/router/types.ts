@@ -12,6 +12,8 @@ export interface routeInfo {
   method: Method
   params: URLSearchParams
   fullPath: string
+  dev: boolean
+  depth: number
 }
 
 export type Routes = Map<string, routeHandler>

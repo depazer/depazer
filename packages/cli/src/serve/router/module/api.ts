@@ -11,19 +11,24 @@ import { handleSuccessRes, handleServerErrorRes, handleMethodNotAllowed } from '
 interface IGraphResponse {
   dependencyNodes: DependencyNode[]
   loopDependencies: string[][]
+  depth: number
+  dev: boolean
 }
 
 const cache = new Map<string, IGraphResponse>()
 
 const apiRoute: Route = {
-  '/api/graph': async (res, { method, params, fullPath }, root) => {
+  '/api/graph': async (res, { method, params, fullPath, dev, depth }, root) => {
     if (method !== 'GET') {
       handleMethodNotAllowed(res)
       return
     }
 
-    let depth = Infinity,
-      includeDev = false
+    /**
+     * 用户初始化时的 dev 和 depth，web端应该通过 api/graph 访问
+     * 用户在 web 端的操作 改变 dev 和 depth，web端应该通过携带参数访问
+     */
+    let includeDev = dev
 
     // api/graph?depth=1
     if (params.has('depth')) {
@@ -50,7 +55,9 @@ const apiRoute: Route = {
     const dependencyNodes = graphTranslator(await resolver(depth))
     const data: IGraphResponse = {
       dependencyNodes,
-      loopDependencies: getLoopDependency(dependencyNodes)
+      loopDependencies: getLoopDependency(dependencyNodes),
+      depth,
+      dev: includeDev
     }
     cache.set(fullPath, data)
     handleSuccessRes(res, data)

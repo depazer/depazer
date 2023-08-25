@@ -13,19 +13,25 @@ const props = withDefaults(
   }
 )
 
-const emit = defineEmits<{ 'update:modelValue': [moduleValue: number] }>()
+const emit = defineEmits<{
+  'update:modelValue': [moduleValue: number]
+  clearInitStatus: [value: boolean]
+}>()
 
 const count = computed({
-  get: () => props.modelValue,
-  set: (newValue: string | number) =>
+  get: () => (props.modelValue === Infinity ? '♾️' : props.modelValue),
+  set: (newValue: string | number) => {
     emit('update:modelValue', clamp(~~newValue, props.min, props.max))
+  }
 })
 
 function handleAdd() {
-  count.value += 1
+  typeof count.value === 'string' ? (count.value = 2) : (count.value += 1)
+  emit('clearInitStatus', false)
 }
 function handleMinus() {
-  count.value -= 1
+  typeof count.value === 'string' ? (count.value = 2) : (count.value -= 1)
+  emit('clearInitStatus', false)
 }
 </script>
 
