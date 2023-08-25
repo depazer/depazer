@@ -32,7 +32,7 @@ describe('base/AutoComplete', async () => {
     }, 1000)
   })
 
-  test.skip('focus event', async ({ expect }) => {
+  test.skip('focus event', async () => {
     const input = wrapper.find('input')
     await input.trigger('focus')
     // expect(wrapper.find('ul').isVisible()).toBe(true)

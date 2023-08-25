@@ -17,7 +17,8 @@
     }
   },
   "scripts": {
-    "build": "rimraf ./lib &&tsc -d && tsx ./build/build.ts && rimraf ./dist"
+    "build": "rimraf ./lib &&tsc -d && tsx ./build/build.ts && rimraf ./dist",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix"
   },
   "devDependencies": {
     "@depazer/core": "workspace:*",
