@@ -27,7 +27,7 @@ function handleToggleRootDependency(rootDependency: string) {
 }
 
 const mainRef = ref<HTMLElement | null>(null)
-const handleScreenshot = () => {
+const handleScreenshot = useDebounceFn(() => {
   if (!mainRef.value) return
 
   html2canvas(mainRef.value, {
@@ -41,7 +41,7 @@ const handleScreenshot = () => {
       link.click()
     })
   })
-}
+}, 400)
 
 const buttonList = computed(() => [
   {
