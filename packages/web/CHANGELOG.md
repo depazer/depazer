@@ -1,5 +1,13 @@
 # @depazer/web
 
+## 0.2.1
+
+### Patch Changes
+
+- 405f464: ⬆️ Update vue-i18n form `9.3.0-beta.25` to `9.3.0-beta.26`
+- c88b746: screenhoot add debounce handle
+- 5afc037: globalSetting add i18n support
+
 ## 0.2.0
 
 ### Minor Changes
