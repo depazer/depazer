@@ -41,7 +41,7 @@ const handleScreenshot = useDebounceFn(() => {
       link.click()
     })
   })
-}, 400)
+}, 300)
 
 const buttonList = computed(() => [
   {
