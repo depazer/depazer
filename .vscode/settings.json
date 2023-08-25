@@ -6,7 +6,7 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
-  "i18n-ally.keystyle": "auto",
+  "i18n-ally.keystyle": "nested",
   "i18n-ally.sortKeys": true,
   "i18n-ally.enabledParsers": ["ts", "json"],
   "i18n-ally.sourceLanguage": "zh-CN",
