@@ -21,7 +21,7 @@
     "build": "turbo build --no-daemon",
     "preview": "pnpm --filter cli preview",
     "commit": "git add . && cz",
-    "commit:changeset": "git add . && cz && changeset add",
+    "commit:changeset": "changeset add && git add . && cz",
     "lint": "turbo lint --no-daemon",
     "test": "turbo test --no-daemon",
     "test:cov": "vitest run --coverage",
