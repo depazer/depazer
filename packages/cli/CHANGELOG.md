@@ -1,5 +1,11 @@
 # @depazer/cli
 
+## 0.2.2
+
+### Patch Changes
+
+- a67e1ec: fix analyze argument display page
+
 ## 0.2.0
 
 ### Minor Changes
