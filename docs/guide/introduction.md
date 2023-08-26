@@ -4,7 +4,7 @@
 
 ## 技术栈
 
-**depazer** 采用 `pnpm + monorepo` 架构搭建，利用 [Turborepo](https://turbo.build/repo) 做项目构建工具，[CLI](https://github.com/depazer/depazer/tree/main/packages/cli) 端采用 [cacjs](https://github.com/cacjs/cac) + [ESBuild](https://esbuild.github.io/) 搭建，[WEB](https://github.com/depazer/depazer/tree/main/packages/web) 端采用 [Vue3](https://vuejs.org/) + [Vite](https://vitejs.dev/) + [D3](https://d3js.org/) 搭建，CSS 框架采用 [Unocss](https://unocss.dev/)，测试框架采用 [Vitest](https://vitest.dev/)
+**depazer** 采用 `pnpm + monorepo` 架构搭建，利用 [Turborepo](https://turbo.build/repo) 做项目构建工具，[CLI](https://github.com/depazer/depazer/tree/main/packages/cli) 端采用 [cac](https://github.com/cacjs/cac) + [ESBuild](https://esbuild.github.io/) 搭建，[WEB](https://github.com/depazer/depazer/tree/main/packages/web) 端采用 [Vue3](https://vuejs.org/) + [Vite](https://vitejs.dev/) + [D3](https://d3js.org/) 搭建，CSS 框架采用 [Unocss](https://unocss.dev/)，测试框架采用 [Vitest](https://vitest.dev/)
 
 ## 功能
 
