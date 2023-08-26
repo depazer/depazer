@@ -5,5 +5,6 @@ export default defineWorkspace([
   'packages/cli',
   'packages/web',
   'packages/shared',
-  'packages/vite'
+  'packages/vite',
+  'packages/server'
 ])

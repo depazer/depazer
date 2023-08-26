@@ -1,0 +1,10 @@
+{
+  "include": ["src/**/*", "test/**/*", "vitest.config.*"],
+  "extends": "@depazer/config/tsconfig/node.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  }
+}
