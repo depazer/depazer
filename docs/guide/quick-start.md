@@ -32,6 +32,8 @@ yarn global add @depazer/cli
 
 打开终端，将运行路径调整至项目的**根目录**，执行`depazer analyze`命令后，就会自动打开浏览器显示依赖包可视化前端页面。默认的本地地址为`localhost:4936`。
 
+可以通过 [CLI 命令详情](./cli.md) 查看更多命令的使用方法。
+
 ## 使用Vite 插件
 
 若你的开发环境基于`vite`,可以选择安装我们的`vite`插件`@depazer/vite`。
