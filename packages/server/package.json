@@ -1,0 +1,18 @@
+{
+  "name": "@depazer/server",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "files": [
+    "./src"
+  ],
+  "scripts": {
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@depazer/config": "workspace:*",
+    "@depazer/core": "workspace:*"
+  }
+}

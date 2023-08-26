@@ -90,11 +90,22 @@ importers:
         specifier: ^6.7.14
         version: 6.7.14
 
+  packages/config: {}
+
   packages/core:
     devDependencies:
       '@depazer/shared':
         specifier: workspace:*
         version: link:../shared
+
+  packages/server:
+    devDependencies:
+      '@depazer/config':
+        specifier: workspace:*
+        version: link:../config
+      '@depazer/core':
+        specifier: workspace:*
+        version: link:../core
 
   packages/shared: {}
 
