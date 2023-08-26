@@ -1,0 +1,9 @@
+{
+  "name": "@depazer/config",
+  "version": "0.0.0",
+  "type": "module",
+  "private": true,
+  "files": [
+    "./tsconfig/node.json"
+  ]
+}
