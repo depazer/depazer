@@ -10,7 +10,7 @@
     "build": "run-p type-check build-cli build-vite",
     "preview": "vite preview --outDir dist/cli",
     "test": "vitest run",
-    "build-vite": "vite build --base /__depazer --outDir dist/vite",
+    "build-vite": "vite build --base /__depazer/ --outDir dist/vite",
     "build-cli": "vite build --outDir dist/cli",
     "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix",
