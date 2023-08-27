@@ -1,7 +1,8 @@
 import { build } from 'esbuild'
-import { copyFile, readdir, stat, mkdir } from 'node:fs/promises'
 import { resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { mkdir } from 'node:fs/promises'
+import { copyDir } from '@depazer/shared'
 
 main()
 
@@ -25,18 +26,4 @@ async function main() {
   })
 
   copyDir(resolve(rootPath, 'node_modules/@depazer/web/dist/cli'), resolve(libPath, 'web'))
-}
-
-async function copyDir(from: string, to: string) {
-  await mkdir(to).catch(() => void 0)
-  const list = await readdir(from)
-  for (const item of list) {
-    const filePath = resolve(from, item)
-    const fileStat = await stat(filePath)
-    if (fileStat.isFile()) {
-      copyFile(filePath, resolve(to, item))
-    } else {
-      copyDir(filePath, resolve(to, item))
-    }
-  }
 }
