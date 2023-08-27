@@ -11,8 +11,6 @@
     "composite": true,
     "module": "ESNext",
     "moduleResolution": "Node",
-    "declarationDir": "dist",
-    "types": ["node"],
-    "outDir": "dist"
+    "types": ["node"]
   }
 }
