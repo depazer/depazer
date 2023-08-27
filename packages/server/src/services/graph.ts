@@ -20,7 +20,7 @@ export async function graphService(
   const resolver = await getModuleResolver(root, includeDevDependency)
 
   if (typeof resolver === 'string') {
-    return { code: 200, message: resolver, data: null }
+    return { code: 400, message: resolver, data: null }
   }
 
   const dependencyTree = await resolver(depth)

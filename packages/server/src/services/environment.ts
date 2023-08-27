@@ -14,5 +14,5 @@ export async function environmentService(root: string): Promise<ServicePayload> 
           nodeVersion: process.version
         }
       }
-    : { code: 400, message: error, data: {} }
+    : { code: 400, message: error, data: null }
 }
