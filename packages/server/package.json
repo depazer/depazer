@@ -13,6 +13,7 @@
   },
   "devDependencies": {
     "@depazer/config": "workspace:*",
-    "@depazer/core": "workspace:*"
+    "@depazer/core": "workspace:*",
+    "@depazer/shared": "workspace:*"
   }
 }
