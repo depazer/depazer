@@ -1,5 +1,12 @@
 # @depazer/cli
 
+## 0.2.3
+
+### Patch Changes
+
+- b75d072: ♻️ Use @depazer/server to provide api server
+- 2ee4570: ♻️ Report only output flat dependency tree data
+
 ## 0.2.2
 
 ### Patch Changes
