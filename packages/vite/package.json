@@ -21,7 +21,8 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix"
   },
   "devDependencies": {
-    "@depazer/core": "workspace:*",
+    "@depazer/config": "workspace:*",
+    "@depazer/server": "workspace:*",
     "@depazer/shared": "workspace:*",
     "@depazer/web": "workspace:*",
     "vite": "^4.4.9"

@@ -1,24 +1,24 @@
 import { resolve } from 'node:path'
-import { apiRouter } from './router'
-import { hasFile } from '@depazer/shared'
-import staticService from './services/static'
+import { apiController, jsonResponse, pageController } from '@depazer/server'
 
 import type { Plugin, ViteDevServer } from 'vite'
 
 interface Config {
+  root: string
   monorepo: boolean
 }
 
 function mergeConfig(config: Partial<Config>): Config {
   return {
+    root: process.cwd(),
     monorepo: false,
     ...config
   }
 }
 
 export function vitePluginDepazer(option: Partial<Config> = {}): Plugin {
-  const _config = mergeConfig(option)
-  const PAGE_PATH = resolve(__dirname, './web')
+  const config = mergeConfig(option)
+  const PAGE_DIR = resolve(__dirname, './web')
   const PATH_PREFIX = '/__depazer'
   const API_PREFIX = PATH_PREFIX + '/api'
   /** @todo 使用ws */
@@ -31,34 +31,19 @@ export function vitePluginDepazer(option: Partial<Config> = {}): Plugin {
     async configureServer(server: ViteDevServer) {
       /** @desc 后端api */
       server.middlewares.use(API_PREFIX, async (req, res) => {
-        if (req.method !== 'GET') {
-          res.statusCode = 405
-          return res.end()
-        }
+        const url = new URL(req?.url ?? '/', 'http://api.depazer')
+        const method = req.method ?? ''
 
-        const data = await apiRouter(req?.url ?? '/')
-
-        res.setHeader('Content-Type', 'application/json')
-        res.end(JSON.stringify(data))
+        const servicePayload = await apiController(url, method, config.root)
+        jsonResponse(res, servicePayload)
       })
 
       /** @desc 静态资源 */
       server.middlewares.use(PATH_PREFIX, async (req, res, next) => {
-        const url = req.url === '/' ? '/index.html' : req?.url ?? '/index.html'
+        const url = req?.url ?? '/'
         const isAPI = url.startsWith('/api')
 
-        if (isAPI) {
-          next()
-        } else {
-          const filePath = resolve(PAGE_PATH, '.' + url)
-          if (!(await hasFile(filePath))) {
-            res.statusCode = 302
-            res.setHeader('Location', PATH_PREFIX)
-            return res.end()
-          }
-
-          staticService(filePath, res)
-        }
+        return isAPI ? next() : pageController(PAGE_DIR, url, PATH_PREFIX, res)
       })
     }
   }
