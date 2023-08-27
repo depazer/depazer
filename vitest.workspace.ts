@@ -1,10 +1,10 @@
 import { defineWorkspace } from 'vitest/config'
 
 export default defineWorkspace([
-  'packages/core',
-  'packages/cli',
-  'packages/web',
   'packages/shared',
+  'packages/core',
+  'packages/server',
+  'packages/web',
   'packages/vite',
-  'packages/server'
+  'packages/cli'
 ])
