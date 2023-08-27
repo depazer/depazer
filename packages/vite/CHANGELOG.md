@@ -1,5 +1,11 @@
 # @depazer/vite
 
+## 0.3.1
+
+### Patch Changes
+
+- cf43045: add package info
+
 ## 0.3.0
 
 ### Minor Changes
