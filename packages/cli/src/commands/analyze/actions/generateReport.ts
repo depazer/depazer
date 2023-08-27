@@ -16,7 +16,5 @@ export async function generateReport(
   const targetPath = resolve(root, fileName)
 
   successLogger('Report generated: ' + targetPath)
-  successLogger('Flat report generated: ' + resolve(targetPath, '..', 'flat.json'))
-  writeFile(targetPath, JSON.stringify(res, null, 2))
-  writeFile(resolve(targetPath, '..', 'flat.json'), JSON.stringify(graphTranslator(res), null, 2))
+  writeFile(targetPath, JSON.stringify(graphTranslator(res), null, 2))
 }

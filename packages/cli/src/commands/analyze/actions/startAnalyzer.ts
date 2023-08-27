@@ -10,7 +10,7 @@ import type { Server } from 'node:http'
 export async function startAnalyzer(port: number, depth: number, dev: boolean, root: string) {
   /** @desc 检测环境 */
   const { error } = await environmentScanner(root)
-  if (typeof error === 'string') return
+  if (typeof error === 'string') return error
 
   const config = {
     /** 前端静态资源目录 */
@@ -29,7 +29,7 @@ export async function startAnalyzer(port: number, depth: number, dev: boolean, r
 
   const server = createServer(async function (req, res) {
     const isAPI = req.url?.startsWith('/api')
-    const url = new URL(req?.url ?? '/', 'http://api.depazer')
+    const url = new URL(req.url ?? '/', 'http://api.depazer')
 
     if (isAPI) {
       const method = req.method ?? ''
