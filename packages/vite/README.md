@@ -23,4 +23,4 @@ export default defineConfig({
 
 ## Preview
 
-[localhsot:5173/\_\_depazer](http://localhsot:5173/__depazer)
+[localhost:5173/\_\_depazer](http://localhost:5173/__depazer)
