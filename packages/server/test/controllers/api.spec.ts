@@ -1,4 +1,4 @@
-import { apiController, defaultService } from '../../src/controllers/api'
+import { apiController } from '@/controllers/api'
 
 import { describe, test, vi } from 'vitest'
 
@@ -28,20 +28,36 @@ describe('api controller', () => {
     mockedGraphService.mockResolvedValueOnce({
       code: 200,
       message: 'OK',
-      data: {}
+      data: {
+        dependencyNodes: [
+          {
+            dependencies: [],
+            depth: 0,
+            isDevDependency: false,
+            name: 'a@1.0.0'
+          }
+        ],
+        loopDependencies: []
+      }
     })
 
-    const payload = await apiController(
-      new URL('http://localhost:3000/graph?includeDev=true&depth=1'),
-      'GET',
-      '.'
-    )
+    const payload = await apiController(new URL('http://localhost:3000/graph'), 'GET', '.')
     expect(mockedGraphService).toBeCalledTimes(1)
-    expect(mockedGraphService).toBeCalledWith({ depth: 1, includeDevDependency: true }, '.')
+    expect(mockedGraphService).toBeCalledWith({ depth: Infinity, includeDevDependency: false }, '.')
     expect(payload).toMatchInlineSnapshot(`
       {
         "code": 200,
-        "data": {},
+        "data": {
+          "dependencyNodes": [
+            {
+              "dependencies": [],
+              "depth": 0,
+              "isDevDependency": false,
+              "name": "a@1.0.0",
+            },
+          ],
+          "loopDependencies": [],
+        },
         "message": "OK",
       }
     `)
@@ -51,7 +67,10 @@ describe('api controller', () => {
     mockedEnvironmentService.mockResolvedValueOnce({
       code: 200,
       message: 'OK',
-      data: {}
+      data: {
+        packageManager: 'yarn',
+        nodeVersion: process.version
+      }
     })
 
     const payload = await apiController(
@@ -60,26 +79,22 @@ describe('api controller', () => {
       '.',
       '/api'
     )
-    expect(mockedGraphService).toBeCalledTimes(1)
-    expect(mockedGraphService).toBeCalledWith({ depth: 1, includeDevDependency: true }, '.')
-    expect(payload).toMatchInlineSnapshot(`
-      {
-        "code": 200,
-        "data": {},
-        "message": "OK",
-      }
-    `)
+
+    expect(mockedEnvironmentService).toBeCalledTimes(1)
+    expect(mockedEnvironmentService).toBeCalledWith('.')
+    expect(payload).toEqual({
+      code: 200,
+      data: {
+        nodeVersion: process.version,
+        packageManager: 'yarn'
+      },
+      message: 'OK'
+    })
   })
 
   test('should return 404 when path error', async ({ expect }) => {
     const payload = await apiController(new URL('http://localhost:3000'), 'GET', '.')
 
-    const defaultV = defaultService()
-    expect(defaultV).toEqual({
-      code: 404,
-      data: null,
-      message: 'Not Found!'
-    })
     expect(payload).toMatchInlineSnapshot(`
       {
         "code": 404,
