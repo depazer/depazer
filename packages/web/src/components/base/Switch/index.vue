@@ -2,14 +2,10 @@
 import { useI18n } from 'vue-i18n'
 
 withDefaults(defineProps<{ modelValue: boolean }>(), { modelValue: false })
-const emit = defineEmits<{
-  'update:modelValue': [value: boolean]
-  clearInitStatus: [value: boolean]
-}>()
+const emit = defineEmits<{ 'update:modelValue': [value: boolean] }>()
 
 const handleToggle = (modelValue: boolean) => {
   emit('update:modelValue', !modelValue)
-  emit('clearInitStatus', false)
 }
 
 const { t } = useI18n({

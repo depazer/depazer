@@ -97,7 +97,7 @@ const buttonList = computed(() => [
   <Transition name="loopDependencies">
     <div
       @mousedown="appStore.toggleLoopDependencyVisible"
-      v-show="loopDependencyCardVisible"
+      v-if="loopDependencyCardVisible"
       :bg="loopDependencyCardVisible ? 'gray-1/50 dark:slate-9/50' : ''"
       class="absolute h-200vh w-full pt-[calc(100vh+4rem)] -top-100vh backdrop-blur-3 transition-background-color"
     >

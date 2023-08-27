@@ -16,9 +16,9 @@ const { moduleConfig } = storeToRefs(useModuleStore())
 
 <template>
   <BaseCard class="w-xs">
-    <template #header
-      ><span class="font-bold">{{ $t('globalSetting.title') }}</span></template
-    >
+    <template #header>
+      <span class="font-bold">{{ $t('globalSetting.title') }}</span>
+    </template>
     <div>
       <div my-4 flex="~ justify-between items-center">
         <span>{{ $t('globalSetting.drag') }}</span>
@@ -27,20 +27,12 @@ const { moduleConfig } = storeToRefs(useModuleStore())
 
       <div my-4 flex="~ justify-between items-center">
         <span>{{ $t('globalSetting.devDependencies') }}</span>
-        <BaseSwitch
-          v-model="moduleConfig.includeDev"
-          @clearInitStatus="moduleConfig.init = false"
-        />
+        <BaseSwitch v-model="moduleConfig.includeDev" />
       </div>
 
       <div class="mt-4" flex="~ justify-between items-center">
         <span>{{ $t('globalSetting.maxDepth') }}</span>
-        <BaseCounter
-          v-model="moduleConfig.depth"
-          :max="Infinity"
-          @clearInitStatus="moduleConfig.init = false"
-          class="max-w-24"
-        />
+        <BaseCounter v-model="moduleConfig.depth" :max="Infinity" class="max-w-24" />
       </div>
 
       <p>{{ $t('globalSetting.repulsion') }}</p>
