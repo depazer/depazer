@@ -6,7 +6,7 @@ const emit = defineEmits<{ open: [] }>()
 
 const { data } = useFetch(import.meta.env.BASE_URL + 'api/environment')
   .get()
-  .json<{ packageManager: 'npm' | 'pnpm' | 'yarn' | 'bun'; version: string }>()
+  .json<{ packageManager: 'npm' | 'pnpm' | 'yarn' | 'bun'; nodeVersion: string }>()
 
 const iconMap = {
   npm: 'i-logos-npm-icon',
@@ -40,6 +40,6 @@ function InfoLi(props: { title: string; icon: string }) {
     </li>
 
     <InfoLi :title="data?.packageManager" :icon="iconMap[data?.packageManager ?? 'npm']" />
-    <InfoLi :title="data?.version" icon="i-devicon-nodejs" />
+    <InfoLi :title="data?.nodeVersion" icon="i-devicon-nodejs" />
   </ul>
 </template>
