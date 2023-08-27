@@ -1,5 +1,11 @@
 # @depazer/web
 
+## 0.2.3
+
+### Patch Changes
+
+- 54e518b: 🐛 Update api response type
+
 ## 0.2.2
 
 ### Patch Changes

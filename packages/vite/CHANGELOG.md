@@ -1,5 +1,15 @@
 # @depazer/vite
 
+## 0.3.0
+
+### Minor Changes
+
+- 7c31327: ✨ Add @depazer/server to support dependency api
+
+### Patch Changes
+
+- fa3026d: 🐛 Fix typescript dts outdir error
+
 ## 0.2.0
 
 ### Minor Changes
