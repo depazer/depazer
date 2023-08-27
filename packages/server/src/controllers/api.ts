@@ -3,12 +3,12 @@ import { environmentService } from '../services/environment'
 
 import type { ServicePayload } from '../types'
 
-export function apiController(
+export async function apiController(
   url: URL,
   method: 'GET' | string,
   root: string,
   prefix: string = ''
-): ServicePayload | Promise<ServicePayload> {
+): Promise<ServicePayload> {
   if (method !== 'GET') return defaultService()
 
   const { searchParams, pathname } = url
@@ -23,13 +23,13 @@ export function apiController(
       [`${prefix}/environment`]: () => environmentService(root)
     }[pathname] ?? defaultService
 
-  return service()
+  return await service()
 }
 
-function defaultService(): ServicePayload {
+export function defaultService(): ServicePayload {
   return {
     code: 404,
     message: 'Not Found!',
-    data: {}
+    data: null
   }
 }
