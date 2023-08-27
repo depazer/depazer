@@ -40,6 +40,7 @@
   },
   "devDependencies": {
     "@depazer/core": "workspace:*",
+    "@depazer/server": "workspace:*",
     "@depazer/shared": "workspace:*",
     "@depazer/web": "workspace:*",
     "cac": "^6.7.14"

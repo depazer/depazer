@@ -80,6 +80,9 @@ importers:
       '@depazer/core':
         specifier: workspace:*
         version: link:../core
+      '@depazer/server':
+        specifier: workspace:*
+        version: link:../server
       '@depazer/shared':
         specifier: workspace:*
         version: link:../shared
