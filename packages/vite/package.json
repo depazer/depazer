@@ -2,9 +2,20 @@
   "name": "@depazer/vite",
   "type": "module",
   "version": "0.3.0",
+  "description": "Vite plugin for dependency analyzer",
   "files": [
     "lib"
   ],
+  "keywords": [
+    "vite",
+    "dependency",
+    "analyzer",
+    "plugin"
+  ],
+  "bugs": {
+    "url": "https://github.com/depazer/depazer/issues"
+  },
+  "homepage": "https://github.com/depazer/depazer/tree/main/packages/vite#depazervite",
   "license": "MIT",
   "publishConfig": {
     "access": "public",
