@@ -61,7 +61,7 @@
     "tsx": "^3.12.7",
     "turbo": "^1.10.13",
     "typescript": "^5.2.2",
-    "vitepress": "1.0.0-rc.4",
+    "vitepress": "1.0.0-rc.9",
     "vitest": "^0.34.2"
   }
 }
