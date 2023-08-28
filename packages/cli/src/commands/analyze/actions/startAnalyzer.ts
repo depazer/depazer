@@ -41,20 +41,28 @@ export async function startAnalyzer(port: number, depth: number, dev: boolean, r
     }
   })
 
-  listenServer(server, config.port, config.hostname, config.open)
+  const params = `/init/${depth}/${dev}`
+  listenServer(server, config.port, config.hostname, config.open, params)
 }
 
-function listenServer(server: Server, port: number, hostname: string, open: boolean) {
+function listenServer(
+  server: Server,
+  port: number,
+  hostname: string,
+  open: boolean,
+  params: string
+) {
   server.listen(port, hostname, () => {
     const link = `http://${hostname}:${port}`
     process.env.NODE_ENV === 'production' && console.clear()
     noteLogger(link, 'LOCAL')
     /** @desc 启动默认浏览器 */
-    open && exec(`start ${link}`)
+    open && exec(`start ${link + params}`)
   })
 
   /** @desc 端口占用 */
-  server.on('error', (err) => {
-    if (err.message.endsWith(port + '')) return listenServer(server, port + 1, hostname, open)
+  server.on('error', (err: Error & { code: string }) => {
+    server.close()
+    err.code === 'EADDRINUSE' && listenServer(server, port + 1, hostname, open, params)
   })
 }
