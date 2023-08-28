@@ -1,6 +1,6 @@
 import { apiController, jsonResponse, pageController } from '@depazer/server'
-import { fileURLToPath } from 'url'
-
+import { resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import type { Plugin, ViteDevServer } from 'vite'
 
 interface Config {
@@ -18,7 +18,9 @@ function mergeConfig(config: Partial<Config>): Config {
 
 export function vitePluginDepazer(option: Partial<Config> = {}): Plugin {
   const config = mergeConfig(option)
-  const PAGE_DIR = fileURLToPath(new URL('./web', import.meta.url))
+  const PAGE_DIR = import.meta
+    ? fileURLToPath(new URL('./web', import.meta.url))
+    : resolve(__dirname, './web')
 
   const PATH_PREFIX = '/__depazer'
   const API_PREFIX = PATH_PREFIX + '/api'

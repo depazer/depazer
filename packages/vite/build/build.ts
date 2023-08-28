@@ -27,7 +27,10 @@ async function main() {
   build({
     ...baseConfig,
     outfile: resolve(libPath, 'index.cjs'),
-    format: 'cjs'
+    format: 'cjs',
+    define: {
+      'import.meta': 'false'
+    }
   })
 
   copyDir(resolve(rootPath, 'node_modules/@depazer/web/dist/vite'), resolve(libPath, 'web'))
