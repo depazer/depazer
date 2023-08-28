@@ -1,4 +1,4 @@
-lockfileVersion: '6.1'
+lockfileVersion: '6.0'
 
 settings:
   autoInstallPeers: true
@@ -21,8 +21,8 @@ importers:
         specifier: ^20.5.6
         version: 20.5.6
       '@vitest/coverage-v8':
-        specifier: ^0.34.2
-        version: 0.34.2(vitest@0.34.2)
+        specifier: ^0.34.3
+        version: 0.34.3(vitest@0.34.2)
       '@vue/eslint-config-prettier':
         specifier: ^8.0.0
         version: 8.0.0(eslint@8.47.0)(prettier@3.0.2)
@@ -940,7 +940,7 @@ packages:
       lodash.merge: 4.6.2
       lodash.uniq: 4.5.0
       resolve-from: 5.0.0
-      ts-node: 10.9.1(@types/node@20.4.7)(typescript@5.2.2)
+      ts-node: 10.9.1(@types/node@20.5.6)(typescript@5.2.2)
       typescript: 5.2.2
     transitivePeerDependencies:
       - '@swc/core'
@@ -2644,8 +2644,8 @@ packages:
       vue: 3.3.4
     dev: true
 
-  /@vitest/coverage-v8@0.34.2(vitest@0.34.2):
-    resolution: {integrity: sha512-3VuDZPeGGd1zWtc0Tdj9cHSbFc8IQ0ffnWp9MlhItOkziN6HEf219meZ9cZheg/hJXrXb+Fi2bMu7GeCAfL4yA==}
+  /@vitest/coverage-v8@0.34.3(vitest@0.34.2):
+    resolution: {integrity: sha512-bNjP0RHe8UxdklCigZlk6FVCNbOiqVjWnpZJ1zKixpvb7YHSaZiN/w+mzpvXIoqyxyePzKC+L+G1oj7SB20PJw==}
     peerDependencies:
       vitest: '>=0.32.0 <1'
     dependencies:
@@ -3641,7 +3641,7 @@ packages:
     dependencies:
       '@types/node': 20.4.7
       cosmiconfig: 8.2.0
-      ts-node: 10.9.1(@types/node@20.4.7)(typescript@5.2.2)
+      ts-node: 10.9.1(@types/node@20.5.6)(typescript@5.2.2)
       typescript: 5.2.2
     dev: true
 
@@ -7322,7 +7322,7 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /ts-node@10.9.1(@types/node@20.4.7)(typescript@5.2.2):
+  /ts-node@10.9.1(@types/node@20.5.6)(typescript@5.2.2):
     resolution: {integrity: sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==}
     hasBin: true
     requiresBuild: true
@@ -7342,7 +7342,7 @@ packages:
       '@tsconfig/node12': 1.0.11
       '@tsconfig/node14': 1.0.3
       '@tsconfig/node16': 1.0.4
-      '@types/node': 20.4.7
+      '@types/node': 20.5.6
       acorn: 8.10.0
       acorn-walk: 8.2.0
       arg: 4.1.3
