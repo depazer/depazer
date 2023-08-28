@@ -1,3 +1,4 @@
+import { resolve } from 'node:path'
 import { pageController } from '@/controllers/page'
 
 import { describe, test, vi } from 'vitest'
@@ -19,31 +20,18 @@ describe('page controller', () => {
   test('should call static service', async ({ expect }) => {
     mockedHasFile.mockResolvedValueOnce(true)
 
-    const res = {
-      statusCode: 0,
-      setHeader: vi.fn(),
-      end: vi.fn()
-    }
-
-    await pageController('.', '/index.html', 'http://localhost:3000', res as any)
+    await pageController('.', '/index.html', {} as any)
 
     expect(mockedStaticService).toBeCalledTimes(1)
   })
 
   test('should redirect when file is not found', async ({ expect }) => {
     mockedHasFile.mockResolvedValueOnce(false)
+    mockedStaticService.mockReset()
 
-    const res = {
-      statusCode: 0,
-      setHeader: vi.fn(),
-      end: vi.fn()
-    }
+    await pageController('.', '/', {} as any)
 
-    await pageController('.', '/', '/base', res as any)
-
-    expect(res.statusCode).toBe(302)
-    expect(res.setHeader).toBeCalledTimes(1)
-    expect(res.setHeader).toBeCalledWith('Location', '/base')
-    expect(res.end).toBeCalledTimes(1)
+    expect(mockedStaticService).toBeCalledTimes(1)
+    expect(mockedStaticService).toBeCalledWith(resolve('.', './index.html'), {} as any)
   })
 })

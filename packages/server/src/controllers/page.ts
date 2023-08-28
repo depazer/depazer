@@ -7,7 +7,6 @@ import type { IncomingMessage, ServerResponse } from 'node:http'
 export async function pageController(
   staticDir: string,
   url: string,
-  baseURL: string,
   res: ServerResponse<IncomingMessage>
 ) {
   let filePath = resolve(staticDir, `.${url === '/' ? '/index.html' : url}`)

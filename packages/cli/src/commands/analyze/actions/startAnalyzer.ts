@@ -37,7 +37,7 @@ export async function startAnalyzer(port: number, depth: number, dev: boolean, r
       const servicePayload = await apiController(url, method, root, '/api')
       jsonResponse(res, servicePayload)
     } else {
-      pageController(config.staticDir, url.pathname, '/', res)
+      pageController(config.staticDir, url.pathname, res)
     }
   })
 

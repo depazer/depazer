@@ -67,6 +67,7 @@ describe('startAnalyzer', () => {
     mocked.environmentScanner.mockResolvedValueOnce({ error: null })
 
     const server = {
+      close: vi.fn(),
       listen: vi.fn(),
       on: vi.fn()
     }
@@ -97,7 +98,7 @@ describe('startAnalyzer', () => {
     process.env.NODE_ENV = 'production'
 
     listenCallback()
-    expect(mocked.exec).toBeCalledWith('start http://localhost:3000')
+    expect(mocked.exec).toBeCalledWith('start http://localhost:3000/init/1/false')
     expect(console.clear).toBeCalled()
 
     mocked.exec.mockReset()
@@ -107,7 +108,7 @@ describe('startAnalyzer', () => {
     onCallback({ message: 'error' })
     expect(mocked.exec).not.toBeCalled()
 
-    onCallback({ message: 'error3000' })
+    onCallback({ code: 'EADDRINUSE' })
     expect(server.listen).toBeCalledWith(3001, 'localhost', expect.any(Function))
   })
 })

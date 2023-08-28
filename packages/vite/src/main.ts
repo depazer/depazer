@@ -46,7 +46,7 @@ export function vitePluginDepazer(option: Partial<Config> = {}): Plugin {
         const url = req?.url ?? '/'
         const isAPI = url.startsWith('/api')
 
-        return isAPI ? next() : pageController(PAGE_DIR, url, PATH_PREFIX, res)
+        return isAPI ? next() : pageController(PAGE_DIR, url, res)
       })
     }
   }
