@@ -1,0 +1,8 @@
+{
+  "include": ["src/worker/**/*.ts", "src/types/**/*.ts"],
+  "exclude": ["src/**/__tests__/*"],
+  "extends": "./tsconfig.app.json",
+  "compilerOptions": {
+    "lib": ["ES2020", "WebWorker"]
+  }
+}

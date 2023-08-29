@@ -34,7 +34,7 @@ export const useModuleStore = defineStore('module', () => {
   )
 
   const graphData = shallowRef<DigraphWithLinks>({ nodes: [], links: [] })
-  const depsDigraphWorker = new Worker(new URL('../utils/depsDigraphWorker.ts', import.meta.url))
+  const depsDigraphWorker = new Worker(new URL('../worker/depsDigraph.ts', import.meta.url))
   depsDigraphWorker.onmessage = (e: MessageEvent<{ type: number; data: DigraphWithLinks }>) => {
     graphData.value = e.data.data
   }
