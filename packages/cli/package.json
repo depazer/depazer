@@ -43,6 +43,7 @@
     "@depazer/server": "workspace:*",
     "@depazer/shared": "workspace:*",
     "@depazer/web": "workspace:*",
-    "cac": "^6.7.14"
+    "cac": "^6.7.14",
+    "open": "^9.1.0"
   }
 }
