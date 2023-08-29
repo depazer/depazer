@@ -10,7 +10,7 @@ describe('startAnalyzer', () => {
       apiController: vi.fn(),
       pageController: vi.fn(),
       environmentScanner: vi.fn(),
-      exec: vi.fn()
+      open: vi.fn()
     }
   })
 
@@ -46,11 +46,9 @@ describe('startAnalyzer', () => {
     }
   })
 
-  vi.mock('node:child_process', async (getSourceMods) => {
-    const sourceMods = await getSourceMods<Record<string, Function>>()
+  vi.mock('open', () => {
     return {
-      ...sourceMods,
-      exec: mocked.exec
+      default: mocked.open
     }
   })
 
@@ -76,7 +74,7 @@ describe('startAnalyzer', () => {
 
     mocked.createServer.mockReturnValueOnce(server)
 
-    await startAnalyzer(3000, 1, false, false, 'root')
+    await startAnalyzer(3000, 1, false, true, 'root')
     expect(mocked.createServer).toBeCalled()
 
     const createServerCallback = mocked.createServer.mock.calls[0][0]
@@ -98,15 +96,17 @@ describe('startAnalyzer', () => {
     process.env.NODE_ENV = 'production'
 
     listenCallback()
-    // expect(mocked.exec).toBeCalledWith('start http://localhost:3000/init/1/false')
+
+    expect(mocked.open).toBeCalled()
+    expect(mocked.open).toBeCalledWith('http://localhost:3000?depth=1')
     expect(console.clear).toBeCalled()
 
-    mocked.exec.mockReset()
+    mocked.open.mockReset()
 
     const onCallback = server.on.mock.calls[0][1]
 
     onCallback({ message: 'error' })
-    expect(mocked.exec).not.toBeCalled()
+    expect(mocked.open).not.toBeCalled()
 
     onCallback({ code: 'EADDRINUSE' })
     expect(server.listen).toBeCalledWith(3001, 'localhost', expect.any(Function))
