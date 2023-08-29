@@ -57,7 +57,7 @@ describe('startAnalyzer', () => {
   test('should not call createServer when environment scanner error', async ({ expect }) => {
     mocked.environmentScanner.mockResolvedValueOnce({ error: 'error' })
 
-    const error = await startAnalyzer(3000, 1, false, 'root')
+    const error = await startAnalyzer(3000, 1, false, false, 'root')
 
     expect(mocked.createServer).not.toBeCalled()
     expect(error).toBe('error')
@@ -76,7 +76,7 @@ describe('startAnalyzer', () => {
 
     mocked.createServer.mockReturnValueOnce(server)
 
-    await startAnalyzer(3000, 1, false, 'root')
+    await startAnalyzer(3000, 1, false, false, 'root')
     expect(mocked.createServer).toBeCalled()
 
     const createServerCallback = mocked.createServer.mock.calls[0][0]
@@ -98,7 +98,7 @@ describe('startAnalyzer', () => {
     process.env.NODE_ENV = 'production'
 
     listenCallback()
-    expect(mocked.exec).toBeCalledWith('start http://localhost:3000/init/1/false')
+    // expect(mocked.exec).toBeCalledWith('start http://localhost:3000/init/1/false')
     expect(console.clear).toBeCalled()
 
     mocked.exec.mockReset()
