@@ -1,5 +1,16 @@
 # @depazer/cli
 
+## 0.2.4
+
+### Patch Changes
+
+- f134ecb: ♻️ Refactor route params display page
+- 16df859: 🐛 Fix vue-router history mode
+- 5da4ce0: ✨ CLI add --open params
+- 5f34340: 📄 README add web online
+- 9fec09c: 🐛 Init args when cli start web
+- cd084c3: 🐛 Fix Switch component style error
+
 ## 0.2.3
 
 ### Patch Changes

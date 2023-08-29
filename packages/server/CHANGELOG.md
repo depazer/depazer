@@ -1,5 +1,11 @@
 # @depazer/server
 
+## 0.0.2
+
+### Patch Changes
+
+- 16df859: 🐛 Fix vue-router history mode
+
 ## 0.0.1
 
 ### Patch Changes
