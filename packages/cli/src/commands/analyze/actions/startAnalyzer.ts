@@ -1,11 +1,16 @@
 import { fileURLToPath } from 'node:url'
 import { createServer } from 'node:http'
-import { exec } from 'node:child_process'
 import { noteLogger } from '@depazer/shared'
 import { environmentScanner } from '@depazer/core'
 import { apiController, jsonResponse, pageController } from '@depazer/server'
+import o from 'open'
 
 import type { Server } from 'node:http'
+
+interface IParams {
+  depth: number
+  dev: boolean
+}
 
 export async function startAnalyzer(port: number, depth: number, dev: boolean, root: string) {
   /** @desc 检测环境 */
@@ -41,8 +46,7 @@ export async function startAnalyzer(port: number, depth: number, dev: boolean, r
     }
   })
 
-  const params = `/init/${depth}/${dev}`
-  listenServer(server, config.port, config.hostname, config.open, params)
+  listenServer(server, config.port, config.hostname, config.open, { depth, dev })
 }
 
 function listenServer(
@@ -50,14 +54,23 @@ function listenServer(
   port: number,
   hostname: string,
   open: boolean,
-  params: string
+  params: IParams
 ) {
   server.listen(port, hostname, () => {
-    const link = `http://${hostname}:${port}`
+    let link = `http://${hostname}:${port}`
+    // 因为 web 端设置了默认值 所以depth 不为 Infinity的情况再带上 url，dev 同理
+    let flag = false
+    if (params.depth !== Infinity) {
+      link += `?depth=${params.depth}`
+      flag = true
+    }
+    if (params.dev) link += flag ? `&dev=${params.dev}` : `?dev=${params.dev}`
+
     process.env.NODE_ENV === 'production' && console.clear()
+
     noteLogger(link, 'LOCAL')
     /** @desc 启动默认浏览器 */
-    open && exec(`start ${link + params}`)
+    open && o(link)
   })
 
   /** @desc 端口占用 */

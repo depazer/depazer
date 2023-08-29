@@ -29,6 +29,13 @@ function handleToggleRootDependency(rootDependency: string) {
   moduleConfig.value.rootModule = rootDependency
 }
 
+// 初始化参数 http://loclahost:3000?depth=2&dev=true
+const {
+  query: { depth, dev }
+} = useRoute()
+moduleConfig.value.depth = Number(depth ?? Infinity)
+moduleConfig.value.includeDev = dev === 'true'
+
 const mainRef = ref<HTMLElement | null>(null)
 const handleScreenshot = useDebounceFn(() => {
   if (!mainRef.value) return

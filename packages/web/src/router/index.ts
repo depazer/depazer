@@ -12,20 +12,6 @@ const router = createRouter({
           path: '',
           name: 'home',
           component: () => import('@/views/index.vue')
-        },
-        {
-          path: 'init/:depth/:includeDev',
-          redirect: (to) => {
-            const moduleStore = useModuleStore()
-
-            moduleStore.moduleConfig.depth = +(to.params.depth ?? '2')
-            moduleStore.moduleConfig.includeDev = to.params.includeDev === 'true'
-
-            return {
-              name: 'home',
-              params: {}
-            }
-          }
         }
       ]
     }
