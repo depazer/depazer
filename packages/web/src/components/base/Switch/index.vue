@@ -37,7 +37,7 @@ const { t } = useI18n({
     class="h-6 w-12 rounded-3 bg-gray-2 transition-background-color dark:bg-slate-8 transition-background-color"
   >
     <span
-      :transform="modelValue && 'translate-x-3'"
+      :transform="modelValue && '!translate-x-3'"
       class="inline-block h-4 w-4 rounded-2 bg-gray-4 transition-transform -translate-x-3"
     />
   </button>
