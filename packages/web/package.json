@@ -8,6 +8,7 @@
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check build-cli build-vite",
+    "build:playground": "vite build --mode playground --outDir dist/cli",
     "preview": "vite preview --outDir dist/cli",
     "test": "vitest run",
     "build-vite": "vite build --base /__depazer/ --outDir dist/vite",
