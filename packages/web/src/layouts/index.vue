@@ -2,6 +2,7 @@
 import GlobalSetting from '@/components/GlobalSetting.vue'
 import EnvironmentInfo from '@/components/EnvironmentInfo.vue'
 import LoopDependency from '@/components/LoopDependency.vue'
+import Tip from '@/components/base/Tip/index.vue'
 
 import html2canvas from 'html2canvas'
 import { useLocale } from '@/hooks/locale'
@@ -10,6 +11,8 @@ import { useModuleStore } from '@/stores/module'
 
 const isDark = useDark()
 const toggleDark = useToggle(isDark)
+
+const isPlayground = ref(import.meta.env.MODE === 'playground')
 
 const { isFullscreen, toggle: toggleFullscreen } = useFullscreen()
 
@@ -66,6 +69,9 @@ const buttonList = computed(() => [
     >
       <img src="/logo.svg" class="w-7 align-bottom" /> Depazer
     </a>
+
+    <Tip v-if="isPlayground" />
+
     <div>
       <button
         bg="gray-1 hover:gray-2 active:gray-3 dark:slate-6 hover:dark:slate-7 active:dark:slate-8"
