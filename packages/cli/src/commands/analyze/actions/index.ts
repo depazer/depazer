@@ -6,7 +6,10 @@ import type { AnalyzeOption } from '../types'
 import { resolve } from 'path'
 import { noteLogger } from '@depazer/shared'
 
-export default function (root: string, { depth, dev, jsonFile, port, '--': args }: AnalyzeOption) {
+export default function (
+  root: string,
+  { depth, dev, jsonFile, port, open, '--': args }: AnalyzeOption
+) {
   root = resolve(process.cwd(), root ?? '.')
   jsonFile = jsonFile === true ? 'analyzer.json' : jsonFile
   noteLogger(root, 'BASE')
@@ -27,6 +30,6 @@ export default function (root: string, { depth, dev, jsonFile, port, '--': args 
        * @example pnpm dev a  |  pnpm dev analyzer
        * @example depazer a  |  depazer analyzer
        */
-      return startAnalyzer(port, depth, dev, root)
+      return startAnalyzer(port, depth, dev, open, root)
   }
 }

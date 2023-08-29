@@ -12,7 +12,13 @@ interface IParams {
   dev: boolean
 }
 
-export async function startAnalyzer(port: number, depth: number, dev: boolean, root: string) {
+export async function startAnalyzer(
+  port: number,
+  depth: number,
+  dev: boolean,
+  open: boolean,
+  root: string
+) {
   /** @desc 检测环境 */
   const { error } = await environmentScanner(root)
   if (typeof error === 'string') return error
@@ -29,7 +35,7 @@ export async function startAnalyzer(port: number, depth: number, dev: boolean, r
     /** @desc 监听端口 */
     port,
     /** @desc 是否打开浏览器 */
-    open: true
+    open
   }
 
   const server = createServer(async function (req, res) {

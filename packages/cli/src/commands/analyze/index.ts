@@ -34,6 +34,13 @@ export const createAnalyzeCommand: CreateCommand<AnalyzeOption, string> = functi
         config: {
           default: false
         }
+      },
+      {
+        rawName: '--open',
+        description: 'Auto open default browser',
+        config: {
+          default: false
+        }
       }
     ]
   }
