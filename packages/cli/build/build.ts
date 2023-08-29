@@ -20,6 +20,7 @@ async function main() {
     outfile: resolve(libPath, 'index.js'),
     format: 'esm',
     treeShaking: true,
+    external: ['open'],
     define: {
       'process.env.NODE_ENV': '"production"'
     }
