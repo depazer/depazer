@@ -5,67 +5,34 @@
  * @used stores/modules.ts
  */
 
-import type { DependencyFetchData, DigraphWithLinks, DependencyLink } from '@/types/dependency'
+import type { DependencyLink } from '@/types/dependency'
+import type { WorkerMessage } from '@/types/worker'
 import type { DependencyNode } from '@depazer/core'
 
-const data: { dependencyNodes: DependencyNode[]; loopLinks: string[]; id: number } = {
+const globalData: {
+  dependencyNodes: DependencyNode[]
+  packedNodes: string[]
+  loopLinks: string[]
+  id: number
+} = {
   dependencyNodes: [],
+  packedNodes: [],
   loopLinks: [],
   id: -1
 }
 
-self.onmessage = (e: MessageEvent<{ dependency: DependencyFetchData; rootDependency: string }>) => {
-  data.id = Math.random()
-  data.dependencyNodes = e.data.dependency.dependencyNodes
-  data.loopLinks = generateLoopLink(e.data.dependency.loopDependencies)
+self.onmessage = (e: MessageEvent<WorkerMessage>) => {
+  const { type, data } = e.data
 
-  generateDigraphWithLink(data.id, e.data.rootDependency)
-}
+  switch (type) {
+    case 0:
+      globalData.id = Math.random()
+      globalData.dependencyNodes = data.dependency.dependencyNodes
+      globalData.loopLinks = generateLoopLink(data.dependency.loopDependencies)
+      globalData.packedNodes = data.packedNodes
 
-function generateDigraphWithLink(id: number, rootDependency: string) {
-  const nodes = data.dependencyNodes
-  const isRoot = rootDependency === ''
-  const rootNode = isRoot ? undefined : nodes.find(({ name }) => name === rootDependency)
-
-  const filteredNodes: DependencyNode[] = []
-  const links: DependencyLink[] = []
-  const markedSet = new Set()
-  rootNode && generateSubModule(rootNode)
-
-  function generateSubModule(rootNode: DependencyNode) {
-    markedSet.add(rootNode.name)
-    filteredNodes.push(rootNode)
-    links.push(...rootNode.dependencies.map((dep) => dependencyNodeMap(rootNode.name, dep)))
-    rootNode.dependencies.forEach((name) => {
-      !markedSet.has(name) && generateSubModule(nodes.find((node) => node.name === name)!)
-    })
-  }
-
-  const digraphWithLinks: DigraphWithLinks = {
-    nodes: rootNode === undefined ? nodes : filteredNodes,
-    links:
-      rootNode === undefined
-        ? nodes.reduce<DependencyLink[]>((links, { name, dependencies }) => {
-            links.push(...dependencies.map((dep) => dependencyNodeMap(name, dep)))
-            return links
-          }, [])
-        : links
-  }
-
-  if (data.id === id) self.postMessage({ type: 0, data: digraphWithLinks })
-  else return
-}
-
-function dependencyNodeMap(source: string, target: string): DependencyLink {
-  const targetNode = data.dependencyNodes.find((node) => node.name === target)
-
-  return {
-    source,
-    target,
-    linkColor: calcLinkColor(
-      targetNode?.isDevDependency ?? false,
-      data.loopLinks.includes(`${source}->${target}`)
-    )
+      generateDigraphWithLink(globalData.id, data.rootDependency)
+      break
   }
 }
 
@@ -79,6 +46,55 @@ function generateLoopLink(loopDependencies: string[][]) {
   }
 
   return [...links]
+}
+
+function generateDigraphWithLink(id: number, rootDependency: string) {
+  const nodes = globalData.dependencyNodes
+  const isRoot = rootDependency === ''
+  const rootNode = isRoot ? nodes[0] : nodes.find(({ name }) => name === rootDependency)
+
+  const filteredNodes: DependencyNode[] = []
+  const links: DependencyLink[] = []
+  const markedSet = new Set()
+  rootNode && generateSubModule(rootNode)
+
+  function generateSubModule(rootNode: DependencyNode) {
+    markedSet.add(rootNode.name)
+    filteredNodes.push(rootNode)
+    links.push(...generateNodeLink(rootNode.name, rootNode.dependencies))
+    rootNode.dependencies.forEach((name) => {
+      !markedSet.has(name) &&
+        !globalData.packedNodes.includes(rootNode.name) &&
+        generateSubModule(nodes.find((node) => node.name === name)!)
+    })
+  }
+
+  if (globalData.id === id)
+    self.postMessage({
+      type: 0,
+      data: {
+        nodes: filteredNodes,
+        links
+      }
+    })
+  else return
+}
+
+function generateNodeLink(source: string, dependencies: string[]) {
+  if (globalData.packedNodes.includes(source)) return []
+
+  return dependencies.map((target) => {
+    const targetNode = globalData.dependencyNodes.find((node) => node.name === target)
+
+    return {
+      source,
+      target,
+      linkColor: calcLinkColor(
+        targetNode?.isDevDependency ?? false,
+        globalData.loopLinks.includes(`${source}->${target}`)
+      )
+    }
+  })
 }
 
 function calcLinkColor(isDev: boolean, isLoop: boolean) {

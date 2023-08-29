@@ -10,7 +10,7 @@ export default {
   },
   globalSetting: {
     title: 'Setting',
-    drag: 'Drag and lock',
+    drag: 'Fixed position after drag',
     devDependencies: 'Include development dependencies',
     maxDepth: 'Max depth',
     repulsion: 'Repulsion magnitude',

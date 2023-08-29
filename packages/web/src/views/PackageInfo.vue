@@ -2,16 +2,22 @@
 import BaseCard from '@/components/base/Card/index.vue'
 
 import { useAppStore } from '@/stores/app'
+import { useModuleStore } from '@/stores/module'
 import { ApiGetNpmPackageInfo } from '@/api/npmRegistry'
 
 const appStore = useAppStore()
-
 const { currentRegistry } = storeToRefs(appStore)
+
+const { isPackedNode, togglePackedNode } = useModuleStore()
 
 const props = defineProps<{
   currentPackage: Record<'name' | 'version', string>
   modelValue: string
 }>()
+
+const dependencyNameWithVersion = computed(() => {
+  return props.currentPackage.name + '@' + props.currentPackage.version
+})
 
 const emit = defineEmits<{ 'update:modelValue': [rootModule: string] }>()
 const fetching = ref<boolean>(false)
@@ -71,19 +77,31 @@ const formattedPackageInfo = computed(() => {
 
         <div>
           <button
-            v-show="currentPackage.version.match(/^\d/)"
             type="button"
-            title="设为根"
+            title="断开依赖项链接"
             class="ma-0 rounded-md border-none pa-1"
             bg="transparent hover:gray-2 hover:dark:slate-8"
-            @click="emit('update:modelValue', currentPackage.name + '@' + currentPackage.version)"
+            @click="togglePackedNode(dependencyNameWithVersion)"
+          >
+            <i
+              :class="isPackedNode(dependencyNameWithVersion) ? 'i-uil-plus' : 'i-uil-link-broken'"
+              text="lg red-3"
+            />
+          </button>
+          <button
+            v-show="currentPackage.version.match(/^\d/)"
+            type="button"
+            title="设为根节点"
+            class="ma-0 rounded-md border-none pa-1"
+            bg="transparent hover:gray-2 hover:dark:slate-8"
+            @click="emit('update:modelValue', dependencyNameWithVersion)"
           >
             <i class="i-uil-location-point" text="lg red" />
           </button>
           <button
             v-show="modelValue !== ''"
             type="button"
-            title="返回主包"
+            title="返回主节点"
             class="ma-0 rounded-md border-none pa-1"
             bg="transparent hover:gray-2 hover:dark:slate-8"
             @click="emit('update:modelValue', '')"

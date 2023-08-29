@@ -10,7 +10,7 @@ export default {
   },
   globalSetting: {
     title: '设置',
-    drag: '拖拽固定',
+    drag: '拖拽后固定',
     devDependencies: '包含开发依赖',
     maxDepth: '最大深度',
     repulsion: '斥力大小',
