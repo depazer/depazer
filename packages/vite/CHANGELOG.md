@@ -1,5 +1,14 @@
 # @depazer/vite
 
+## 0.3.3
+
+### Patch Changes
+
+- 16df859: 🐛 Fix vue-router history mode
+- 8dfddbd: 🐛 Fix import.meta is not define in cjs
+- 9fec09c: 🐛 Init args when cli start web
+- cd084c3: 🐛 Fix Switch component style error
+
 ## 0.3.2
 
 ### Patch Changes

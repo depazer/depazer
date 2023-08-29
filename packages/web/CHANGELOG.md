@@ -1,5 +1,16 @@
 # @depazer/web
 
+## 0.2.4
+
+### Patch Changes
+
+- 9ee1d05: ✨ Add depazer web online mode
+- f134ecb: ♻️ Refactor route params display page
+- c1b7a01: ✨ Playground mode add tip component
+- 5f34340: 📄 README add web online
+- 9fec09c: 🐛 Init args when cli start web
+- cd084c3: 🐛 Fix Switch component style error
+
 ## 0.2.3
 
 ### Patch Changes
