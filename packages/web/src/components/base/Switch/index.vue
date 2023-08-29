@@ -4,6 +4,8 @@ import { useI18n } from 'vue-i18n'
 withDefaults(defineProps<{ modelValue: boolean }>(), { modelValue: false })
 const emit = defineEmits<{ 'update:modelValue': [value: boolean] }>()
 
+const isPlayground = ref(import.meta.env.MODE === 'playground')
+
 const handleToggle = (modelValue: boolean) => {
   emit('update:modelValue', !modelValue)
 }
@@ -35,6 +37,7 @@ const { t } = useI18n({
     flex="~ justify-center items-center"
     :bg="modelValue && '!gray-5 !dark:slate-2'"
     class="h-6 w-12 rounded-3 bg-gray-2 transition-background-color dark:bg-slate-8 transition-background-color"
+    :disabled="isPlayground"
   >
     <span
       :transform="modelValue && '!translate-x-3'"

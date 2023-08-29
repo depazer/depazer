@@ -13,6 +13,8 @@ const props = withDefaults(
   }
 )
 
+const isPlayground = ref(import.meta.env.MODE === 'playground')
+
 const emit = defineEmits<{
   'update:modelValue': [moduleValue: number]
   clearInitStatus: [value: boolean]
@@ -43,6 +45,7 @@ function handleMinus() {
       @click="handleMinus"
       bg="gray-2 dark:slate-6 hover:gray dark:hover:slate active:gray/70 dark:active:slate/70"
       class="rounded-l-md border-none dark:text-slate-1"
+      :disabled="isPlayground"
     >
       <i i-ci-remove-minus />
     </button>
@@ -51,6 +54,7 @@ function handleMinus() {
       placeholder="请输入数字"
       bg="gray-2 dark:slate-6 focus:gray-1 dark:focus:slate-8"
       class="block w-full border-none text-center text-4 dark:text-slate-1 focus:outline-none"
+      :disabled="isPlayground"
     />
     <button
       title="加"
@@ -58,6 +62,7 @@ function handleMinus() {
       @click="handleAdd"
       bg="gray-2 dark:slate-6 hover:gray dark:hover:slate active:gray/70 dark:active:slate/70"
       class="rounded-r-md border-none dark:text-slate-1"
+      :disabled="isPlayground"
     >
       <i i-ci-add-plus />
     </button>

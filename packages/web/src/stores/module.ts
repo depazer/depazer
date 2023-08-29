@@ -1,11 +1,12 @@
+import { getPlaygroundData } from '@/utils/mockPlaygroundData'
 import type { DependencyFetchData, DigraphWithLinks } from '@/types/dependency'
 
 export const useModuleStore = defineStore('module', () => {
   const moduleConfig = reactive({
     depth: Infinity,
     includeDev: false,
-    /** @desc 使用本地api获取模块图数据 */
-    isLocal: true,
+    /** @desc 使用本地api获取模块图数据; playground环境下为false */
+    isLocal: import.meta.env.MODE !== 'playground',
     /** @desc 根模块名 ${name}@${version} */
     rootModule: ''
   })
@@ -21,8 +22,11 @@ export const useModuleStore = defineStore('module', () => {
 
   watchEffect(() => {
     abort()
-    if (moduleConfig.isLocal)
+    if (moduleConfig.isLocal) {
       apiURL.value = apiGenerator(moduleConfig.depth, moduleConfig.includeDev)
+    } else {
+      data.value = getPlaygroundData()
+    }
   })
 
   const nodesData = computed<DependencyFetchData>(
