@@ -59,14 +59,18 @@ depazer a
 # 如果遇到端口占用，会默认+1，直到找到可用端口
 depazer a -p 8080
 depazer a --port 8080
+
+# 自动打开默认浏览器
+depazer a -o
+depazer a --open
 ```
 
 上面的参数同样可以组合在一起使用
 
 ```bash
 # 分析当前目录依赖关系
-# 递归深度为 5，分析 devDependencies和dependencies 依赖，服务器端口为 8080
-depazer a -d 5 --dev -p 8080
+# 递归深度为 5，分析 devDependencies和dependencies 依赖，服务器端口为 8080，并且自动打开默认浏览器
+depazer a -d 5 --dev -p 8080 -o
 
 # 分析当前目录依赖关系，生成 JSON 文件 (-p 不可以和 -j 连用)
 # 递归深度为 5，分析 devDependencies和dependencies 依赖
