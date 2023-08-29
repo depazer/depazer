@@ -24,7 +24,7 @@ export const useModuleStore = defineStore('module', () => {
     abort()
     if (moduleConfig.isLocal) {
       apiURL.value = apiGenerator(moduleConfig.depth, moduleConfig.includeDev)
-    } else {
+    } else if (import.meta.env.MODE === 'playground') {
       data.value = getPlaygroundData()
     }
   })
