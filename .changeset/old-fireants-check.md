@@ -2,4 +2,4 @@
 '@depazer/cli': patch
 ---
 
-cli add --open params
+✨ CLI add --open params

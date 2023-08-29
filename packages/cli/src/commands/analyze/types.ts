@@ -7,6 +7,7 @@ interface AnalyzeOption extends Record<string, unknown> {
   port: number
   p: number
   open: boolean
+  o: boolean
   '--': unknown[]
 }
 

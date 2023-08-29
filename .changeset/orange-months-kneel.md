@@ -3,4 +3,4 @@
 '@depazer/web': patch
 ---
 
-readme add web online
+📄 README add web online

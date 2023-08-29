@@ -2,4 +2,4 @@
 '@depazer/web': patch
 ---
 
-add depazer web online mode
+✨ Add depazer web online mode

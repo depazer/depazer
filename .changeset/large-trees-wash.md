@@ -2,4 +2,4 @@
 '@depazer/web': patch
 ---
 
-playground mode add tip component
+✨ Playground mode add tip component

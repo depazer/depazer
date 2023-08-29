@@ -36,7 +36,7 @@ export const createAnalyzeCommand: CreateCommand<AnalyzeOption, string> = functi
         }
       },
       {
-        rawName: '--open',
+        rawName: '-o, --open',
         description: 'Auto open default browser',
         config: {
           default: false

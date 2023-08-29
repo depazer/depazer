@@ -3,4 +3,4 @@
 '@depazer/web': patch
 ---
 
-refactor route params display page
+♻️ Refactor route params display page
