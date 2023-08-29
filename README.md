@@ -6,7 +6,7 @@
 
 <p align="center">
 <a href="https://depazer.github.io/depazer">🧑‍💻 Document(zh-CN)</a> |
-<a href="/README.zh-CN.md">🌐 README (zh-CN)</a>
+<a href="/README.zh-CN.md">🌐 README (zh-CN)</a> |
 <a href="https://depazer.github.io/playground">👀 Web Online</a>
 </p>
 

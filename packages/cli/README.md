@@ -5,7 +5,7 @@
 <p align="center"><img width="50%" alt="snapshot" src="https://github.com/depazer/depazer/assets/86412303/858660fa-2635-440a-a2df-8a598cfdd057" /></p>
 
 <p align="center">
-<a href="https://depazer.github.io/depazer">🧑‍💻 Document(zh-CN)</a>
+<a href="https://depazer.github.io/depazer">🧑‍💻 Document(zh-CN)</a> |
 <a href="https://depazer.github.io/playground">👀 Web Online</a>
 </p>
 
