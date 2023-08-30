@@ -2,7 +2,7 @@
 
 该包提供了依赖分析的核心函数
 
-<img src="./contributing/core.webp" alt="@depazer/core" class="depazer-img" style="border:none;box-shadow:none" />
+<img src="./img/core.webp" alt="@depazer/core" class="depazer-img" style="border:none;box-shadow:none" />
 
 - `environmentScanner.ts`用于获取当前目录使用的包管理器，是否已经安装了依赖，有无`package.json`等信息。
 - `commonAdaptor.ts`(支持`npm`, `yarn`, `pnpm`, `bun`)用于生成node_modules的模块依赖树(并不完整，会省略已查找过的依赖)。

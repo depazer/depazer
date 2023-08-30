@@ -1,8 +1,8 @@
-# 快速开始
+# Depazer 快速上手
 
 ## 线上体验
 
-可以打开我们的[线上站点](https://depazer.github.io/playground)体验依赖包的可视化功能。
+可以打开我们的 [Playground 线上站点](https://depazer.github.io/playground) 体验**依赖关系分析**的可视化功能。
 
 ## 使用Depazer CLI
 
@@ -58,10 +58,10 @@ yarn add @depazer/vite -D
 
 ```ts [vite.config.ts]
 import { defineConfig } from 'vite'
-import depazer from '@depazer/vite'
+import depazer from '@depazer/vite' // [!code focus]
 
 export default defineConfig({
-  plugins: [depazer()]
+  plugins: [depazer()] // [!code focus]
 })
 ```
 

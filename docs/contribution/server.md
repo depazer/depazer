@@ -2,7 +2,7 @@
 
 该包提供了服务器端的服务，用于提供静态资源服务和 `api` 服务
 
-<img src="./contributing/server.webp" alt="@depazer/server" class="depazer-img" style="border:none;box-shadow:none" />
+<img src="./img/server.webp" alt="@depazer/server" class="depazer-img" style="border:none;box-shadow:none" />
 
 - `environment.ts` 用于提供环境信息服务，包管理器，`node.js` 版本等
 - `graph.ts` 用于提供依赖有向图节点的相关服务

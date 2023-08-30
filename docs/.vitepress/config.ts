@@ -2,65 +2,124 @@ import { defineConfig } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
+  lang: 'zh-CN',
+  title: 'Depazer',
+  description: '简单易用的 NPM 依赖关系分析工具',
+  head: [['link', { rel: 'icon', href: '/logo.svg' }]],
+  lastUpdated: true,
   ignoreDeadLinks: 'localhostLinks',
 
-  title: 'Depazer',
-  description: 'JavaScript 依赖包可视化分析工具',
-  head: [['link', { rel: 'icon', href: '/logo.svg' }]],
-
+  // https://vitepress.dev/reference/default-theme-config
   themeConfig: {
-    // https://vitepress.dev/reference/default-theme-config
-    logo: { src: '/logo.svg', width: 32, height: 32 },
+    logo: '/logo.svg',
+
     nav: [
-      { text: '指南', link: '/guide/introduction', activeMatch: '/guide/' },
-      { text: '在线体验', link: 'https://depazer.github.io/playground' }
-    ],
-
-    search: {
-      provider: 'local'
-    },
-
-    sidebar: [
+      { text: '开始使用', link: '/guide/introduction', activeMatch: '/guide/' },
       {
-        text: '入门',
-        base: '/guide',
-        items: [
-          { text: '项目简介', link: '/introduction' },
-          { text: '快速开始', link: '/quick-start' }
-        ]
-      },
-      {
-        text: '操作手册',
-        base: '/guide',
+        text: '参与开源',
         items: [
           {
-            text: 'WEB 可视化操作',
-            link: '/web'
+            text: '贡献',
+            items: [
+              { text: 'Depazer 开发指南', link: '/contribution/' },
+              { text: '@depazer/cli', link: '/contribution/cli' },
+              { text: '@depazer/core', link: '/contribution/core' },
+              { text: '@depazer/server', link: '/contribution/server' },
+              { text: '@depazer/web', link: '/contribution/web' }
+            ]
           },
           {
-            text: 'CLI 命令详情',
-            link: '/cli'
+            text: '关于',
+            items: [{ text: 'Depazer 开发团队', link: '/about/team' }]
           }
         ]
       },
-      {
-        text: '贡献指南',
-        base: '/guide',
-        items: [
-          { text: '依赖json文件说明', link: '/contributing-json' },
-          { text: '项目概述', link: '/contributing' },
-          { text: 'server', link: '/contributing-server' },
-          { text: 'cli', link: '/contributing-cli' },
-          { text: 'web', link: '/contributing-web' },
-          { text: 'core', link: '/contributing-core' }
-        ]
-      }
+      { text: '在线体验', link: 'https://depazer.github.io/playground' }
     ],
 
-    socialLinks: [{ icon: 'github', link: 'https://github.com/depazer/depazer' }],
+    sidebar: {
+      '/guide/': [
+        {
+          text: '开始使用',
+          base: '/guide',
+          items: [
+            { text: 'Depazer 是什么？', link: '/introduction' },
+            { text: 'Depazer 快速上手', link: '/quick-start' }
+          ]
+        },
+        {
+          text: '进阶手册',
+          base: '/guide',
+          items: [
+            { text: 'WEB 可视化操作', link: '/web' },
+            { text: 'CLI 命令详情', link: '/cli' },
+            { text: 'json文件说明', link: '/json' }
+          ]
+        }
+      ],
+      '/contribution/': [
+        {
+          text: '贡献',
+          items: [
+            { text: 'Depazer 开发指南', link: '/contribution/' },
+            { text: '@depazer/cli', link: '/contribution/cli' },
+            { text: '@depazer/core', link: '/contribution/core' },
+            { text: '@depazer/server', link: '/contribution/server' },
+            { text: '@depazer/web', link: '/contribution/web' }
+          ]
+        },
+        {
+          text: '关于',
+          items: [{ text: 'Depazer 开发团队', link: '/about/team' }]
+        }
+      ]
+    },
+
+    outline: [2, 3],
+
     footer: {
       message: 'Released under the MIT License.',
-      copyright: 'Copyright © 2023-present Depazer'
-    }
+      copyright:
+        'Copyright © 2023-present <a href="https://github.com/Depazer/depazer">Depazer</a>'
+    },
+
+    editLink: {
+      pattern: 'https://github.com/depazer/depazer/edit/main/docs/:path',
+      text: '在 GitHub 上编辑此页'
+    },
+
+    lastUpdated: {
+      text: '本页更新时间',
+      formatOptions: {
+        dateStyle: 'short',
+        timeStyle: 'medium'
+      }
+    },
+
+    search: {
+      provider: 'local',
+      options: {
+        locales: {
+          zh: {
+            translations: {
+              button: {
+                buttonText: '搜索文档',
+                buttonAriaLabel: '搜索文档'
+              },
+              modal: {
+                noResultsText: '无法找到相关结果',
+                resetButtonTitle: '清除查询条件',
+                footer: {
+                  selectText: '选择',
+                  navigateText: '切换'
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    socialLinks: [{ icon: 'github', link: 'https://github.com/Depazer/depazer' }]
   }
 })
