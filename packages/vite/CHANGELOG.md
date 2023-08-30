@@ -1,5 +1,11 @@
 # @depazer/vite
 
+## 0.4.0
+
+### Minor Changes
+
+- 61b037b: ✨ Support pack up node
+
 ## 0.3.3
 
 ### Patch Changes

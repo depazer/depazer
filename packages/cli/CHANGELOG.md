@@ -1,5 +1,16 @@
 # @depazer/cli
 
+## 0.3.0
+
+### Minor Changes
+
+- 61b037b: ✨ Support pack up node
+- b8b0c80: ✨ Check update when start cli
+
+### Patch Changes
+
+- b91ea73: cli build minify
+
 ## 0.2.4
 
 ### Patch Changes
