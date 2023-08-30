@@ -45,12 +45,14 @@ export default defineConfig({
       },
       {
         text: '贡献指南',
+        base: '/guide',
         items: [
-          { text: '依赖json文件说明', link: '/markdown-examples' },
-          { text: '项目概述', link: '/markdown-examples' },
-          { text: 'cli', link: '/guide/contributing-cli' },
-          { text: 'web', link: '/markdown-examples' },
-          { text: 'core', link: '/api-examples' }
+          { text: '依赖json文件说明', link: '/contributing-json' },
+          { text: '项目概述', link: '/contributing' },
+          { text: 'server', link: '/contributing-server' },
+          { text: 'cli', link: '/contributing-cli' },
+          { text: 'web', link: '/contributing-web' },
+          { text: 'core', link: '/contributing-core' }
         ]
       }
     ],

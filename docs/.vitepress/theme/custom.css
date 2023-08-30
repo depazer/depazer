@@ -27,3 +27,11 @@
 .vp-doc a:hover {
   text-decoration-color: #16a34a;
 }
+
+.depazer-img {
+  margin: 1rem auto;
+  border-radius: 4px;
+  border: solid var(--vp-c-brand-light) 1px;
+  box-shadow: 0 0 5px #9996;
+  overflow: hidden;
+}

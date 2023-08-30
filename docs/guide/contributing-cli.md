@@ -1,4 +1,6 @@
-# CLI项目
+# @depazer/cli
+
+<img src="./contributing/cli.webp" alt="@depazer/cli" class="depazer-img" style="border:none;box-shadow:none" />
 
 cli项目基于`cac`构建，`cac`是一个轻量级的命令行解析器，支持子命令，选项，参数等。
 
