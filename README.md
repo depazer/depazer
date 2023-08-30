@@ -58,6 +58,7 @@ Options:
   -j, --jsonFile [file name]  Generate json file for analysis
   -d, --depth <number>        Depth of analysis (default: Infinity)
   --dev                       Include devDependencies (default: false)
+  -o, --open                  Auto open default browser (default: false)
   -h, --help                  Display this message
 ```
 

@@ -35,7 +35,7 @@ Usage:
   $ depazer
 
 Commands:
-  analyze  alias: a  Analyze package dependencies
+  analyze [root]  alias: a  Analyze package dependencies (root default .)
 
 
 For more info, run any command with the `--help` flag:
@@ -51,11 +51,14 @@ Options:
 
 ```bash
 Usage:
-  $ depazer analyze
+  $ depazer analyze [root]
 
 Options:
   -p, --port <number>         Port of analyzer server (default: 4936)
   -j, --jsonFile [file name]  Generate json file for analysis
+  -d, --depth <number>        Depth of analysis (default: Infinity)
+  --dev                       Include devDependencies (default: false)
+  -o, --open                  Auto open default browser (default: false)
   -h, --help                  Display this message
 ```
 
