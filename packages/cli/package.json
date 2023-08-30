@@ -1,6 +1,6 @@
 {
   "name": "@depazer/cli",
-  "version": "0.2.4",
+  "version": "0.3.0",
   "description": "A CLI tool for analyzing package dependencies",
   "type": "module",
   "files": [

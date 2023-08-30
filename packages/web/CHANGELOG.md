@@ -1,5 +1,11 @@
 # @depazer/web
 
+## 0.3.0
+
+### Minor Changes
+
+- 61b037b: ✨ Support pack up node
+
 ## 0.2.4
 
 ### Patch Changes
