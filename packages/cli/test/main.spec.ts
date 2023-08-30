@@ -3,6 +3,10 @@ import { createCli, parseCommand } from '@/main'
 import { describe, test, vi } from 'vitest'
 
 describe('cli', () => {
+  vi.mock('@/utils/checkUpdate', () => ({
+    checkUpdate: vi.fn()
+  }))
+
   test('createCli', ({ expect }) => {
     expect(createCli()).toBeDefined()
   })

@@ -1,4 +1,5 @@
 import { cac } from 'cac'
+import { checkUpdate } from './utils/checkUpdate'
 import { errorLogger } from '@depazer/shared'
 import { registerCommand } from './utils/registerCommand'
 import { createCommandFunctions, helpCallback } from './commands'
@@ -34,4 +35,5 @@ export function parseCommand(run: boolean) {
   }
 }
 
+checkUpdate()
 parseCommand(process.env.NODE_ENV !== 'test')
