@@ -22,17 +22,6 @@ export const useModuleStore = defineStore('module', () => {
     packedNodes: []
   })
 
-  function isPackedNode(name: string) {
-    return moduleConfig.packedNodes.includes(name)
-  }
-  function togglePackedNode(name: string) {
-    if (isPackedNode(name)) {
-      moduleConfig.packedNodes = moduleConfig.packedNodes.filter((n) => n !== name)
-    } else {
-      moduleConfig.packedNodes.push(name)
-    }
-  }
-
   const apiGenerator = (depth: number, includeDev: boolean) => {
     return `${import.meta.env.BASE_URL}api/graph?depth=${depth}&includeDev=${includeDev}`
   }
@@ -71,12 +60,36 @@ export const useModuleStore = defineStore('module', () => {
     } as GenerateDigraphWithLinkPayload)
   })
 
+  function isPackedNode(name: string) {
+    return moduleConfig.packedNodes.includes(name)
+  }
+  function togglePackedNode(name: string) {
+    if (isPackedNode(name)) {
+      moduleConfig.packedNodes = moduleConfig.packedNodes.filter((n) => n !== name)
+    } else {
+      moduleConfig.packedNodes.push(name)
+    }
+  }
+  function packedAllNodes() {
+    const rootNode =
+      moduleConfig.rootModule === ''
+        ? nodesData.value.dependencyNodes[0]
+        : nodesData.value.dependencyNodes.find(({ name }) => name === moduleConfig.rootModule)
+
+    moduleConfig.packedNodes = [...new Set(rootNode?.dependencies ?? [])]
+  }
+  function unpackedAllNodes() {
+    moduleConfig.packedNodes = []
+  }
+
   return {
     graphData,
     moduleConfig,
     nodesData,
 
     isPackedNode,
-    togglePackedNode
+    togglePackedNode,
+    packedAllNodes,
+    unpackedAllNodes
   }
 })

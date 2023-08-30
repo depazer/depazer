@@ -8,7 +8,7 @@ import { ApiGetNpmPackageInfo } from '@/api/npmRegistry'
 const appStore = useAppStore()
 const { currentRegistry } = storeToRefs(appStore)
 
-const { isPackedNode, togglePackedNode } = useModuleStore()
+const { isPackedNode, togglePackedNode, moduleConfig } = useModuleStore()
 
 const props = defineProps<{
   currentPackage: Record<'name' | 'version', string>
@@ -85,11 +85,14 @@ const formattedPackageInfo = computed(() => {
           >
             <i
               :class="isPackedNode(dependencyNameWithVersion) ? 'i-uil-plus' : 'i-uil-link-broken'"
-              text="lg red-3"
+              text="lg orange-5 dark:orange-3"
             />
           </button>
           <button
-            v-show="currentPackage.version.match(/^\d/)"
+            v-show="
+              currentPackage.version.match(/^\d/) &&
+              moduleConfig.rootModule !== dependencyNameWithVersion
+            "
             type="button"
             title="设为根节点"
             class="ma-0 rounded-md border-none pa-1"

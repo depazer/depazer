@@ -1,12 +1,17 @@
 <script lang="tsx" setup>
 import { useModuleStore } from '@/stores/module'
 
-const { nodesData } = storeToRefs(useModuleStore())
+const moduleStore = useModuleStore()
+const { nodesData, moduleConfig } = storeToRefs(moduleStore)
 const emit = defineEmits<{ open: [] }>()
 
 const { data } = useFetch(import.meta.env.BASE_URL + 'api/environment')
   .get()
   .json<{ packageManager: 'npm' | 'pnpm' | 'yarn' | 'bun'; nodeVersion: string }>()
+
+if (import.meta.env.MODE === 'playground') {
+  setTimeout(() => (data.value = { packageManager: 'npm', nodeVersion: 'v18.17.0' }), 200)
+}
 
 const iconMap = {
   npm: 'i-logos-npm-icon',
@@ -39,7 +44,38 @@ function InfoLi(props: { title: string; icon: string }) {
       <i class="i-uil-process text-2xl text-red" />
     </li>
 
-    <InfoLi :title="data?.packageManager" :icon="iconMap[data?.packageManager ?? 'npm']" />
-    <InfoLi :title="data?.nodeVersion" icon="i-devicon-nodejs" />
+    <li
+      title="重置根节点"
+      v-show="moduleConfig.rootModule !== ''"
+      @click="moduleConfig.rootModule = ''"
+      bg="green-6-1/60 hover:green-1 dark:green-9/60 hover:dark:green-9"
+      class="block rounded-md pa-2 list-none shadow-lg"
+    >
+      <i class="i-uil-compass text-2xl text-green" />
+    </li>
+
+    <li
+      title="展开全部依赖"
+      @click="moduleStore.unpackedAllNodes"
+      bg="indigo-1/60 hover:indigo-1 dark:indigo-9/60 hover:dark:indigo-9"
+      class="block rounded-md pa-2 list-none shadow-lg"
+    >
+      <i class="i-uil-channel-add text-2xl text-indigo" />
+    </li>
+    <li
+      title="收起全部子依赖"
+      @click="moduleStore.packedAllNodes"
+      bg="orange-1/60 hover:orange-1 dark:orange-9/60 hover:dark:orange-9"
+      class="block rounded-md pa-2 list-none shadow-lg"
+    >
+      <i class="i-uil-fidget-spinner text-2xl text-orange" />
+    </li>
+
+    <InfoLi
+      v-if="data"
+      :title="data?.packageManager"
+      :icon="iconMap[data?.packageManager ?? 'npm']"
+    />
+    <InfoLi v-if="data" :title="data?.nodeVersion" icon="i-devicon-nodejs" />
   </ul>
 </template>
