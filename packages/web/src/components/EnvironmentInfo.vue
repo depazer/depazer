@@ -39,9 +39,9 @@ function InfoLi(props: { title: string; icon: string }) {
       @click="emit('open')"
       v-show="nodesData.loopDependencies.length"
       bg="red-1/60 hover:red-1 dark:red-9/60 hover:dark:red-9"
-      class="block rounded-md pa-2 list-none shadow-lg"
+      class="button"
     >
-      <i class="i-uil-process text-2xl text-red" />
+      <i class="i-uil-process text-red" />
     </li>
 
     <li
@@ -49,26 +49,26 @@ function InfoLi(props: { title: string; icon: string }) {
       v-show="moduleConfig.rootModule !== ''"
       @click="moduleConfig.rootModule = ''"
       bg="green-6-1/60 hover:green-1 dark:green-9/60 hover:dark:green-9"
-      class="block rounded-md pa-2 list-none shadow-lg"
+      class="button"
     >
-      <i class="i-uil-compass text-2xl text-green" />
+      <i class="i-uil-compass text-green" />
     </li>
 
     <li
       title="展开全部依赖"
       @click="moduleStore.unpackedAllNodes"
       bg="indigo-1/60 hover:indigo-1 dark:indigo-9/60 hover:dark:indigo-9"
-      class="block rounded-md pa-2 list-none shadow-lg"
+      class="button"
     >
-      <i class="i-uil-channel-add text-2xl text-indigo" />
+      <i class="i-uil-channel-add text-indigo" />
     </li>
     <li
       title="收起全部子依赖"
       @click="moduleStore.packedAllNodes"
       bg="orange-1/60 hover:orange-1 dark:orange-9/60 hover:dark:orange-9"
-      class="block rounded-md pa-2 list-none shadow-lg"
+      class="button"
     >
-      <i class="i-uil-fidget-spinner text-2xl text-orange" />
+      <i class="i-uil-fidget-spinner text-orange" />
     </li>
 
     <InfoLi
@@ -79,3 +79,12 @@ function InfoLi(props: { title: string; icon: string }) {
     <InfoLi v-if="data" :title="data?.nodeVersion" icon="i-devicon-nodejs" />
   </ul>
 </template>
+
+<style scoped>
+.button {
+  --uno-apply: block rounded-md pa-2 list-none shadow-lg cursor-pointer;
+}
+.button > i {
+  --uno-apply: text-2xl;
+}
+</style>

@@ -8,7 +8,9 @@ import { ApiGetNpmPackageInfo } from '@/api/npmRegistry'
 const appStore = useAppStore()
 const { currentRegistry } = storeToRefs(appStore)
 
-const { isPackedNode, togglePackedNode, moduleConfig } = useModuleStore()
+const moduleStore = useModuleStore()
+const { moduleConfig } = storeToRefs(moduleStore)
+const { isPackedNode, togglePackedNode, packSubNodes, unPackSubNodes } = moduleStore
 
 const props = defineProps<{
   currentPackage: Record<'name' | 'version', string>
@@ -77,39 +79,43 @@ const formattedPackageInfo = computed(() => {
 
         <div>
           <button
-            type="button"
-            title="断开依赖项链接"
-            class="ma-0 rounded-md border-none pa-1"
-            bg="transparent hover:gray-2 hover:dark:slate-8"
-            @click="togglePackedNode(dependencyNameWithVersion)"
-          >
-            <i
-              :class="isPackedNode(dependencyNameWithVersion) ? 'i-uil-plus' : 'i-uil-link-broken'"
-              text="lg orange-5 dark:orange-3"
-            />
-          </button>
-          <button
             v-show="
               currentPackage.version.match(/^\d/) &&
               moduleConfig.rootModule !== dependencyNameWithVersion
             "
             type="button"
             title="设为根节点"
-            class="ma-0 rounded-md border-none pa-1"
-            bg="transparent hover:gray-2 hover:dark:slate-8"
+            class="icon-button"
             @click="emit('update:modelValue', dependencyNameWithVersion)"
           >
-            <i class="i-uil-location-point" text="lg red" />
+            <i class="i-uil-location-point" text="lg lime-7 dark:lime" />
           </button>
           <button
-            v-show="modelValue !== ''"
             type="button"
-            title="返回主节点"
-            class="ma-0 rounded-md border-none pa-1"
-            bg="transparent hover:gray-2 hover:dark:slate-8"
-            @click="emit('update:modelValue', '')"
+            :title="isPackedNode(dependencyNameWithVersion) ? '展开自身依赖' : '收起自身依赖'"
+            class="icon-button"
+            @click="togglePackedNode(dependencyNameWithVersion)"
           >
-            <i class="i-uil-focus-target" text="lg green-6" />
+            <i
+              :class="isPackedNode(dependencyNameWithVersion) ? 'i-uil-plus' : 'i-uil-link-broken'"
+              text="lg red dark:red-3"
+            />
+          </button>
+          <button
+            type="button"
+            title="展开子依赖"
+            class="icon-button"
+            @click="unPackSubNodes(dependencyNameWithVersion)"
+          >
+            <i class="i-uil-channel-add" text="lg indigo" />
+          </button>
+          <button
+            type="button"
+            title="显示一层子依赖"
+            class="icon-button"
+            @click="packSubNodes(dependencyNameWithVersion)"
+          >
+            <i class="i-uil-fidget-spinner" text="lg orange" />
           </button>
         </div>
       </div>

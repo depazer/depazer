@@ -26,6 +26,7 @@ export const useModuleStore = defineStore('module', () => {
     return `${import.meta.env.BASE_URL}api/graph?depth=${depth}&includeDev=${includeDev}`
   }
 
+  /** @desc 获取本地api数据，api地址改变自动刷新 */
   const apiURL = ref(apiGenerator(moduleConfig.depth, moduleConfig.includeDev))
   const { data, abort } = useFetch(debouncedRef(apiURL, 300), { refetch: true })
     .get()
@@ -44,6 +45,7 @@ export const useModuleStore = defineStore('module', () => {
     () => data?.value ?? { dependencyNodes: [], loopDependencies: [] }
   )
 
+  /** @desc 有向图节点筛选与边生成 */
   const graphData = shallowRef<DigraphWithLinks>({ nodes: [], links: [] })
   const depsDigraphWorker = new Worker(new URL('../worker/depsDigraph.ts', import.meta.url))
   depsDigraphWorker.onmessage = (e: MessageEvent<{ type: number; data: DigraphWithLinks }>) => {
@@ -60,6 +62,7 @@ export const useModuleStore = defineStore('module', () => {
     } as GenerateDigraphWithLinkPayload)
   })
 
+  /** @desc 节点收起与展开 */
   function isPackedNode(name: string) {
     return moduleConfig.packedNodes.includes(name)
   }
@@ -68,6 +71,28 @@ export const useModuleStore = defineStore('module', () => {
       moduleConfig.packedNodes = moduleConfig.packedNodes.filter((n) => n !== name)
     } else {
       moduleConfig.packedNodes.push(name)
+    }
+  }
+  function packSubNodes(name: string) {
+    const node = nodesData.value.dependencyNodes.find((n) => n.name === name)
+    if (node) {
+      const indexOfPackedNode = moduleConfig.packedNodes.indexOf(name)
+      if (indexOfPackedNode !== -1) {
+        moduleConfig.packedNodes.splice(indexOfPackedNode, 1)
+      }
+      moduleConfig.packedNodes = [...new Set([...moduleConfig.packedNodes, ...node.dependencies])]
+    }
+  }
+  function unPackSubNodes(name: string) {
+    const node = nodesData.value.dependencyNodes.find((n) => n.name === name)
+    if (node) {
+      const indexOfPackedNode = moduleConfig.packedNodes.indexOf(name)
+      if (indexOfPackedNode !== -1) {
+        moduleConfig.packedNodes.splice(indexOfPackedNode, 1)
+      }
+      moduleConfig.packedNodes = moduleConfig.packedNodes.filter(
+        (n) => !node.dependencies.includes(n)
+      )
     }
   }
   function packedAllNodes() {
@@ -89,6 +114,8 @@ export const useModuleStore = defineStore('module', () => {
 
     isPackedNode,
     togglePackedNode,
+    packSubNodes,
+    unPackSubNodes,
     packedAllNodes,
     unpackedAllNodes
   }

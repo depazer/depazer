@@ -17,6 +17,9 @@ export default defineConfig({
   ],
   rules: [],
   safelist: [],
-  shortcuts: {},
+  shortcuts: {
+    'icon-button':
+      'ma-0 rounded-md border-none pa-1 bg-transparent hover:bg-gray-2 hover:dark:bg-slate-8 cursor-pointer'
+  },
   transformers: [transformerDirectives()]
 })
