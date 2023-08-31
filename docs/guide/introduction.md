@@ -42,7 +42,9 @@ node_modules
 
 分析这些包的 `package.json`，可以发现它们之间形成了如下依赖关系：
 
-![glob dependency](./img/glob-dependency.png)
+<img src="./img/glob-dependency.png" alt="glob-dependency" class="depazer-img" style="border:none;box-shadow:none" />
+
+<!-- ![glob dependency](./img/glob-dependency.png) -->
 
 那么，随着项目变大、依赖变多之后，这种依赖关系会变得非常非常复杂，常常让我们看不清：
 
