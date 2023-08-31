@@ -21,8 +21,8 @@ const members = [
   },
   {
     avatar: 'https://avatars.githubusercontent.com/u/74575471?s=96&v=4',
-    name: '杨鹏',
-    title: 'Vue3、TypeScript、uni-app',
+    name: '梁振胜',
+    title: 'Vue、React、Java',
     links: [
       { icon: 'github', link: 'https://github.com/Lzzzs' }
     ]
@@ -47,8 +47,8 @@ const members = [
   },
   {
     avatar: 'https://avatars.githubusercontent.com/u/94176764?s=96&v=4',
-    name: '梁振胜',
-    title: 'Vue、React、Java',
+    name: '杨鹏',
+    title: 'Vue3、TypeScript、uni-app',
     links: [
       { icon: 'github', link: 'https://github.com/kitori7' }
     ]

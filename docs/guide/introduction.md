@@ -56,9 +56,10 @@ node_modules
 
 ## 技术栈
 
-- 项目管理：[`Pnpm`](https://pnpm.io/zh/workspaces)(Workspase)、[`Turborepo`](https://turbo.build/repo)、[`cac`](https://github.com/cacjs/cac)、[`ESBuild`](https://esbuild.github.io/)
-- 前端构建：[`Vue3`](https://vuejs.org/)、[`Vite`](https://vitejs.dev/)、[`D3`](https://d3js.org/)、[`Unocss`](https://unocss.dev/)
-- 工程化：[`TypeScript`](https://www.typescriptlang.org/)、[`Vitest`](https://vitest.dev/)(单元测试)、[`ESLint`](https://eslint.org/)、`husky`、`lint-staged`
+- 项目构建：[`PNPM`](https://pnpm.io/zh/workspaces)(Workspase)、[`Turborepo`](https://turbo.build/repo)
+- CLI端：[`CAC`](https://github.com/cacjs/cac)、[`ESBuild`](https://esbuild.github.io/)
+- WEB端：[`Vue3`](https://vuejs.org/)、[`Vite`](https://vitejs.dev/)、[`D3`](https://d3js.org/)、[`Pinia`](https://pinia.vuejs.org/)、[`Unocss`](https://unocss.dev/)
+- 工程化：[`TypeScript`](https://www.typescriptlang.org/)、[`Vitest`](https://vitest.dev/)(单元测试)、[`ESLint`](https://eslint.org/)、[`Husky`](https://github.com/typicode/husky)、[`lint-staged`](https://github.com/okonet/lint-staged)
 - 文档构建：[`VitePress`](https://vitepress.dev/)
 
 ## 功能清单
