@@ -8,10 +8,10 @@
 
 默认依赖不包含开发依赖包，如果需要查看开发依赖包，可以点击右上角的设置将开发依赖的开关打开以包含开发依赖，如下图所示：
 
-<img src="./img/setting.webp" alt="web-1" class="depazer-img" />
+<img src="https://qingshaner.oss-cn-hangzhou.aliyuncs.com/images/202308311105688.webp" alt="setting" class="depazer-img" />
 
 为了区分开发依赖和生产依赖，指向生产依赖的线条会以偏紫色的背景色进行标记，而指向开发依赖的线条以偏蓝色的线条标记，如下图所示：
-<img src="./img/line.webp" alt="web-1" class="depazer-img" />
+<img src="https://qingshaner.oss-cn-hangzhou.aliyuncs.com/images/202308311103783.webp" alt="line" class="depazer-img" />
 
 ## 依赖查询深度
 
