@@ -3,6 +3,7 @@
   "exclude": ["src/**/__tests__/*"],
   "extends": "./tsconfig.app.json",
   "compilerOptions": {
+    "types": ["node"],
     "lib": ["ES2020", "WebWorker"]
   }
 }

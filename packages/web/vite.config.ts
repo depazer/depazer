@@ -30,5 +30,9 @@ export default defineConfig({
         target: 'http://localhost:4936'
       }
     }
+  },
+  worker: {
+    format: 'es',
+    rollupOptions: {}
   }
 })

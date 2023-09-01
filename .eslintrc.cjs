@@ -8,6 +8,7 @@ module.exports = {
     '/**/**/node_modules',
     '/**/**/dist',
     '/**/**/public',
+    'packages/web/src/worker/**/*.js',
     '*.{json,yaml,yml,md,css,scss,less,html,gitignore,editorconfig}'
   ],
   root: true,

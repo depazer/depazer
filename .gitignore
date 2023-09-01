@@ -10,6 +10,8 @@ node_modules
 .changeset/README.md
 *.tsbuildinfo
 
+packages/web/src/worker/**/*.js
+
 .idea
 .vscode/**/*
 !.vscode/settings.json
