@@ -1,5 +1,11 @@
 # @depazer/web
 
+## 0.4.0
+
+### Minor Changes
+
+- 0b16df3: ✨ Support virtual build dependency
+
 ## 0.3.0
 
 ### Minor Changes
