@@ -21,8 +21,9 @@ export const useModuleStore = defineStore('module', () => {
     /** @desc 需要收起的节点  */
     packedNodes: []
   })
+  const depsDigraphWorker = new Worker(new URL('../worker/index.ts', import.meta.url))
 
-  const apiGenerator = (depth: number, includeDev: boolean) => {
+  function apiGenerator(depth: number, includeDev: boolean) {
     return `${import.meta.env.BASE_URL}api/graph?depth=${depth}&includeDev=${includeDev}`
   }
 
@@ -37,10 +38,7 @@ export const useModuleStore = defineStore('module', () => {
 
   watchEffect(() => {
     abort()
-    if (!moduleConfig.isVirtual) {
-      if (import.meta.env.MODE === 'playground') return (data.value = getPlaygroundData())
-      apiURL.value = apiGenerator(moduleConfig.depth, moduleConfig.includeDev)
-    } else {
+    if (moduleConfig.isVirtual) {
       unpackedAllNodes()
       graphData.value = { nodes: [], links: [] }
       depsDigraphWorker.postMessage({
@@ -51,6 +49,9 @@ export const useModuleStore = defineStore('module', () => {
           packedNodes: []
         }
       } as WorkerMessage)
+    } else {
+      if (import.meta.env.MODE === 'playground') return (data.value = getPlaygroundData())
+      apiURL.value = apiGenerator(moduleConfig.depth, moduleConfig.includeDev)
     }
   })
 
@@ -59,7 +60,6 @@ export const useModuleStore = defineStore('module', () => {
   )
 
   /** @desc 有向图节点筛选与边生成 */
-  const depsDigraphWorker = new Worker(new URL('../worker/index.ts', import.meta.url))
   depsDigraphWorker.onmessage = (e: MessageEvent<{ type: number; data: DigraphWithLinks }>) => {
     graphData.value = e.data.data
   }
