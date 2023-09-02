@@ -17,6 +17,7 @@ export interface GenerateDigraphWithLinkPayload {
 export interface GenerateRemoteNodesPayload {
   type: WorkerMessageType.GenerateRemoteNodes
   data: {
+    rootDependency: string
     packedNodes: string[]
     depth: number
   }
