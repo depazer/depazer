@@ -53,7 +53,10 @@ function updateCache(cachePath: string, latestVersion: string | null) {
 
 function updateLogger(currentVersion: string, latestVersion: string) {
   warnLogger(`🎉 Update available: v${currentVersion} -> v${latestVersion}`, 'UPDATE!')
-  successLogger(`📄 https://github.com/depazer/depazer/releases/tag/@depazer/cli@0.2.4`, 'RELEASE')
+  successLogger(
+    `📄 https://github.com/depazer/depazer/releases/tag/@depazer/cli@${latestVersion}`,
+    'RELEASE'
+  )
   noteLogger(
     `✨ npm up @depazer/cli -g | pnpm up @depazer/cli -g | yarn global up @depazer/cli`,
     'INSTALL'
