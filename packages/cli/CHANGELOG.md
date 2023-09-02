@@ -1,5 +1,15 @@
 # @depazer/cli
 
+## 0.4.0
+
+### Minor Changes
+
+- 0b16df3: ✨ Support virtual build dependency
+
+### Patch Changes
+
+- 63fcc38: 🐛 Fix check update log error
+
 ## 0.3.0
 
 ### Minor Changes
