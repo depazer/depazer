@@ -26,6 +26,9 @@ export const useModuleStore = defineStore('module', () => {
     return `${import.meta.env.BASE_URL}api/graph?depth=${depth}&includeDev=${includeDev}`
   }
 
+  /** @desc 有向图数据 */
+  const graphData = shallowRef<DigraphWithLinks>({ nodes: [], links: [] })
+
   /** @desc 获取本地api数据，api地址改变自动刷新 */
   const apiURL = ref(apiGenerator(moduleConfig.depth, moduleConfig.includeDev))
   const { data, abort } = useFetch(debouncedRef(apiURL, 300), { refetch: true })
@@ -56,7 +59,6 @@ export const useModuleStore = defineStore('module', () => {
   )
 
   /** @desc 有向图节点筛选与边生成 */
-  const graphData = shallowRef<DigraphWithLinks>({ nodes: [], links: [] })
   const depsDigraphWorker = new Worker(new URL('../worker/index.ts', import.meta.url))
   depsDigraphWorker.onmessage = (e: MessageEvent<{ type: number; data: DigraphWithLinks }>) => {
     graphData.value = e.data.data
