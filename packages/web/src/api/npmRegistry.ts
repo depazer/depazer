@@ -1,8 +1,10 @@
-import { get, set } from 'idb-keyval'
+import { createStore, del, get, set } from 'idb-keyval'
 import { useFetch } from '@vueuse/core'
 
+const registryStore = createStore('depazer', 'registry')
+
 /**
- * @desc 获取npm包信息, 从缓存中获取, 如果没有则从网络获取, 未指定具体版本则不缓存
+ * @desc 获取npm包信息, 指定版本号永久缓存，其他版本号5分钟缓存
  * @param name 包名
  * @param version 版本 可为 '' 查询所有版本 ‘latest’ 查询最新版本
  * @param baseURL npm registry 接口地址
@@ -15,20 +17,29 @@ export async function ApiGetNpmPackageInfo(
   data: any
   error: any
 }> {
-  const url = `${baseURL || 'https://registry.npmjs.org/'}${name}/${version}`
+  const key = `${name}@${version}`
 
-  const cached = version === '' ? undefined : await get(url)
-
-  if (cached) {
-    return { data: cached, error: undefined }
+  const hasCache = await get(key, registryStore)
+  if (hasCache) {
+    if (hasCache.ttl === undefined) return { data: hasCache, error: undefined }
+    if (hasCache.ttl > Date.now()) return { data: hasCache.registry, error: undefined }
+    else del(key, registryStore)
   }
 
   const { data, error } = await useFetch(
-    url,
+    `${baseURL || 'https://registry.npmjs.org/'}${name}/${version}`,
     { headers: { 'Content-Type': 'application/json' }, method: 'GET' },
     {
       afterFetch({ data }) {
-        if (version !== '') set(url, data)
+        version !== '' && set(`${name}@${data.version}`, data, registryStore)
+
+        version !== data.version &&
+          set(
+            `${name}@${version}`,
+            { ttl: Date.now() + 1000 * 60 * 5, registry: data },
+            registryStore
+          )
+
         return { data }
       }
     }

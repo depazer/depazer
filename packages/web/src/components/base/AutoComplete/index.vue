@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 const props = defineProps<{ data: string[]; placeholder?: string; modelValue: string }>()
-const emits = defineEmits<{ 'update:modelValue': [input: string] }>()
+const emits = defineEmits<{ 'update:modelValue': [input: string]; change: [input: string] }>()
 const inputValue = useVModel(props, 'modelValue', emits)
 
 const optionsVisible = ref<boolean>(false)
@@ -14,6 +14,15 @@ const optionList = computed(() => {
 
   return filteredData.slice(0, 5)
 })
+
+function handleChange($event: Event) {
+  const target = $event.target as HTMLInputElement
+  emits('change', target.value)
+}
+function handleSelect(item: string) {
+  inputValue.value = item
+  emits('change', item)
+}
 </script>
 
 <template>
@@ -28,9 +37,10 @@ const optionList = computed(() => {
       class="w-full rounded-md border-none pa-1 text-base focus:outline-none"
       bg="transparent"
       v-model="inputValue"
+      @change="handleChange"
       :placeholder="placeholder"
-      @blur="toggleOPtionsVisible()"
-      @focus="toggleOPtionsVisible()"
+      @blur="toggleOPtionsVisible(false)"
+      @focus="toggleOPtionsVisible(true)"
     />
     <slot name="suffix" />
   </div>
@@ -43,7 +53,7 @@ const optionList = computed(() => {
     >
       <li
         tabindex="0"
-        @click="() => (inputValue = item)"
+        @mousedown="handleSelect(item)"
         class="list-none pa-2 hover:bg-gray-3/50 dark:hover:bg-slate-7/50 cursor-pointer"
         v-for="item of optionList"
         :key="item"

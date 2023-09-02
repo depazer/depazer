@@ -1,11 +1,11 @@
 import { getPlaygroundData } from '@/utils/mockPlaygroundData'
-import { WorkerMessageType, type GenerateDigraphWithLinkPayload } from '@/types/worker'
+import { WorkerMessageType, type WorkerMessage } from '@/types/worker'
 import type { DependencyFetchData, DigraphWithLinks } from '@/types/dependency'
 
 interface ModuleConfig {
   depth: number
   includeDev: boolean
-  isLocal: boolean
+  isVirtual: boolean
   rootModule: string
   packedNodes: string[]
 }
@@ -14,8 +14,8 @@ export const useModuleStore = defineStore('module', () => {
   const moduleConfig = reactive<ModuleConfig>({
     depth: Infinity,
     includeDev: false,
-    /** @desc 使用本地api获取模块图数据; playground环境下为false */
-    isLocal: import.meta.env.MODE !== 'playground',
+    /** @desc 使用本地api获取模块图数据; 虚拟为使用api模拟构建依赖关系, playground环境下默认为true */
+    isVirtual: import.meta.env.MODE === 'playground',
     /** @desc 根模块名 ${name}@${version} */
     rootModule: '',
     /** @desc 需要收起的节点  */
@@ -34,10 +34,20 @@ export const useModuleStore = defineStore('module', () => {
 
   watchEffect(() => {
     abort()
-    if (moduleConfig.isLocal) {
+    if (!moduleConfig.isVirtual) {
+      if (import.meta.env.MODE === 'playground') return (data.value = getPlaygroundData())
       apiURL.value = apiGenerator(moduleConfig.depth, moduleConfig.includeDev)
-    } else if (import.meta.env.MODE === 'playground') {
-      data.value = getPlaygroundData()
+    } else {
+      unpackedAllNodes()
+      graphData.value = { nodes: [], links: [] }
+      depsDigraphWorker.postMessage({
+        type: WorkerMessageType.GenerateRemoteNodes,
+        data: {
+          rootDependency: moduleConfig.rootModule || '@depazer/cli@latest',
+          depth: moduleConfig.depth,
+          packedNodes: []
+        }
+      } as WorkerMessage)
     }
   })
 
@@ -47,19 +57,20 @@ export const useModuleStore = defineStore('module', () => {
 
   /** @desc 有向图节点筛选与边生成 */
   const graphData = shallowRef<DigraphWithLinks>({ nodes: [], links: [] })
-  const depsDigraphWorker = new Worker(new URL('../worker/depsDigraph.ts', import.meta.url))
+  const depsDigraphWorker = new Worker(new URL('../worker/index.ts', import.meta.url))
   depsDigraphWorker.onmessage = (e: MessageEvent<{ type: number; data: DigraphWithLinks }>) => {
     graphData.value = e.data.data
   }
   watchEffect(() => {
-    depsDigraphWorker.postMessage({
-      type: WorkerMessageType.GenerateDigraphWithLink,
-      data: {
-        dependency: nodesData.value,
-        rootDependency: moduleConfig.rootModule,
-        packedNodes: [...moduleConfig.packedNodes]
-      }
-    } as GenerateDigraphWithLinkPayload)
+    !moduleConfig.isVirtual &&
+      depsDigraphWorker.postMessage({
+        type: WorkerMessageType.GenerateDigraphWithLink,
+        data: {
+          dependency: nodesData.value,
+          rootDependency: moduleConfig.rootModule,
+          packedNodes: [...moduleConfig.packedNodes]
+        }
+      } as WorkerMessage)
   })
 
   /** @desc 节点收起与展开 */

@@ -1,4 +1,4 @@
-import { describe, test } from 'vitest'
+import { describe, expect, test } from 'vitest'
 
 import { mount } from '@vue/test-utils'
 import AutoComplete from '@/components/base/AutoComplete/index.vue'
@@ -32,9 +32,33 @@ describe('base/AutoComplete', async () => {
     }, 1000)
   })
 
-  test.skip('focus event', async () => {
+  test('focus event', async () => {
     const input = wrapper.find('input')
     await input.trigger('focus')
-    // expect(wrapper.find('ul').isVisible()).toBe(true)
+    const li = wrapper.findAll('li')
+    expect(li.length).toBe(3)
+  })
+
+  test('change event', async () => {
+    const input = wrapper.find('input')
+    input.element.value = 'aa'
+    await input.trigger('change')
+    expect(wrapper.find('ul').isVisible()).toBe(false)
+    expect(wrapper.emitted()['change'][0]).toEqual(['aa'])
+  })
+
+  test('select options', async () => {
+    await wrapper.setProps({
+      moduleValue: 'a',
+      placeholder: '请输入',
+      data: ['aaa', 'aab', 'abc']
+    })
+    const input = wrapper.find('input')
+    await input.trigger('focus')
+
+    const li = wrapper.find('li')
+    expect(li.exists()).toBe(true)
+    await li.trigger('mousedown')
+    expect(wrapper.emitted()['change'][1]).toEqual(['aaa'])
   })
 })
