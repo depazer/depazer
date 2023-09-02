@@ -33,7 +33,7 @@ function handleToggleRootDependency(rootDependency: string) {
 const {
   query: { depth, dev }
 } = useRoute()
-moduleConfig.value.depth = Number(depth ?? Infinity)
+moduleConfig.value.depth = ~~(depth ?? 2)
 moduleConfig.value.includeDev = dev === 'true'
 
 const mainRef = ref<HTMLElement | null>(null)

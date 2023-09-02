@@ -10,11 +10,13 @@ export default {
   },
   globalSetting: {
     title: 'Setting',
+    virtual: 'Virtual dependency',
     drag: 'Fixed position after drag',
     devDependencies: 'Include development dependencies',
     maxDepth: 'Max depth',
     repulsion: 'Repulsion magnitude',
-    searchNode: 'Search node',
+    searchDependency: 'Search dependency',
+    searchDependencyPlaceholder: '`${name}@${version}`',
     registryApi: 'NPM Registry api'
   }
 }

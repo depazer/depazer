@@ -33,7 +33,7 @@ function InfoLi(props: { title: string; icon: string }) {
 </script>
 
 <template>
-  <ul v-if="data" class="my-0 flex gap-1">
+  <ul class="my-0 flex gap-1">
     <li
       title="循环依赖"
       @click="emit('open')"

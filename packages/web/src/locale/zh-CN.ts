@@ -10,11 +10,13 @@ export default {
   },
   globalSetting: {
     title: '设置',
+    virtual: '依赖虚拟构建',
     drag: '拖拽后固定',
     devDependencies: '包含开发依赖',
     maxDepth: '最大深度',
     repulsion: '斥力大小',
-    searchNode: '搜索节点',
+    searchDependency: '搜索依赖',
+    searchDependencyPlaceholder: '`${name}@${version}`',
     registryApi: '注册表API'
   }
 }

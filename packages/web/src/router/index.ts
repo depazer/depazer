@@ -1,4 +1,3 @@
-import { useModuleStore } from '@/stores/module'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
