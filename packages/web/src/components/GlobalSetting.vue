@@ -58,10 +58,10 @@ function toggleMode(target: boolean) {
     </template>
     <div>
       <div my-4 flex="~ justify-between items-center">
-        <span
-          >{{ $t('globalSetting.virtual')
-          }}<code class="text-red-6 dark:text-red-3 text-sm">Beta</code></span
-        >
+        <span>
+          {{ $t('globalSetting.virtual') }}
+          <code class="text-red-6 dark:text-red-3 text-sm">Beta</code>
+        </span>
         <BaseSwitch v-model="moduleConfig.isVirtual" @update:model-value="toggleMode" />
       </div>
 

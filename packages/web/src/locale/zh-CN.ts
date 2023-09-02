@@ -16,7 +16,7 @@ export default {
     maxDepth: '最大深度',
     repulsion: '斥力大小',
     searchDependency: '搜索依赖',
-    searchDependencyPlaceholder: '`${name}@${version}`',
+    searchDependencyPlaceholder: "{'${name}@${version}'}",
     registryApi: '注册表API'
   }
 }

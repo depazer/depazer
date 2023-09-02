@@ -16,7 +16,7 @@ export default {
     maxDepth: 'Max depth',
     repulsion: 'Repulsion magnitude',
     searchDependency: 'Search dependency',
-    searchDependencyPlaceholder: '`${name}@${version}`',
+    searchDependencyPlaceholder: "{'${name}@${version}'}",
     registryApi: 'NPM Registry api'
   }
 }
