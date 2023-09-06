@@ -58,7 +58,7 @@
     "lint-staged": "^14.0.1",
     "prettier": "^3.0.3",
     "rimraf": "^5.0.1",
-    "tsx": "^3.12.7",
+    "tsx": "^3.12.8",
     "turbo": "^1.10.13",
     "typescript": "^5.2.2",
     "vitepress": "1.0.0-rc.4",
