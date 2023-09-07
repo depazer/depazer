@@ -1,5 +1,5 @@
 import { getPlaygroundData } from '@/utils/mockPlaygroundData'
-import { WorkerMessageType, type WorkerMessage } from '@/types/worker'
+import { WorkerMessageType, type WorkerMessage, type WorkerReturnMessage } from '@/types/worker'
 import type { DependencyFetchData, DigraphWithLinks } from '@/types/dependency'
 
 interface ModuleConfig {
@@ -11,6 +11,8 @@ interface ModuleConfig {
 }
 
 export const useModuleStore = defineStore('module', () => {
+  /** @desc web Worker 任务 id */
+  let id = 0
   const moduleConfig = reactive<ModuleConfig>({
     depth: Infinity,
     includeDev: false,
@@ -32,16 +34,27 @@ export const useModuleStore = defineStore('module', () => {
 
   /** @desc 获取本地api数据，api地址改变自动刷新 */
   const apiURL = ref(apiGenerator(moduleConfig.depth, moduleConfig.includeDev))
-  const { data, abort } = useFetch(debouncedRef(apiURL, 300), { refetch: true })
+  const { data, abort, execute } = useFetch(debouncedRef(apiURL, 300), { refetch: true })
     .get()
     .json<DependencyFetchData>()
+
+  async function toggleVirtual() {
+    data.value = null
+    unpackedAllNodes()
+    graphData.value = { nodes: [], links: [] }
+
+    await execute()
+    moduleConfig.isVirtual = !moduleConfig.isVirtual
+  }
 
   watchEffect(() => {
     abort()
     if (moduleConfig.isVirtual) {
+      id = Math.random()
       unpackedAllNodes()
       graphData.value = { nodes: [], links: [] }
       depsDigraphWorker.postMessage({
+        id,
         type: WorkerMessageType.GenerateRemoteNodes,
         data: {
           rootDependency: moduleConfig.rootModule || '@depazer/cli@latest',
@@ -60,19 +73,29 @@ export const useModuleStore = defineStore('module', () => {
   )
 
   /** @desc 有向图节点筛选与边生成 */
-  depsDigraphWorker.onmessage = (e: MessageEvent<{ type: number; data: DigraphWithLinks }>) => {
-    graphData.value = e.data.data
+  depsDigraphWorker.onmessage = ({ data: payload }: WorkerReturnMessage) => {
+    switch (payload.type) {
+      case WorkerMessageType.GenerateDigraphWithLink:
+        graphData.value = payload.data
+        break
+      case WorkerMessageType.GenerateRemoteNodes:
+        data.value = {
+          dependencyNodes: payload.data,
+          loopDependencies: []
+        }
+        break
+    }
   }
   watchEffect(() => {
-    !moduleConfig.isVirtual &&
-      depsDigraphWorker.postMessage({
-        type: WorkerMessageType.GenerateDigraphWithLink,
-        data: {
-          dependency: nodesData.value,
-          rootDependency: moduleConfig.rootModule,
-          packedNodes: [...moduleConfig.packedNodes]
-        }
-      } as WorkerMessage)
+    depsDigraphWorker.postMessage({
+      id: moduleConfig.isVirtual ? id : Math.random(),
+      type: WorkerMessageType.GenerateDigraphWithLink,
+      data: {
+        dependency: nodesData.value,
+        rootDependency: moduleConfig.rootModule,
+        packedNodes: [...moduleConfig.packedNodes]
+      }
+    } as WorkerMessage)
   })
 
   /** @desc 节点收起与展开 */
@@ -121,8 +144,10 @@ export const useModuleStore = defineStore('module', () => {
   }
 
   return {
-    graphData,
     moduleConfig,
+    toggleVirtual,
+
+    graphData,
     nodesData,
 
     isPackedNode,

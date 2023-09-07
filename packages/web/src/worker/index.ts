@@ -18,19 +18,19 @@ importScripts(new URL('./getRegistry', import.meta.url), new URL('./depsDigraph'
 importScripts(new URL('./generateVirtualDependency', import.meta.url))
 
 self.onmessage = (e: MessageEvent<WorkerMessage>) => {
-  globalData.id = Math.random()
+  globalData.id = e.data.id
 
   const { type, data } = e.data
 
   switch (type) {
-    case 0:
+    case 0 /* GenerateDigraphWithLink */:
       globalData.dependencyNodes = data.dependency.dependencyNodes
       globalData.loopLinks = generateLoopLink(data.dependency.loopDependencies)
       globalData.packedNodes = data.packedNodes
 
       generateDigraphWithLink(globalData.id, data.rootDependency, globalData)
       break
-    case 1:
+    case 1 /* GenerateRemoteNodes */:
       generateVirtualDependencyNodes(globalData.id, data.rootDependency, data.depth, globalData)
       break
   }
