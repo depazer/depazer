@@ -1,5 +1,11 @@
 # @depazer/web
 
+## 0.4.1
+
+### Patch Changes
+
+- ccc3ed2: 🐛 Fix virtual mode node pack error
+
 ## 0.4.0
 
 ### Minor Changes
