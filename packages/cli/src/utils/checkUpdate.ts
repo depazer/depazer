@@ -1,12 +1,13 @@
 import { get } from 'node:https'
-import { fileURLToPath } from 'node:url'
+import { resolve } from 'node:path'
+import { LIB_PATH } from '@/constants/path'
 import { readFile, writeFile } from 'node:fs/promises'
 import { noteLogger, successLogger, warnLogger } from '@depazer/shared'
 
 import { version } from '../../package.json'
 
 export async function checkUpdate() {
-  const CachePath = fileURLToPath(new URL('.cache', import.meta.url))
+  const CachePath = resolve(LIB_PATH, '.cache')
 
   const needCheck = await setupUpdate(CachePath)
   if (!needCheck) return false
