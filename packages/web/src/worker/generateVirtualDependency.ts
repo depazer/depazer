@@ -126,7 +126,11 @@ async function generateVirtualDependencyNodes(
         ...generateTmpNode(waitedDependency.nextNodes, depth + 1, nodeSet)
       ]
       globalData.loopLinks = []
-      generateDigraphWithLink(id, rootDependencyNode.name, globalData)
+      self.postMessage({
+        type: 1,
+        id,
+        data: globalData.dependencyNodes
+      })
     }
 
     waitedDependency.waitedNodes = [...new Set(waitedDependency.nextNodes)]

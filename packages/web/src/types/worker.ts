@@ -1,4 +1,5 @@
-import type { DependencyFetchData } from './dependency'
+import type { DependencyNode } from '@depazer/core'
+import type { DependencyFetchData, DigraphWithLinks } from './dependency'
 
 export const enum WorkerMessageType {
   GenerateDigraphWithLink,
@@ -7,6 +8,7 @@ export const enum WorkerMessageType {
 
 export interface GenerateDigraphWithLinkPayload {
   type: WorkerMessageType.GenerateDigraphWithLink
+  id: number
   data: {
     dependency: DependencyFetchData
     rootDependency: string
@@ -16,11 +18,25 @@ export interface GenerateDigraphWithLinkPayload {
 
 export interface GenerateRemoteNodesPayload {
   type: WorkerMessageType.GenerateRemoteNodes
+  id: number
   data: {
     rootDependency: string
     packedNodes: string[]
     depth: number
   }
 }
+
+export type WorkerReturnMessage = MessageEvent<
+  | {
+      type: WorkerMessageType.GenerateDigraphWithLink
+      id: number
+      data: DigraphWithLinks
+    }
+  | {
+      type: WorkerMessageType.GenerateRemoteNodes
+      id: number
+      data: DependencyNode[]
+    }
+>
 
 export type WorkerMessage = GenerateDigraphWithLinkPayload | GenerateRemoteNodesPayload

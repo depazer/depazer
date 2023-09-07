@@ -12,7 +12,8 @@ import type { NPMRegistrySearch } from '@/types/registry'
 
 const appStore = useAppStore()
 const { fixedNailModel, repulsion, currentRegistry } = storeToRefs(appStore)
-const { moduleConfig, nodesData } = storeToRefs(useModuleStore())
+const moduleStore = useModuleStore()
+const { moduleConfig, nodesData } = storeToRefs(moduleStore)
 
 /** @desc 零时输入框数据 */
 const rootDependency = ref<string>(moduleConfig.value.rootModule)
@@ -44,6 +45,7 @@ async function handleChange(newRootDependency: string) {
 
 /** @desc 换回本地api时重置根依赖包 */
 function toggleMode(target: boolean) {
+  moduleStore.toggleVirtual()
   if (target === false) {
     rootDependency.value = ''
     moduleConfig.value.rootModule = ''
@@ -62,7 +64,7 @@ function toggleMode(target: boolean) {
           {{ $t('globalSetting.virtual') }}
           <code class="text-red-6 dark:text-red-3 text-sm">Beta</code>
         </span>
-        <BaseSwitch v-model="moduleConfig.isVirtual" @update:model-value="toggleMode" />
+        <BaseSwitch :modelValue="moduleConfig.isVirtual" @update:model-value="toggleMode" />
       </div>
 
       <div my-4 flex="~ justify-between items-center">

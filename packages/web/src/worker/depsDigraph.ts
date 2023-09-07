@@ -25,6 +25,7 @@ function generateDigraphWithLink(id: number, rootDependency: string, globalData:
 
   if (globalData.id === id)
     self.postMessage({
+      id,
       type: 0,
       data: {
         nodes: filteredNodes,
