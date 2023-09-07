@@ -1,5 +1,11 @@
 # @depazer/vite
 
+## 0.5.1
+
+### Patch Changes
+
+- ccc3ed2: 🐛 Fix virtual mode node pack error
+
 ## 0.5.0
 
 ### Minor Changes
