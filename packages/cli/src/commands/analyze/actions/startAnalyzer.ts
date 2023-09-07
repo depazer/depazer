@@ -1,11 +1,12 @@
-import { fileURLToPath } from 'node:url'
+import o from 'open'
+import { resolve } from 'node:path'
 import { createServer } from 'node:http'
 import { noteLogger } from '@depazer/shared'
 import { environmentScanner } from '@depazer/core'
 import { apiController, jsonResponse, pageController } from '@depazer/server'
-import o from 'open'
 
 import type { Server } from 'node:http'
+import { LIB_PATH } from '@/constants/path'
 
 interface IParams {
   depth: number
@@ -25,12 +26,7 @@ export async function startAnalyzer(
 
   const config = {
     /** 前端静态资源目录 */
-    staticDir: fileURLToPath(
-      new URL(
-        `${process.env.NODE_ENV === 'production' ? '.' : '../../../../lib'}/web`,
-        import.meta.url
-      )
-    ),
+    staticDir: resolve(LIB_PATH, 'web'),
     hostname: 'localhost',
     /** @desc 监听端口 */
     port,
