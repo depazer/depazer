@@ -1,5 +1,15 @@
 # @depazer/core
 
+## 1.0.0
+
+### Major Changes
+
+- 4507410: 🎉 Release 1.0.0
+
+### Patch Changes
+
+- 4507410: 🐛 Remove repeat loop dependency
+
 ## 0.0.4
 
 ### Patch Changes
