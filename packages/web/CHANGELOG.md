@@ -1,5 +1,11 @@
 # @depazer/web
 
+## 1.0.0
+
+### Major Changes
+
+- 4507410: 🎉 Release 1.0.0
+
 ## 0.4.1
 
 ### Patch Changes

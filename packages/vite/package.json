@@ -1,7 +1,7 @@
 {
   "name": "@depazer/vite",
   "type": "module",
-  "version": "0.5.1",
+  "version": "1.0.0",
   "description": "Vite plugin for dependency analyzer",
   "files": [
     "lib"
