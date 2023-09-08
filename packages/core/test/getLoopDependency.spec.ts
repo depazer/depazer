@@ -41,7 +41,6 @@ describe('get loop dependencies', (test) => {
       { name: 'd@1.0.0', dependencies: ['b@1.0.0', 'c@1.0.0'], depth: 3, isDevDependency: false }
     ])
 
-    /** @todo 消除该类重复 */
     expect(loopDependencies).toMatchInlineSnapshot(`
       [
         [
@@ -60,11 +59,6 @@ describe('get loop dependencies', (test) => {
           "b@1.0.0",
           "c@1.0.0",
           "b@1.0.0",
-        ],
-        [
-          "c@1.0.0",
-          "b@1.0.0",
-          "c@1.0.0",
         ],
         [
           "b@1.0.0",
