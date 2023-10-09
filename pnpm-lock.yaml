@@ -152,8 +152,8 @@ importers:
         specifier: ^21.1.2
         version: 21.1.2
       '@unocss/reset':
-        specifier: ^0.55.2
-        version: 0.55.3
+        specifier: ^0.56.5
+        version: 0.56.5
       '@vitejs/plugin-vue':
         specifier: ^4.3.3
         version: 4.3.4(vite@4.4.9)(vue@3.3.4)
@@ -2357,6 +2357,10 @@ packages:
 
   /@unocss/reset@0.55.3:
     resolution: {integrity: sha512-zl3mogr3z6huA5CHZggOljoYFQDTidEw5T6pGPahfHB5qS9DH0UGozg5T9UtYWiidHL3xqyv6ZU27nyIMnlnhg==}
+    dev: true
+
+  /@unocss/reset@0.56.5:
+    resolution: {integrity: sha512-//Pv2ITAdnpWB9FIr0JiQVl1rL1XgISR8mu3OikhCfi6d/4OH+o6/WyE7evF1pOmk1JjsQlznOABIZXQlcpbHQ==}
     dev: true
 
   /@unocss/scope@0.55.3:
